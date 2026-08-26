@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+/*
+ * Semantic tokens are the design-system API. Components should consume names
+ * such as `bg-surface` and `text-ink`, never palette values directly.
+ */
+:root {
+  --token-color-surface: #f8f1e3;
+  --token-color-surface-raised: #fffaf0;
+  --token-color-ink: #172a46;
+  --token-color-ink-muted: #536277;
+  --token-color-copper: #b86f3d;
+  --token-color-teal: #367d79;
+  --token-color-border: #d9cbb8;
+  --token-color-focus: #2563a6;
+
+  --token-spacing-page: 1.25rem;
+  --token-spacing-section: 3rem;
+  --token-spacing-card: 1.5rem;
+  --token-spacing-control: 0.75rem;
+
+  --token-font-body: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
+  --token-font-display: "Bree Serif", ui-serif, Georgia, serif;
+  --token-text-display: 2.5rem;
+  --token-text-title: 1.75rem;
+  --token-text-body: 1rem;
+  --token-text-caption: 0.875rem;
+
+  --token-radius-card: 1rem;
+  --token-radius-control: 0.625rem;
+  --token-radius-pill: 9999px;
+
+  --token-shadow-card: 0 0.5rem 1.5rem rgb(23 42 70 / 0.12);
+  --token-shadow-lifted: 0 1rem 2.5rem rgb(23 42 70 / 0.18);
+
+  --token-motion-fast: 150ms;
+  --token-motion-standard: 250ms;
+  --token-motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@theme inline {
+  --color-surface: var(--token-color-surface);
+  --color-surface-raised: var(--token-color-surface-raised);
+  --color-ink: var(--token-color-ink);
+  --color-ink-muted: var(--token-color-ink-muted);
+  --color-copper: var(--token-color-copper);
+  --color-teal: var(--token-color-teal);
+  --color-border: var(--token-color-border);
+  --color-focus: var(--token-color-focus);
+
+  --spacing-page: var(--token-spacing-page);
+  --spacing-section: var(--token-spacing-section);
+  --spacing-card: var(--token-spacing-card);
+  --spacing-control: var(--token-spacing-control);
+
+  --font-body: var(--token-font-body);
+  --font-display: var(--token-font-display);
+  --text-display: var(--token-text-display);
+  --text-title: var(--token-text-title);
+  --text-body: var(--token-text-body);
+  --text-caption: var(--token-text-caption);
+
+  --radius-card: var(--token-radius-card);
+  --radius-control: var(--token-radius-control);
+  --radius-pill: var(--token-radius-pill);
+
+  --shadow-card: var(--token-shadow-card);
+  --shadow-lifted: var(--token-shadow-lifted);
+
+  --ease-standard: var(--token-motion-ease);
+  --transition-duration-fast: var(--token-motion-fast);
+  --transition-duration-standard: var(--token-motion-standard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --token-motion-fast: 0ms;
+    --token-motion-standard: 0ms;
+  }
+}
+
+@layer base {
+  html {
+    font-family: var(--font-body);
+    color: var(--token-color-ink);
+    background: var(--token-color-surface);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--token-color-focus);
+    outline-offset: 3px;
+  }
+}

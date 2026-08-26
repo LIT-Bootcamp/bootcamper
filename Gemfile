@@ -10,6 +10,7 @@ gem "propshaft"
 gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
+gem "tailwindcss-rails", "~> 4.6"
 
 group :development, :test do
   gem "debug"
