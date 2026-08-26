@@ -18,7 +18,8 @@ services:
       db:
         condition: service_healthy
     environment:
-      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:?Set RAILS_MASTER_KEY for the development credentials}
+      RAILS_ENV: docker
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:?Set RAILS_MASTER_KEY for the Docker credentials}
     ports:
       - "3000:3000"
     volumes:

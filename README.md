@@ -14,7 +14,7 @@ Ruby, Rails, and the resolved dependency graph are pinned in `.ruby-version`, `G
 
 Requirements: Docker Engine with Compose v2.
 
-Compose requires `RAILS_MASTER_KEY` for encrypted development credentials and `POSTGRES_PASSWORD` for PostgreSQL; the latter must match encrypted `database.password`.
+Host-run Rails uses `development` credentials and Docker Compose uses separate `docker` credentials. Compose requires `RAILS_MASTER_KEY` for the encrypted Docker credentials and `POSTGRES_PASSWORD` for PostgreSQL; the latter must match encrypted `database.password`.
 
 Before starting, create the environment-specific encrypted credentials and keep the generated key out of Git:
 
@@ -26,10 +26,18 @@ Add `database.host`, `database.username`, `database.password`, and `database.nam
 
 Create test credentials similarly with `RAILS_ENV=test bin/rails credentials:edit`; CI supplies the matching key through its secret store.
 
-Start the application after exporting both development values:
+Create Docker credentials once for Compose:
 
 ```sh
-export RAILS_MASTER_KEY="$(cat config/credentials/development.key)"
+RAILS_ENV=docker bin/rails credentials:edit
+```
+
+Use `db` as `database.host` and `bootcamper_development` as `database.name`. Export the generated `config/credentials/docker.key` as `RAILS_MASTER_KEY` before running Compose. Host-run commands continue to use `rdc` with `database.host: localhost`.
+
+Start Docker after exporting both Docker values:
+
+```sh
+export RAILS_MASTER_KEY="$(cat config/credentials/docker.key)"
 read -r -s -p 'PostgreSQL password (must match encrypted database.password): ' POSTGRES_PASSWORD; export POSTGRES_PASSWORD; echo
 docker compose up --build
 ```
