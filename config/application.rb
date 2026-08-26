@@ -22,6 +22,10 @@ Bundler.require(*Rails.groups)
 module Bootcamper
   class Application < Rails::Application
     config.load_defaults 8.1
+    credentials_dir = Rails.root.join("config", "credentials")
+    config.credentials.content_path = credentials_dir.join("#{Rails.env}.yml.enc")
+    config.credentials.key_path = credentials_dir.join("#{Rails.env}.key")
+    config.require_master_key = true
     config.i18n.default_locale = :uk
     config.time_zone = "Europe/Kyiv"
     config.generators.system_tests = nil

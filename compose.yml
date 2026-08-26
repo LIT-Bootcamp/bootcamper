@@ -3,7 +3,7 @@ services:
     image: postgres:17-alpine
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD for the local database}
       POSTGRES_DB: bootcamper_development
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d bootcamper_development"]
@@ -18,10 +18,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      DATABASE_HOST: db
-      DATABASE_USER: postgres
-      DATABASE_PASSWORD: postgres
-      DATABASE_NAME: bootcamper_development
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:?Set RAILS_MASTER_KEY for the development credentials}
     ports:
       - "3000:3000"
     volumes:
@@ -32,4 +29,3 @@ services:
 volumes:
   bundle_cache:
   postgres_data:
-

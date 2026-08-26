@@ -10,15 +10,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build application image
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_DEVELOPMENT }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD_DEVELOPMENT }}
         run: docker compose build web
       - name: Prepare database and run tests
-        run: docker compose run --rm -e RAILS_ENV=test -e DATABASE_NAME=bootcamper_test web sh -c "bin/rails db:prepare && bundle exec rspec"
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_TEST }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD_TEST }}
+        run: docker compose run --rm -e RAILS_ENV=test web sh -c "bin/rails db:prepare && bundle exec rspec"
       - name: Run quality gates
-        run: docker compose run --rm -e RAILS_ENV=test -e DATABASE_NAME=bootcamper_test web sh -c "bin/rails db:prepare && bin/quality"
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_TEST }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD_TEST }}
+        run: docker compose run --rm -e RAILS_ENV=test web sh -c "bin/rails db:prepare && bin/quality"
       - name: Start services and smoke test
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_DEVELOPMENT }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD_DEVELOPMENT }}
         run: |
           docker compose up -d
           curl --fail --retry 10 --retry-delay 2 http://localhost:3000/
       - name: Tear down services
         if: always()
-        run: docker compose down -v
+        run: docker compose down
