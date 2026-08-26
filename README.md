@@ -29,4 +29,14 @@ docker compose run --rm -e RAILS_ENV=test -e DATABASE_NAME=bootcamper_test web s
 docker compose run --rm web bundle exec rubocop
 ```
 
+The complete blocking quality gate is:
+
+```sh
+docker compose run --rm web sh -c 'bin/rails db:prepare && bin/quality'
+```
+
+It runs RuboCop, Fasterer, Brakeman, Bundler Audit (refreshing advisories),
+database consistency, ERB Lint, and the frozen AnnotateRb schema check. All
+checks fail closed; Bundler Audit therefore requires network access.
+
 Stop services and remove the development database with `docker compose down -v`.

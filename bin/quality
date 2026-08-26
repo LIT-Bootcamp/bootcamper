@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+checks = [
+  "bundle exec rubocop",
+  "bundle exec fasterer",
+  "bundle exec brakeman --no-pager --exit-on-warn",
+  "bundle exec bundler-audit check --update",
+  "bundle exec database_consistency",
+  "bundle exec erb_lint --lint-all",
+  "bundle exec annotaterb models --frozen"
+]
+
+checks.each do |command|
+  abort("Failed: #{command}") unless system(command)
+end

@@ -1,0 +1,6 @@
+---
+frozen: true
+position: before
+show_foreign_keys: true
+show_indexes: true
+skip_on_db_migrate: true

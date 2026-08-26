@@ -14,5 +14,17 @@ gem "stimulus-rails"
 group :development, :test do
   gem "debug"
   gem "rspec-rails", "~> 8.0"
-  gem "rubocop-rails-omakase", require: false
+  gem "rubocop", "1.90.0", require: false
+  gem "rubocop-rails", "2.37.0", require: false
+  gem "rubocop-rspec", "3.10.2", require: false
+  gem "rubocop-rspec_rails", "2.32.0", require: false
+  gem "rubocop-performance", "1.27.0", require: false
+  gem "rubocop-factory_bot", "2.28.0", require: false
+  gem "fasterer", "0.11.0", require: false
+  gem "brakeman", "8.0.6", require: false
+  gem "bundler-audit", "0.9.3", require: false
+  gem "database_consistency", "3.0.11", require: false
+  gem "erb_lint", "0.9.0", require: false
+  gem "annotaterb", "4.24.0", require: false
+  gem "rubocop-rails-omakase", "1.1.0", require: false
 end

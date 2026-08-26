@@ -4,4 +4,22 @@ inherit_gem:
 AllCops:
   TargetRubyVersion: 4.0
   NewCops: enable
+  Exclude:
+    - "Gemfile"
+    - "vendor/**/*"
+    - "tmp/**/*"
+    - "storage/**/*"
+    - "log/**/*"
 
+Layout/LineLength:
+  Max: 120
+
+Style/Documentation:
+  Enabled: false
+
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
+  - rubocop-performance
+  - rubocop-factory_bot
