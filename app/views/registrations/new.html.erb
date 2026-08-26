@@ -1,0 +1,39 @@
+<% content_for :title, t("registration.title") %>
+
+<section class="mx-auto max-w-xl px-4" aria-labelledby="registration-title">
+  <div class="rounded-panel border border-border bg-surface-raised p-6 shadow-lifted md:p-8">
+    <p class="font-body text-xs font-semibold uppercase tracking-[0.2em] text-teal"><%= t("registration.eyebrow") %></p>
+    <h1 id="registration-title" class="mt-2 font-display text-3xl font-bold text-ink"><%= t("registration.title") %></h1>
+    <p class="mt-3 font-body text-sm text-ink-muted"><%= t("registration.intro") %></p>
+
+    <%= form_with model: @user, url: user_registration_path, class: "mt-8 space-y-5" do |form| %>
+      <% if @user.errors.any? %>
+        <div class="rounded-control border border-danger/50 bg-danger/10 p-4 text-sm text-danger" role="alert">
+          <p class="font-semibold"><%= t("registration.errors.heading") %></p>
+          <ul class="mt-2 list-disc space-y-1 pl-5">
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div>
+        <%= form.label :email, t("registration.email"), class: "font-body text-sm font-semibold text-ink" %>
+        <%= form.email_field :email, autocomplete: "email", required: true, autofocus: true, class: "mt-2 w-full rounded-control border border-border bg-surface px-3 py-2 text-ink" %>
+      </div>
+
+      <div>
+        <%= form.label :password, t("registration.password"), class: "font-body text-sm font-semibold text-ink" %>
+        <%= form.password_field :password, autocomplete: "new-password", required: true, class: "mt-2 w-full rounded-control border border-border bg-surface px-3 py-2 text-ink" %>
+      </div>
+
+      <div>
+        <%= form.label :password_confirmation, t("registration.password_confirmation"), class: "font-body text-sm font-semibold text-ink" %>
+        <%= form.password_field :password_confirmation, autocomplete: "new-password", required: true, class: "mt-2 w-full rounded-control border border-border bg-surface px-3 py-2 text-ink" %>
+      </div>
+
+      <%= form.submit t("registration.submit"), class: "w-full rounded-pill bg-magenta px-4 py-3 font-body text-sm font-semibold text-surface shadow-lifted transition hover:bg-magenta/90" %>
+    <% end %>
+  </div>
+</section>

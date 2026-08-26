@@ -22,8 +22,7 @@
       <%= render "layouts/profile_menu" %>
     <% else %>
       <div class="hidden items-center gap-2 sm:flex">
-        <%= link_to t("navigation.public.sign_in"), "#sign-in", class: "rounded-pill px-3 py-2 font-body text-sm font-semibold text-ink-muted transition-colors hover:text-ink" %>
-        <%= link_to t("navigation.public.join"), "#apply", class: "rounded-pill bg-magenta px-4 py-2 font-body text-sm font-semibold text-surface shadow-lifted transition-colors hover:bg-magenta/90" %>
+        <%= link_to t("navigation.public.join"), new_user_registration_path, class: "rounded-pill bg-magenta px-4 py-2 font-body text-sm font-semibold text-surface shadow-lifted transition-colors hover:bg-magenta/90" %>
       </div>
     <% end %>
   </div>
@@ -32,6 +31,6 @@
 <nav class="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface-raised/95 px-2 pb-[env(safe-area-inset-bottom)] shadow-lifted backdrop-blur md:hidden" aria-label="<%= t("navigation.primary") %>">
   <ul class="mx-auto grid max-w-lg grid-cols-4 gap-1">
     <%= render partial: "layouts/navigation_item", collection: (signed_in ? navigation_items.first(4) : [["home", "/"], ["workshops", "/design/workshop-map"]]), as: :item, locals: { mobile: true } %>
-    <% unless signed_in %><li><%= link_to t("navigation.public.sign_in"), "#sign-in", class: "group flex min-h-14 flex-col items-center justify-center gap-0.5 rounded-control px-1 py-2 font-body text-[0.68rem] font-semibold text-ink-muted" %></li><% end %>
+    <% unless signed_in %><li><%= link_to t("navigation.public.join"), new_user_registration_path, class: "group flex min-h-14 flex-col items-center justify-center gap-0.5 rounded-control px-1 py-2 font-body text-[0.68rem] font-semibold text-ink-muted" %></li><% end %>
   </ul>
 </nav>

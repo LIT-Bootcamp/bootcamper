@@ -76,3 +76,25 @@ en:
       production:
         title: "Production"
         description: "Delivery, observability, and care for a live product."
+  registration:
+    eyebrow: "A new journey"
+    title: "Create your account"
+    intro: "Join the Bootcamper learning journey."
+    email: "Email"
+    password: "Password"
+    password_confirmation: "Confirm password"
+    submit: "Create account"
+    success_title: "Account created"
+    success_message: "Your account has been created. Further access steps will appear when account setup is complete."
+    errors:
+      heading: "Check the details you entered"
+  errors:
+    format: "%{message}"
+    messages:
+      taken: "has already been taken"
+      blank: "can't be blank"
+      invalid: "is invalid"
+      too_short: "is too short (minimum is %{count} characters)"
+      too_long: "is too long (maximum is %{count} characters)"
+      confirmation: "doesn't match"
+      inclusion: "is not included in the list"
