@@ -1,4 +1,4 @@
-# Lit Bootcamper MVP Backlog
+# Bootcamper MVP Backlog
 
 ## Working Agreement
 

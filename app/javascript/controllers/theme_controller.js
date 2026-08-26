@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
-const STORAGE_KEY = "lit-bootcamper-theme"
+const STORAGE_KEY = "bootcamper-theme"
 const MODES = ["system", "light", "dark"]
 
 export default class extends Controller {
@@ -31,9 +31,9 @@ export default class extends Controller {
   get mode() {
     try {
       const storedMode = window.localStorage.getItem(STORAGE_KEY)
-      return MODES.includes(storedMode) ? storedMode : "system"
+      return MODES.includes(storedMode) ? storedMode : "dark"
     } catch (_error) {
-      return "system"
+      return "dark"
     }
   }
 

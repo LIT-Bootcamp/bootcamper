@@ -5,50 +5,50 @@
  * such as `bg-surface` and `text-ink`, never palette values directly.
  */
 :root {
-  --token-color-surface: #f8f1e3;
-  --token-color-surface-raised: #fffaf0;
-  --token-color-ink: #172a46;
-  --token-color-ink-muted: #536277;
-  --token-color-copper: #b86f3d;
-  --token-color-teal: #367d79;
-  --token-color-border: #d9cbb8;
-  --token-color-focus: #2563a6;
+  --token-color-surface: #090b18;
+  --token-color-surface-raised: #11152a;
+  --token-color-ink: #eef7ff;
+  --token-color-ink-muted: #a9b5d1;
+  --token-color-copper: #ffb547;
+  --token-color-teal: #22e6ff;
+  --token-color-magenta: #ff3cac;
+  --token-color-lime: #c6ff4a;
+  --token-color-amber: #ffb547;
+  --token-color-border: #29345a;
+  --token-color-focus: #c6ff4a;
 
   --token-spacing-page: 1.25rem;
   --token-spacing-section: 3rem;
   --token-spacing-card: 1.5rem;
   --token-spacing-control: 0.75rem;
 
-  --token-font-body: "Atkinson Hyperlegible", ui-sans-serif, system-ui, sans-serif;
-  --token-font-display: "Bree Serif", ui-serif, Georgia, serif;
-  --token-text-display: 2.5rem;
-  --token-text-title: 1.75rem;
+  --token-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --token-font-display: "Space Grotesk", Inter, ui-sans-serif, system-ui, sans-serif;
+  --token-text-display: clamp(2.5rem, 7vw, 5rem);
+  --token-text-title: 1.5rem;
   --token-text-body: 1rem;
   --token-text-caption: 0.875rem;
 
-  --token-radius-card: 1rem;
-  --token-radius-control: 0.625rem;
+  --token-radius-card: 0.9rem;
+  --token-radius-control: 0.55rem;
   --token-radius-pill: 9999px;
 
-  --token-shadow-card: 0 0.5rem 1.5rem rgb(23 42 70 / 0.12);
-  --token-shadow-lifted: 0 1rem 2.5rem rgb(23 42 70 / 0.18);
+  --token-shadow-card: 0 0 0 1px rgb(34 230 255 / 0.16), 0 0 1.5rem rgb(34 230 255 / 0.08);
+  --token-shadow-lifted: 0 0 0 1px rgb(255 60 172 / 0.45), 0 0 2rem rgb(255 60 172 / 0.18);
 
   --token-motion-fast: 150ms;
   --token-motion-standard: 250ms;
   --token-motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-[data-theme="dark"] {
-  --token-color-surface: #172a46;
-  --token-color-surface-raised: #213553;
-  --token-color-ink: #fffaf0;
-  --token-color-ink-muted: #c6d0df;
-  --token-color-copper: #e4a06e;
-  --token-color-teal: #76c7be;
-  --token-color-border: #60728d;
-  --token-color-focus: #8fc5ff;
-  --token-shadow-card: 0 0.5rem 1.5rem rgb(0 0 0 / 0.24);
-  --token-shadow-lifted: 0 1rem 2.5rem rgb(0 0 0 / 0.34);
+[data-theme="light"] {
+  --token-color-surface: #e7f5ff;
+  --token-color-surface-raised: #f7fbff;
+  --token-color-ink: #10152d;
+  --token-color-ink-muted: #405070;
+  --token-color-border: #9bb6d5;
+  --token-shadow-card: 0 0 0 1px rgb(16 21 45 / 0.12), 0 0.5rem 1.5rem rgb(34 83 120 / 0.14);
+  --token-shadow-lifted: 0 0 0 2px rgb(255 60 172 / 0.35), 0 0.75rem 2rem rgb(34 83 120 / 0.18);
 }
 
 @theme inline {
@@ -58,6 +58,9 @@
   --color-ink-muted: var(--token-color-ink-muted);
   --color-copper: var(--token-color-copper);
   --color-teal: var(--token-color-teal);
+  --color-magenta: var(--token-color-magenta);
+  --color-lime: var(--token-color-lime);
+  --color-amber: var(--token-color-amber);
   --color-border: var(--token-color-border);
   --color-focus: var(--token-color-focus);
 
@@ -97,7 +100,68 @@
     font-family: var(--font-body);
     color: var(--token-color-ink);
     background: var(--token-color-surface);
+    color-scheme: dark;
+    background-image: linear-gradient(rgb(34 230 255 / 0.035) 1px, transparent 1px), linear-gradient(90deg, rgb(34 230 255 / 0.035) 1px, transparent 1px);
+    background-size: 2rem 2rem;
   }
+
+  [data-theme="light"] { color-scheme: light; }
+
+  body { overflow-x: hidden; }
+
+  .cyber-ambient {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .cyber-ambient::before,
+  .cyber-ambient::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: min(32rem, 70vw);
+    height: min(32rem, 70vw);
+    border-radius: 9999px;
+    filter: blur(80px);
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  .cyber-ambient::before {
+    top: -8rem;
+    right: -8rem;
+    background: var(--token-color-teal);
+  }
+
+  .cyber-ambient::after {
+    bottom: -10rem;
+    left: -10rem;
+    background: var(--token-color-magenta);
+  }
+
+  .cyber-gradient-text {
+    background: linear-gradient(100deg, var(--token-color-teal), var(--token-color-magenta) 58%, var(--token-color-amber));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .cyber-chip {
+    border: 1px solid rgb(255 60 172 / 0.35);
+    border-radius: var(--token-radius-pill);
+    background: rgb(255 60 172 / 0.08);
+    color: var(--token-color-magenta);
+    font-family: var(--token-font-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  ::selection { color: var(--token-color-surface); background: var(--token-color-teal); }
+
+  .cyber-panel { border: 1px solid var(--token-color-border); position: relative; }
+  .cyber-panel::before { content: ""; position: absolute; inset: -1px; pointer-events: none; border-top: 2px solid var(--token-color-teal); clip-path: polygon(0 0, 3rem 0, 3rem 2px, 0 2px); }
 
   :focus-visible {
     outline: 3px solid var(--token-color-focus);

@@ -1,4 +1,4 @@
-# Lit Bootcamper Post-MVP Architecture Roadmap
+# Bootcamper Post-MVP Architecture Roadmap
 
 ## Purpose
 
@@ -122,4 +122,3 @@ Before converting a post-MVP capability into tickets:
 5. Split a walking skeleton from enhancements.
 6. Estimate after a technical spike when an external API is involved.
 7. Add the release dependency and rollback path to the execution map.
-

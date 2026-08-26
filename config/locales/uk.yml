@@ -2,10 +2,30 @@ uk:
   navigation:
     skip_to_content: "Перейти до основного вмісту"
     primary: "Основна навігація"
+    header: "Заголовок застосунку"
+    online: "Онлайн"
+    theme: "Колірна тема"
+    profile_menu: "Відкрити меню профілю"
+    themes:
+      system: "Система"
+      light: "Світла"
+      dark: "Темна"
+    profile_items:
+      profile: "Профіль"
+      settings: "Налаштування"
+      notifications: "Сповіщення"
+      help: "Допомога / гід"
+      sign_out: "Вийти"
+    public:
+      how_it_works: "Як це працює"
+      sign_in: "Увійти"
+      join: "Приєднатися"
     compass: "Твоя майстерня"
     items:
       home: "Головна"
       workshop: "Майстерня"
+      workshops: "Майстерні"
+      how_it_works: "Як це працює"
       tasks: "Завдання"
       team: "Команда"
       calendar: "Календар"
@@ -20,6 +40,9 @@ uk:
   home:
     title: "Bootcamper"
     intro: "Навчальні подорожі, створені разом."
+    subintro: "Практичний простір для вивчення веброзробки, виконання завдань і відстеження прогресу."
+    primary_cta: "Переглянути майстерні"
+    secondary_cta: "Переглянути маршрут"
   workshop_map:
     eyebrow: "Мапа майстерні"
     title: "Майстерня веброзробки"

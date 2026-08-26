@@ -1,7 +1,10 @@
-<section class="mx-auto flex max-w-3xl flex-col gap-section px-page py-section">
-  <p class="font-display text-caption uppercase tracking-[0.2em] text-teal">Lit Bootcamper</p>
-  <div class="rounded-card bg-surface-raised p-card shadow-card">
-    <h1 class="font-display text-display text-ink"><%= t("home.title") %></h1>
-    <p class="mt-control text-body text-ink-muted"><%= t("home.intro") %></p>
+<section class="cyber-ambient mx-auto flex max-w-5xl flex-col items-center gap-section px-page py-section text-center">
+  <div class="max-w-4xl">
+    <h1 class="font-display text-display font-bold leading-[0.95] tracking-[-0.04em] text-ink"><%= t("home.title") %><span class="cyber-gradient-text">.dev</span></h1>
+    <p class="mx-auto mt-control max-w-2xl text-body text-ink-muted"><%= t("home.subintro") %></p>
+    <div class="mt-section flex flex-wrap justify-center gap-control">
+      <%= link_to t("home.primary_cta"), "/design/workshop-map", class: "rounded-pill bg-magenta px-6 py-3 font-semibold text-surface shadow-lifted transition-colors hover:bg-magenta/90" %>
+      <%= link_to t("home.secondary_cta"), "/design/workshop-map", class: "rounded-pill border border-border bg-surface-raised px-6 py-3 font-semibold text-ink transition-colors hover:border-teal hover:text-teal" %>
+    </div>
   </div>
 </section>

@@ -2,10 +2,30 @@ en:
   navigation:
     skip_to_content: "Skip to main content"
     primary: "Primary navigation"
+    header: "Application header"
+    online: "Online"
+    theme: "Color theme"
+    profile_menu: "Open profile menu"
+    themes:
+      system: "System"
+      light: "Light"
+      dark: "Dark"
+    profile_items:
+      profile: "Profile"
+      settings: "Settings"
+      notifications: "Notifications"
+      help: "Help / Guide"
+      sign_out: "Sign out"
+    public:
+      how_it_works: "How it works"
+      sign_in: "Sign in"
+      join: "Join the journey"
     compass: "Your workshop"
     items:
       home: "Home"
       workshop: "Workshop"
+      workshops: "Workshops"
+      how_it_works: "How it works"
       tasks: "Tasks"
       team: "Team"
       calendar: "Calendar"
@@ -20,6 +40,9 @@ en:
   home:
     title: "Bootcamper"
     intro: "Learning journeys, built together."
+    subintro: "A practical place to learn web development, complete tasks, and see your progress."
+    primary_cta: "Browse workshops"
+    secondary_cta: "View your route"
   workshop_map:
     eyebrow: "Workshop map"
     title: "Web development workshop"

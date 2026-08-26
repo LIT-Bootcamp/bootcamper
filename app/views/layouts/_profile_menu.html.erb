@@ -1,0 +1,10 @@
+<div class="relative shrink-0" data-controller="dropdown">
+  <button type="button" class="flex size-10 items-center justify-center rounded-full border border-magenta/70 bg-gradient-to-br from-magenta/30 to-teal/20 font-body text-sm font-bold text-ink shadow-[0_0_1rem_rgb(255_60_172_/_0.16)] transition hover:scale-105 hover:border-teal" data-action="dropdown#toggle" data-dropdown-target="button" aria-haspopup="menu" aria-expanded="false" aria-label="<%= t("navigation.profile_menu") %>">
+    <span aria-hidden="true">A</span>
+  </button>
+  <div class="cyber-panel absolute right-0 top-12 hidden min-w-52 rounded-card bg-surface-raised p-2 shadow-lifted" data-dropdown-target="menu" role="menu">
+    <% [["profile", "/profile"], ["settings", "#"], ["notifications", "#"], ["help", "#"], ["sign_out", "#"]].each do |key, path| %>
+      <%= link_to t("navigation.profile_items.#{key}"), path, class: "block rounded-control px-3 py-2 font-body text-sm font-medium text-ink-muted hover:bg-teal/10 hover:text-teal", role: "menuitem", data: { action: ("click->dropdown#close" if path == "#") } %>
+    <% end %>
+  </div>
+</div>

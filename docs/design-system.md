@@ -1,6 +1,6 @@
 # Design System Foundation
 
-E2-01 defines the first visual contract for Lit Bootcamper. The CSS token layer
+E2-01 defines the first visual contract for Bootcamper. The CSS token layer
 is the initial source of truth; a matching Figma library can be created from
 these names without changing application code.
 
@@ -29,7 +29,7 @@ Example: `class="rounded-card bg-surface-raised p-card shadow-card text-ink"`.
 The application supports `System`, `Light`, and `Dark` modes. System is the
 default and follows the operating-system `prefers-color-scheme` preference.
 An explicit choice is stored in browser `localStorage` under
-`lit-bootcamper-theme` and survives Turbo navigation and browser restarts.
+`bootcamper-theme` and survives Turbo navigation and browser restarts.
 
 Theme values override semantic tokens on the document root. Components must
 continue using semantic utilities such as `bg-surface` and `text-ink`; do not
@@ -42,8 +42,9 @@ WCAG AA normal-text targets. Any new token must be checked in both themes.
 
 ## Application shell
 
-The shared layout provides a keyboard-accessible skip link, a desktop sidebar
-from the `md` breakpoint, and a fixed mobile bottom navigation below it. The
-same six destinations are always shown in the same order: Home, Workshop,
-Tasks, Team, Calendar, and Profile. Future tickets add the destination routes;
-the shell owns only their consistent presentation and responsive behavior.
+The shared layout provides a keyboard-accessible skip link and a fixed
+horizontal control bar at every viewport width. Its primary destinations are
+Home, Workshop, Tasks, Team, and Calendar. Profile, settings, notifications,
+help, and sign out live in the avatar menu. Small screens also get a fixed
+bottom navigation for Home, Workshop, Tasks, and Team; Calendar remains
+available in the top bar's horizontal scroll area.

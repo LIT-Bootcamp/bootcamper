@@ -1,4 +1,4 @@
-# Lit Bootcamper MVP Architecture
+# Bootcamper MVP Architecture
 
 ## Scope
 

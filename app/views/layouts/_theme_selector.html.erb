@@ -1,0 +1,9 @@
+<label class="flex items-center gap-2 rounded-pill border border-border bg-surface px-3 py-2 font-body text-xs font-semibold text-ink-muted">
+  <span class="sr-only"><%= t("navigation.theme") %></span>
+  <span aria-hidden="true" class="text-amber">◐</span>
+  <select data-theme-target="select" data-action="change->theme#changed" class="max-w-20 bg-transparent text-ink outline-none">
+    <option value="system"><%= t("navigation.themes.system") %></option>
+    <option value="light"><%= t("navigation.themes.light") %></option>
+    <option value="dark"><%= t("navigation.themes.dark") %></option>
+  </select>
+</label>
