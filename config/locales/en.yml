@@ -1,5 +1,55 @@
 en:
+  navigation:
+    skip_to_content: "Skip to main content"
+    primary: "Primary navigation"
+    compass: "Your workshop"
+    items:
+      home: "Home"
+      workshop: "Workshop"
+      tasks: "Tasks"
+      team: "Team"
+      calendar: "Calendar"
+      profile: "Profile"
+    icons:
+      home: "⌂"
+      workshop: "⚙"
+      tasks: "✦"
+      team: "♧"
+      calendar: "▣"
+      profile: "◎"
   home:
     title: "Bootcamper"
     intro: "Learning journeys, built together."
-
+  workshop_map:
+    eyebrow: "Workshop map"
+    title: "Web development workshop"
+    intro: "A first sketch of the journey: each station opens the next step in the learning path."
+    path_title: "Your route"
+    path_label: "Learning route stations"
+    team_legend: "Team colors"
+    states:
+      completed: "Completed"
+      current: "Current"
+      locked: "Locked"
+    teams:
+      copper: "Copper team"
+      teal: "Teal team"
+    stations:
+      foundations:
+        title: "Foundations"
+        description: "Tools, Git, and the first engineering habits."
+      internet:
+        title: "Internet"
+        description: "How browsers and servers learn to speak together."
+      data:
+        title: "Data"
+        description: "Models, SQL, and dependable information storage."
+      rails:
+        title: "Rails"
+        description: "Assemble the first complete web product."
+      browser:
+        title: "Browser"
+        description: "HTML, CSS, and client-side interaction."
+      production:
+        title: "Production"
+        description: "Delivery, observability, and care for a live product."

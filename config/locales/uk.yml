@@ -1,5 +1,55 @@
 uk:
+  navigation:
+    skip_to_content: "Перейти до основного вмісту"
+    primary: "Основна навігація"
+    compass: "Твоя майстерня"
+    items:
+      home: "Головна"
+      workshop: "Майстерня"
+      tasks: "Завдання"
+      team: "Команда"
+      calendar: "Календар"
+      profile: "Профіль"
+    icons:
+      home: "⌂"
+      workshop: "⚙"
+      tasks: "✦"
+      team: "♧"
+      calendar: "▣"
+      profile: "◎"
   home:
     title: "Bootcamper"
     intro: "Навчальні подорожі, створені разом."
-
+  workshop_map:
+    eyebrow: "Мапа майстерні"
+    title: "Майстерня веброзробки"
+    intro: "Попередній ескіз шляху: кожна станція відкриває наступний крок навчальної подорожі."
+    path_title: "Твій маршрут"
+    path_label: "Станції навчального маршруту"
+    team_legend: "Кольори команд"
+    states:
+      completed: "Завершено"
+      current: "Поточна"
+      locked: "Заблоковано"
+    teams:
+      copper: "Команда Мідь"
+      teal: "Команда Таль"
+    stations:
+      foundations:
+        title: "Основи"
+        description: "Інструменти, Git і перші інженерні звички."
+      internet:
+        title: "Інтернет"
+        description: "Як браузер і сервер знаходять спільну мову."
+      data:
+        title: "Дані"
+        description: "Моделі, SQL і надійне збереження інформації."
+      rails:
+        title: "Rails"
+        description: "Збираємо перший цілісний вебпродукт."
+      browser:
+        title: "Браузер"
+        description: "HTML, CSS і взаємодія на стороні клієнта."
+      production:
+        title: "Продакшн"
+        description: "Доставка, спостереження і турбота про живий продукт."

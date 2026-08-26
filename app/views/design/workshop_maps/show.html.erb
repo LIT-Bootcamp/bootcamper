@@ -1,0 +1,11 @@
+<% content_for :title, t("workshop_map.title") %>
+
+<section class="mx-auto flex w-full max-w-4xl flex-col gap-section px-page py-section">
+  <header class="max-w-2xl">
+    <p class="font-display text-caption uppercase tracking-[0.2em] text-teal"><%= t("workshop_map.eyebrow") %></p>
+    <h1 class="mt-control font-display text-display text-ink"><%= t("workshop_map.title") %></h1>
+    <p class="mt-control text-body text-ink-muted"><%= t("workshop_map.intro") %></p>
+  </header>
+
+  <%= render "shared/workshop_map", stations: @stations, teams: @teams %>
+</section>

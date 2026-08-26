@@ -1,0 +1,31 @@
+<% navigation_items = [
+  ["home", "/"],
+  ["workshop", "/workshop"],
+  ["tasks", "/tasks"],
+  ["team", "/team"],
+  ["calendar", "/calendar"],
+  ["profile", "/profile"]
+] %>
+
+<aside class="hidden w-64 shrink-0 border-r border-border bg-surface-raised px-card py-section md:block" aria-label="<%= t("navigation.primary") %>">
+  <div class="mb-section px-control">
+    <p class="font-display text-title text-ink">Lit Bootcamper</p>
+    <p class="mt-1 text-caption uppercase tracking-[0.16em] text-teal"><%= t("navigation.compass") %></p>
+  </div>
+
+  <nav aria-label="<%= t("navigation.primary") %>">
+    <ul class="flex flex-col gap-2">
+      <%= render partial: "layouts/navigation_item", collection: navigation_items, as: :item %>
+    </ul>
+  </nav>
+</aside>
+
+<header class="flex items-center border-b border-border bg-surface-raised px-page py-control md:hidden">
+  <p class="font-display text-title text-ink">Lit Bootcamper</p>
+</header>
+
+<nav class="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface-raised/95 px-2 pb-[env(safe-area-inset-bottom)] shadow-lifted backdrop-blur md:hidden" aria-label="<%= t("navigation.primary") %>">
+  <ul class="mx-auto grid max-w-lg grid-cols-6 gap-1">
+    <%= render partial: "layouts/navigation_item", collection: navigation_items, as: :item, locals: { mobile: true } %>
+  </ul>
+</nav>

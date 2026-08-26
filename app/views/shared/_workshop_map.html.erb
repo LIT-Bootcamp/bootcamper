@@ -1,0 +1,41 @@
+<% state_labels = {
+  completed: t("workshop_map.states.completed"),
+  current: t("workshop_map.states.current"),
+  locked: t("workshop_map.states.locked")
+} %>
+
+<section class="rounded-card bg-surface-raised p-card shadow-card" aria-labelledby="workshop-map-title">
+  <div class="flex flex-wrap items-center justify-between gap-control">
+    <h2 id="workshop-map-title" class="font-display text-title text-ink"><%= t("workshop_map.path_title") %></h2>
+    <div class="flex flex-wrap gap-control" aria-label="<%= t("workshop_map.team_legend") %>">
+      <% teams.each do |team| %>
+        <span class="inline-flex items-center gap-2 text-caption text-ink-muted">
+          <span class="size-3 rounded-full <%= team == :copper ? "bg-copper" : "bg-teal" %>" aria-hidden="true"></span>
+          <%= t("workshop_map.teams.#{team}") %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+
+  <ol class="mt-section grid gap-control" aria-label="<%= t("workshop_map.path_label") %>">
+    <% stations.each_with_index do |station, index| %>
+      <% state = state_labels.key?(station[:state]) ? station[:state] : :locked %>
+      <% marker_classes = { completed: "border-teal bg-teal text-surface", current: "border-copper bg-surface text-copper", locked: "border-border bg-surface text-ink-muted" } %>
+      <li class="relative flex items-start gap-control <%= "pb-section" unless index == stations.length - 1 %>">
+        <% unless index == stations.length - 1 %>
+          <span class="absolute left-4 top-9 h-[calc(100%-1.5rem)] w-px bg-border" aria-hidden="true"></span>
+        <% end %>
+        <span class="z-10 flex size-8 shrink-0 items-center justify-center rounded-full border-2 text-caption font-bold <%= marker_classes.fetch(state) %>" aria-hidden="true">
+          <%= state == :completed ? "✓" : state == :locked ? "·" : "→" %>
+        </span>
+        <div class="min-w-0 flex-1 rounded-control border border-border p-control <%= state == :current ? "shadow-lifted" : "" %>">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h3 class="font-display text-title text-ink"><%= t("workshop_map.stations.#{station[:key]}.title") %></h3>
+            <span class="rounded-pill bg-surface px-3 py-1 text-caption text-ink-muted"><%= state_labels.fetch(state) %></span>
+          </div>
+          <p class="mt-2 text-body text-ink-muted"><%= t("workshop_map.stations.#{station[:key]}.description") %></p>
+        </div>
+      </li>
+    <% end %>
+  </ol>
+</section>

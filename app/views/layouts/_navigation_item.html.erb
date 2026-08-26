@@ -1,0 +1,15 @@
+<% mobile = local_assigns.fetch(:mobile, false) %>
+<% key, path = item %>
+<% active = request.path == path %>
+<li>
+  <%= link_to path,
+    class: [
+      "group flex min-h-11 items-center gap-3 rounded-control px-control py-2 text-caption font-medium transition-colors",
+      mobile ? "min-h-14 flex-col justify-center gap-0.5 px-1 text-[0.68rem]" : nil,
+      active ? "bg-teal/15 text-teal" : "text-ink-muted hover:bg-teal/10 hover:text-ink"
+    ].compact.join(" "),
+    aria: { current: ("page" if active) } do %>
+    <span aria-hidden="true" class="font-display text-base leading-none text-copper"><%= t("navigation.icons.#{key}") %></span>
+    <span><%= t("navigation.items.#{key}") %></span>
+  <% end %>
+</li>

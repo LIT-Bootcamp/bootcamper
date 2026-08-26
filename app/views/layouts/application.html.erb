@@ -8,10 +8,34 @@
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <script>
+      (() => {
+        let mode = null
+        try { mode = window.localStorage.getItem("lit-bootcamper-theme") } catch (_error) { /* use system */ }
+        const dark = mode === "dark" || (mode !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches)
+        document.documentElement.dataset.theme = dark ? "dark" : "light"
+      })()
+    </script>
   </head>
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+  <body class="min-h-screen bg-surface text-ink" data-controller="theme">
+    <label class="fixed right-4 top-4 z-10 rounded-control bg-surface-raised px-control py-2 text-caption text-ink shadow-card">
+      <span class="sr-only">Color theme</span>
+      <select data-theme-target="select" data-action="change->theme#changed" class="bg-transparent text-ink">
+        <option value="system">System</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </label>
+    <a class="sr-only z-50 rounded-control bg-surface-raised px-control py-control text-ink focus:not-sr-only focus:fixed focus:left-control focus:top-control" href="#main-content">
+      <%= t("navigation.skip_to_content") %>
+    </a>
+
+    <div class="mx-auto flex min-h-screen max-w-[100rem]">
+      <%= render "layouts/navigation" %>
+
+      <main id="main-content" class="min-w-0 flex-1 pb-24 md:pb-0">
+        <%= yield %>
+      </main>
+    </div>
   </body>
 </html>

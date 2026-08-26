@@ -12,4 +12,28 @@ RSpec.describe "Home" do
 
     expect(response.body).to include("Навчальні подорожі")
   end
+
+  it "provides a skip link to the main content" do
+    get root_path
+
+    expect(response.body).to include('id="main-content"', "Перейти до основного вмісту")
+  end
+
+  it "renders the home destination in each responsive navigation" do
+    get root_path
+
+    expect(response.body.scan("Головна").length).to eq(2)
+  end
+
+  it "renders the remaining primary navigation destinations" do
+    get root_path
+
+    expect(response.body).to include("Майстерня", "Завдання", "Команда", "Календар", "Профіль")
+  end
+
+  it "provides navigation landmarks for both responsive presentations" do
+    get root_path
+
+    expect(response.body.scan('aria-label="Основна навігація"').length).to eq(3)
+  end
 end

@@ -24,5 +24,26 @@ these names without changing application code.
 
 Example: `class="rounded-card bg-surface-raised p-card shadow-card text-ink"`.
 
-The light palette is intentionally established first. Theme-specific token
-values belong to E2-02; components should not need to change when they arrive.
+## Themes
+
+The application supports `System`, `Light`, and `Dark` modes. System is the
+default and follows the operating-system `prefers-color-scheme` preference.
+An explicit choice is stored in browser `localStorage` under
+`lit-bootcamper-theme` and survives Turbo navigation and browser restarts.
+
+Theme values override semantic tokens on the document root. Components must
+continue using semantic utilities such as `bg-surface` and `text-ink`; do not
+add light/dark palette values directly to templates. The theme selector is
+keyboard accessible and the initial layout script applies the resolved theme
+before paint to avoid a flash of the wrong palette.
+
+Both palettes use high-contrast ink, muted text, border, and focus values for
+WCAG AA normal-text targets. Any new token must be checked in both themes.
+
+## Application shell
+
+The shared layout provides a keyboard-accessible skip link, a desktop sidebar
+from the `md` breakpoint, and a fixed mobile bottom navigation below it. The
+same six destinations are always shown in the same order: Home, Workshop,
+Tasks, Team, Calendar, and Profile. Future tickets add the destination routes;
+the shell owns only their consistent presentation and responsive behavior.

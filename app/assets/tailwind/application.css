@@ -38,6 +38,19 @@
   --token-motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
+[data-theme="dark"] {
+  --token-color-surface: #172a46;
+  --token-color-surface-raised: #213553;
+  --token-color-ink: #fffaf0;
+  --token-color-ink-muted: #c6d0df;
+  --token-color-copper: #e4a06e;
+  --token-color-teal: #76c7be;
+  --token-color-border: #60728d;
+  --token-color-focus: #8fc5ff;
+  --token-shadow-card: 0 0.5rem 1.5rem rgb(0 0 0 / 0.24);
+  --token-shadow-lifted: 0 1rem 2.5rem rgb(0 0 0 / 0.34);
+}
+
 @theme inline {
   --color-surface: var(--token-color-surface);
   --color-surface-raised: var(--token-color-surface-raised);

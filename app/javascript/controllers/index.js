@@ -1,5 +1,6 @@
 import { application } from "controllers/application"
+import ThemeController from "controllers/theme_controller"
 
-// Stimulus controllers can be registered here as features are introduced.
+application.register("theme", ThemeController)
+
 export { application }
-
