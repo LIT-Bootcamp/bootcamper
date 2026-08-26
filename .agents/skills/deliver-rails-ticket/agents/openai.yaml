@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deliver Rails Ticket"
+  short_description: "Deliver one Rails ticket with gated reviews"
+  default_prompt: "Use $deliver-rails-ticket to plan and deliver the explicitly named Rails ticket."

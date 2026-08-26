@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implement Rails Ticket"
+  short_description: "Implement one Rails ticket with a senior agent"
+  default_prompt: "Use $implement-rails-ticket to plan and implement the explicitly named Rails ticket."

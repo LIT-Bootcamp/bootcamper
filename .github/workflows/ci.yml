@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  quality-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build application image
+        run: docker compose build web
+      - name: Prepare database and run tests
+        run: docker compose run --rm -e RAILS_ENV=test -e DATABASE_NAME=bootcamper_test web sh -c "bin/rails db:prepare && bundle exec rspec"
+      - name: Run RuboCop
+        run: docker compose run --rm web bundle exec rubocop
+      - name: Start services and smoke test
+        run: |
+          docker compose up -d
+          curl --fail --retry 10 --retry-delay 2 http://localhost:3000/
+      - name: Tear down services
+        if: always()
+        run: docker compose down -v

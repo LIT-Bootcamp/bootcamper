@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Rails Change"
+  short_description: "Independently review a completed Rails change"
+  default_prompt: "Use $review-rails-change to independently review this Rails change in the specified context mode."

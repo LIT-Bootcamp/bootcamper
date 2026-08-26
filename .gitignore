@@ -1,0 +1,11 @@
+/log/*
+/tmp/*
+!/tmp/.keep
+/storage/*
+!/storage/.keep
+/.bundle
+/.ruby-gemset
+/vendor/bundle
+.env*
+!.env.example
+
