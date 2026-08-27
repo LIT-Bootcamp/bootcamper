@@ -43,7 +43,10 @@ module ProductFactory
     def artifact_records
       @root.glob("ideas/**/manifest.yml").sort.filter_map do |path|
         manifest = load_yaml(path)
-        next unless manifest.is_a?(Hash)
+        unless manifest.is_a?(Hash)
+          error(path, "manifest must be a mapping")
+          next
+        end
 
         { path: path, directory: path.dirname, manifest: manifest, versions: version_files(path.dirname) }
       end
@@ -83,6 +86,7 @@ module ProductFactory
       error(id, "content hash mismatch") unless digest(current_path) == manifest["content_sha256"]
       prior_state = nil
       versions.keys.sort.each do |number|
+        validate_git_immutability(id, versions[number])
         metadata = front_matter(versions[number])
         missing = VERSION_KEYS.reject { |key| metadata.key?(key) }
         error(id, "version #{number} missing keys: #{missing.join(", ")}") unless missing.empty?
@@ -179,7 +183,25 @@ module ProductFactory
     def load_yaml(path)
       YAML.safe_load(File.read(path), aliases: false) || {}
     rescue Psych::Exception
-      {}
+      nil
+    end
+
+    def validate_git_immutability(id, path)
+      root = git_root
+      return unless root
+
+      relative_path = path.realpath.relative_path_from(root.realpath).to_s
+      content, _stderr, status = Open3.capture3("git", "-C", root.to_s, "show", "HEAD:#{relative_path}")
+      return unless status.success?
+
+      error(id, "version #{path.basename} differs from Git") unless content.b == File.binread(path)
+    end
+
+    def git_root
+      return @git_root if defined?(@git_root)
+
+      output, _stderr, status = Open3.capture3("git", "-C", @root.to_s, "rev-parse", "--show-toplevel")
+      @git_root = status.success? ? Pathname(output.strip) : nil
     end
 
     def digest(path)
@@ -263,7 +285,10 @@ module ProductFactory
       }
       FileUtils.mkdir_p(root.join("factory-log"))
       path = root.join("factory-log", "#{id}-started.yml")
-      File.write(path, YAML.dump(record))
+      File.open(path, "wx") { |file| file.write(YAML.dump(record)) }
+    rescue Errno::EEXIST
+      raise ValidationError, "run record already exists: #{path.basename}"
+    else
       new(path: path, id: id)
     end
 
@@ -280,8 +305,19 @@ module ProductFactory
       record["external_changes"] = external_changes
       record["error"] = error
       record["next_action"] = status == "success" ? "none" : "review run"
-      File.write(@path.sub(/-started\.yml\z/, "-finished.yml"), YAML.dump(record))
+      finished_path = @path.dirname.join("#{@id}-finished.yml")
+      raise ValidationError, "run #{@id} is already finished" if finished_path.exist?
+
+      write_record(finished_path, record)
       nil
+    end
+
+    private
+
+    def write_record(path, record)
+      File.open(path, "wx") { |file| file.write(YAML.dump(record)) }
+    rescue Errno::EEXIST
+      raise ValidationError, "run record already exists: #{path.basename}"
     end
   end
 

@@ -83,6 +83,39 @@ RSpec.describe ProductFactory::Validator do
     end
   end
 
+  it "rejects a manifest that is not a mapping" do
+    with_product do |root|
+      manifest = root.join("ideas/IDEA-001-demo/idea/manifest.yml")
+      FileUtils.mkdir_p(manifest.dirname)
+      File.write(manifest, "---\n- not a mapping\n")
+
+      expect { described_class.new(root: root).validate! }.to raise_error(ProductFactory::ValidationError, /manifest must be a mapping/)
+    end
+  end
+
+  it "rejects a changed committed historical version" do
+    Dir.mktmpdir("product-factory-git") do |dir|
+      root = Pathname(dir).join("product")
+      [ [ "init", "-q" ], [ "config", "user.email", "factory@example.test" ], [ "config", "user.name", "Factory" ] ].each do |args|
+        _stdout, stderr, status = Open3.capture3("git", "-C", dir, *args)
+        raise stderr unless status.success?
+      end
+      directory = write_artifact(root, id: "IDEA-001", kind: "idea", versions: [ 1, 2 ], state: "human-approved")
+      expect(described_class.new(root: root).validate!).to be(true)
+      [ [ "add", "." ], [ "commit", "-qm", "fixture" ] ].each do |args|
+        _stdout, stderr, status = Open3.capture3("git", "-C", dir, *args)
+        raise stderr unless status.success?
+      end
+      version = directory.join("v001.md")
+      File.write(version, "#{File.read(version)}changed after commit\n")
+      committed, _stderr, status = Open3.capture3("git", "-C", dir, "show", "HEAD:product/ideas/IDEA-001-demo/idea/v001.md")
+      expect(status).to be_success
+      expect(committed).not_to eq(File.binread(version))
+
+      expect { described_class.new(root: root).validate! }.to raise_error(ProductFactory::ValidationError, /differs from Git/)
+    end
+  end
+
   it "rejects an illegal lifecycle transition" do
     with_product do |root|
       write_artifact(root, id: "TICKET-001", kind: "ticket", versions: [ 1, 2 ], state: "done", scenarios: [ "SCENARIO-001" ])
@@ -194,6 +227,17 @@ RSpec.describe ProductFactory::Repository do
 
       expect(described_class.new(root: root).next_ticket).to eq(fast.join("manifest.yml"))
       expect(described_class.new(root: root).next_ticket).not_to eq(slow.join("manifest.yml"))
+    end
+  end
+end
+
+RSpec.describe ProductFactory::Run do
+  it "rejects a second finish for the same run" do
+    Dir.mktmpdir("product-factory-run") do |dir|
+      run = described_class.start(root: dir, phase: "backlog-idea", source_ids: [])
+      run.finish!(status: "success", output_ids: [ "IDEA-001" ])
+
+      expect { run.finish!(status: "escalated", output_ids: [], error: "late rewrite") }.to raise_error(ProductFactory::ValidationError, /already finished/)
     end
   end
 end
