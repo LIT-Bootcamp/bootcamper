@@ -102,7 +102,6 @@ These are uncalibrated ideal-day estimates and exclude product review, student/t
 | E3-04 | **Sign in and sign out.** Verified users can create and end sessions; protected pages redirect anonymous visitors to sign-in and return them afterward. | E3-02 | 1d |
 | E3-05 | **Reset a forgotten password.** A user receives an expiring reset link without revealing whether an email exists; using it invalidates existing sessions. | E3-04 | 1.5d |
 | E3-06 | **Separate the admin workspace.** `/admin` rejects students and anonymous users; an admin lands on an empty overview page using the shared design system. | E3-01, E2-03 | 1d |
-| E3-07 | **Create admin accounts safely.** An authenticated admin can invite another admin by email; the invite expires and no public path can create an admin. | E3-03, E3-06 | 1.5d |
 | E3-08 | **Edit a student profile.** Students can save optional display name, avatar, skills, interests, GitHub URL, and profile URLs with format and upload validation. | E3-04 | 1.5d |
 | E3-09 | **Control field visibility.** Each profile field supports private, team/cohort, or public visibility; request specs cover every audience. | E3-08 | 1.5d |
 | E3-10 | **Approve public profiles.** Public display is disabled by default and becomes visible only after student opt-in and admin approval; it uses `Display Name (Full Name)`, and rejected edits return it to pending. | E3-09, E3-06 | 1.5d |

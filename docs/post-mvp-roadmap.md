@@ -46,6 +46,10 @@ Add course channels, team channels, direct messages, lesson/task threads, attach
 
 ## R3 — Admissions and External Integrations
 
+### Secure admin invitations
+
+Allow an authenticated admin to invite another administrator by email. Invitations expire, are single-use, and never expose a public path for creating an admin account. Add audit events, delivery-failure handling, and explicit revocation before launch. Promote this capability into SMART tickets only after the MVP admin workspace has a defined ownership and account-provisioning policy.
+
 ### Configurable admission stages
 
 Extend the application state machine with reorderable fixed stage types: automatic test, manually reviewed test, interview, decision. Avoid a general workflow engine. Version question sets, scoring rules, and decisions so an in-progress application does not change underneath an applicant. Admins record interview date, link, result, and notes; scheduling remains external.
