@@ -2,6 +2,8 @@ require "rails_helper"
 
 # rubocop:disable RSpecRails/InferredSpecType
 RSpec.describe "Profile editing", type: :system do
+  before { driven_by(:rack_test) }
+
   it "lets a student edit profile details", :aggregate_failures do
     user = sign_in_confirmed_user
     edit_profile

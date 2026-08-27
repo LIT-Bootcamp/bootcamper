@@ -18,7 +18,9 @@ RSpec.describe "Student profile" do
   end
 
   it "requires authentication to update a profile" do
-    patch account_path, params: { user: { display_name: "Intruder" } }
+    get login_path
+    csrf_token = response.body[/name="csrf-token" content="([^"]+)/, 1]
+    patch account_path, params: { user: { display_name: "Intruder" } }, headers: { "X-CSRF-Token" => csrf_token }
 
     expect(response).to redirect_to(login_path)
   end
@@ -43,6 +45,8 @@ RSpec.describe "Student profile" do
   end
 
   def patch_profile(attributes)
-    patch account_path, params: { user: attributes }
+    get account_path
+    csrf_token = response.body[/name="csrf-token" content="([^"]+)/, 1]
+    patch account_path, params: { user: attributes }, headers: { "X-CSRF-Token" => csrf_token }
   end
 end

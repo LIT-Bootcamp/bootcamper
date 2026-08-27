@@ -45,6 +45,6 @@ RSpec.describe "Account access" do
   def expect_account_navigation
     expect(response.body).to include("Твій обліковий запис")
     expect(response.body).to include("href=\"/account\"")
-      .and not_include("href=\"/tasks\"", "href=\"/team\"", "href=\"/calendar\"", "href=\"/profile\"")
+    expect(response.body).not_to include("href=\"/tasks\"", "href=\"/team\"", "href=\"/calendar\"", "href=\"/profile\"")
   end
 end

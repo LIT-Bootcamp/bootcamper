@@ -124,6 +124,7 @@ en:
     request_intro: "Enter your email and we will send instructions if an account exists."
     request_success: "If an account exists for this address, instructions have been sent."
     request_submit: "Send instructions"
+    email: "Email"
     edit_title: "Create a new password"
     edit_intro: "Choose a new password for your account."
     password: "New password"

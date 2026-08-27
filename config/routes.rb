@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, skip: :all
 
   devise_scope :user do
+    get "login", to: "sessions#new", as: :new_user_session
     get "login", to: "sessions#new", as: :login
     post "login", to: "sessions#create"
     delete "logout", to: "sessions#destroy", as: :logout

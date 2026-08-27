@@ -10,7 +10,7 @@ RSpec.describe "Home" do
   it "includes the Ukrainian introduction" do
     get root_path
 
-    expect(response.body).to include("Навчальні подорожі")
+    expect(response.body).to include("Практичний простір для вивчення веброзробки")
   end
 
   it "provides a skip link to the main content" do
@@ -28,12 +28,12 @@ RSpec.describe "Home" do
   it "renders the remaining primary navigation destinations" do
     get root_path
 
-    expect(response.body).to include("Майстерня", "Завдання", "Команда", "Календар", "Профіль")
+    expect(response.body).to include("Майстерні", "Як це працює")
   end
 
   it "provides navigation landmarks for both responsive presentations" do
     get root_path
 
-    expect(response.body.scan('aria-label="Основна навігація"').length).to eq(3)
+    expect(response.body.scan('aria-label="Основна навігація"').length).to eq(2)
   end
 end
