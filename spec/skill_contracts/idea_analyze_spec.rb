@@ -15,6 +15,18 @@ RSpec.describe "Idea analysis skill contract" do
     expect(content).to include("analyzed")
   end
 
+  it "publishes immutable IDEA versions for approval and completion before manifest changes" do
+    content = File.read(SKILL_ROOT.join("SKILL.md"))
+
+    expect(content).to include("idea/vNNN.md")
+    expect(content).to include("immediate predecessor")
+    expect(content).to include("run ID")
+    expect(content).to include("non-empty reason")
+    expect(content).to include("human-approved IDEA version")
+    expect(content).to include("analyzed IDEA version")
+    expect(content).to include("Validate the IDEA version before updating the manifest or changelog")
+  end
+
   it "uses named isolated BA and Ideator clarification with a three-round limit" do
     content = File.read(SKILL_ROOT.join("SKILL.md"))
 

@@ -48,7 +48,7 @@ module ProductFactory
           next
         end
 
-        { path: path, directory: path.dirname, manifest: manifest, versions: version_files(path.dirname) }
+        { path: path, directory: path.dirname, manifest: manifest, versions: version_files(path.dirname, manifest["kind"]) }
       end
     end
 
@@ -149,6 +149,7 @@ module ProductFactory
     end
 
     def validate_coverage(artifacts)
+      validate_requirement_coverage(artifacts)
       coverage = @root.glob("ideas/**/coverage.yml").sort.flat_map do |path|
         data = load_yaml(path)
         data.is_a?(Hash) && data["scenarios"].is_a?(Array) ? data["scenarios"] : []
@@ -163,8 +164,53 @@ module ProductFactory
       end
     end
 
-    def version_files(directory)
-      directory.children.each_with_object({}) do |path, files|
+    def validate_requirement_coverage(artifacts)
+      artifacts.select { |artifact| artifact[:manifest]["kind"] == "epic" }.each do |artifact|
+        id = artifact[:manifest]["id"]
+        requirements, scenarios = gherkin_ids(artifact[:versions][artifact[:manifest]["current_version"]])
+        error(id, "Gherkin has no requirement IDs") if requirements.empty?
+        error(id, "Gherkin has no scenario IDs") if scenarios.empty?
+
+        coverage = load_yaml(artifact[:directory].join("requirements/coverage.yml"))
+        rows = coverage.is_a?(Hash) ? coverage["requirements"] : nil
+        unless rows.is_a?(Array)
+          error(id, "missing requirement coverage")
+          next
+        end
+
+        mapped = rows.filter_map { |row| row["requirement_id"] if row.is_a?(Hash) }
+        requirements.each { |requirement| error(id, "missing coverage for #{requirement}") unless mapped.include?(requirement) }
+        mapped.each { |requirement| error(id, "unknown coverage requirement #{requirement}") unless requirements.include?(requirement) }
+        rows.each do |row|
+          next unless row.is_a?(Hash)
+
+          requirement = row["requirement_id"]
+          happy_path = row["happy_path"]
+          edge_or_error = row["edge_or_error"]
+          error(id, "#{requirement}: invalid happy path scenario") unless scenarios.include?(happy_path)
+          unless edge_or_error.is_a?(Array)
+            error(id, "#{requirement}: missing edge or error mapping")
+            next
+          end
+          edge_or_error.each { |scenario| error(id, "#{requirement}: invalid edge or error scenario") unless scenarios.include?(scenario) }
+        end
+      end
+    end
+
+    def gherkin_ids(path)
+      return [ [], [] ] unless path
+
+      content = File.binread(path).gsub("\r\n", "\n")
+      requirements = content.scan(/^\s*#\s*requirement_id:\s*(REQUIREMENT-\d{3,})\s*$/).flatten.uniq
+      scenarios = content.scan(/^\s*#\s*scenario_id:\s*(SCENARIO-\d{3,})\s*$/).flatten.uniq
+      [ requirements, scenarios ]
+    end
+
+    def version_files(directory, kind)
+      version_directory = kind == "epic" ? directory.join("requirements") : directory
+      return {} unless version_directory.directory?
+
+      version_directory.children.each_with_object({}) do |path, files|
         match = path.basename.to_s.match(/\Av(\d{3,})\.(?:md|feature)\z/)
         files[match[1].to_i] = path if match
       end

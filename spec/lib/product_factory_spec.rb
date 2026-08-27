@@ -13,8 +13,9 @@ RSpec.describe ProductFactory::Validator do
 
   def write_artifact(root, id:, kind:, versions: [ 1 ], state: "proposed", dependencies: [], priority: 1,
                      estimate_days: 1, scenarios: nil, source_versions: {})
-    directory = root.join("ideas", "IDEA-001-demo", kind == "idea" ? "idea" : "epics/EPIC-001-demo/#{kind == "ticket" ? "tickets/#{id.downcase}-demo" : "analysis/#{id.downcase}-demo"}")
-    FileUtils.mkdir_p(directory)
+    directory = root.join("ideas", "IDEA-001-demo", kind == "idea" ? "idea" : "epics/EPIC-001-demo/#{kind == "ticket" ? "tickets/#{id.downcase}-demo" : id.downcase + "-demo"}")
+    version_directory = kind == "epic" ? directory.join("requirements") : directory
+    FileUtils.mkdir_p(version_directory)
 
     versions.each do |version|
       metadata = {
@@ -30,10 +31,10 @@ RSpec.describe ProductFactory::Validator do
         "unresolved_questions" => [],
         "state" => state
       }
-      File.write(directory.join(format("v%03d.%s", version, kind == "epic" ? "feature" : "md")), "---\n#{YAML.dump(metadata).sub(/\\A---\\n/, "")}---\n# #{id} v#{version}\n")
+      File.write(version_directory.join(format("v%03d.%s", version, kind == "epic" ? "feature" : "md")), "---\n#{YAML.dump(metadata).sub(/\\A---\\n/, "")}---\n# #{id} v#{version}\n")
     end
 
-    current = directory.join(format("v%03d.%s", versions.last, kind == "epic" ? "feature" : "md"))
+    current = version_directory.join(format("v%03d.%s", versions.last, kind == "epic" ? "feature" : "md"))
     manifest = {
       "id" => id,
       "kind" => kind,
@@ -51,11 +52,67 @@ RSpec.describe ProductFactory::Validator do
     directory
   end
 
+  def write_epic_requirements(directory, coverage:)
+    version = directory.join("requirements/v001.feature")
+    File.write(version, <<~FEATURE)
+      #{File.read(version)}
+      # requirement_id: REQUIREMENT-001
+      Feature: Example outcome
+
+        # scenario_id: SCENARIO-001
+        Scenario: Happy path
+          Given a starting condition
+          When the user acts
+          Then the outcome is visible
+
+        # scenario_id: SCENARIO-002
+        Scenario: Error path
+          Given a failing condition
+          When the user acts
+          Then the error is visible
+    FEATURE
+    File.write(directory.join("requirements/coverage.yml"), YAML.dump("requirements" => coverage))
+    manifest = YAML.load_file(directory.join("manifest.yml"))
+    manifest["content_sha256"] = Digest::SHA256.hexdigest(File.binread(version).gsub("\r\n", "\n"))
+    File.write(directory.join("manifest.yml"), YAML.dump(manifest))
+  end
+
   it "accepts a valid immutable version chain" do
     with_product do |root|
       write_artifact(root, id: "IDEA-001", kind: "idea", versions: [ 1, 2 ], state: "human-approved")
 
       expect(described_class.new(root: root).validate!).to be(true)
+    end
+  end
+
+  it "reads EPIC versions from their requirements directory" do
+    with_product do |root|
+      epic = write_artifact(root, id: "EPIC-001", kind: "epic", state: "draft")
+      write_epic_requirements(epic, coverage: [ {
+        "requirement_id" => "REQUIREMENT-001", "happy_path" => "SCENARIO-001", "edge_or_error" => [ "SCENARIO-002" ]
+      } ])
+
+      expect(described_class.new(root: root).validate!).to be(true)
+    end
+  end
+
+  it "rejects EPIC coverage without an edge or error mapping" do
+    with_product do |root|
+      epic = write_artifact(root, id: "EPIC-001", kind: "epic", state: "draft")
+      write_epic_requirements(epic, coverage: [ { "requirement_id" => "REQUIREMENT-001", "happy_path" => "SCENARIO-001" } ])
+
+      expect { described_class.new(root: root).validate! }.to raise_error(ProductFactory::ValidationError, /edge or error/)
+    end
+  end
+
+  it "rejects EPIC coverage whose happy path is not a Gherkin scenario" do
+    with_product do |root|
+      epic = write_artifact(root, id: "EPIC-001", kind: "epic", state: "draft")
+      write_epic_requirements(epic, coverage: [ {
+        "requirement_id" => "REQUIREMENT-001", "happy_path" => "SCENARIO-999", "edge_or_error" => [ "SCENARIO-002" ]
+      } ])
+
+      expect { described_class.new(root: root).validate! }.to raise_error(ProductFactory::ValidationError, /happy path scenario/)
     end
   end
 
