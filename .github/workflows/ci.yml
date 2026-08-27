@@ -134,6 +134,8 @@ jobs:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_TEST }}
         run: >-
           docker run --rm --network host
+          -v $GITHUB_WORKSPACE/coverage:/app/coverage
+          -e CI=true
           -e RAILS_ENV=test
           -e RAILS_MASTER_KEY
           -e DATABASE_HOST=127.0.0.1
@@ -142,6 +144,13 @@ jobs:
           -e DATABASE_NAME=bootcamper_test
           $TEST_IMAGE
           sh -c "bin/rails db:prepare && bundle exec rspec"
+      - name: Share coverage report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-report
+          path: coverage
+          retention-days: 7
 
   production-smoke:
     name: Production smoke

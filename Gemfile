@@ -31,3 +31,9 @@ group :development, :test do
   gem "annotaterb", "4.24.0", require: false
   gem "rubocop-rails-omakase", "1.1.0", require: false
 end
+
+group :test do
+  gem "factory_bot_rails"
+  gem "shoulda-matchers", require: false
+  gem "simplecov", require: false
+end

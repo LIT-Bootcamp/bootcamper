@@ -18,7 +18,7 @@ RSpec.describe "Account access" do
   private
 
   def create_confirmed_user
-    User.create!(email: "student@example.com", password: "correct horse battery", password_confirmation: "correct horse battery").tap(&:confirm)
+    create(:user, :confirmed)
   end
 
   def request_account_as_anonymous

@@ -15,8 +15,7 @@ RSpec.describe "Profile editing", type: :system do
   private
 
   def sign_in_confirmed_user
-    user = User.create!(email: "student@example.com", password: "correct horse battery", password_confirmation: "correct horse battery")
-    user.confirm
+    user = create(:user, :confirmed, email: "student@example.com")
     sign_in_user(user)
     user
   end

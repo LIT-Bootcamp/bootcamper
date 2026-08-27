@@ -27,12 +27,7 @@ RSpec.describe "Admin workspace" do
   private
 
   def create_user(role:)
-    User.create!(
-      email: "#{role}@example.com",
-      password: "correct horse battery",
-      password_confirmation: "correct horse battery",
-      role:
-    ).tap(&:confirm)
+    create(:user, :confirmed, role:)
   end
 
   def sign_in_user(user)

@@ -32,7 +32,7 @@ RSpec.describe "Student profile" do
   end
 
   def create_confirmed_user
-    User.create!(email: "student@example.com", password: "correct horse battery", password_confirmation: "correct horse battery").tap(&:confirm)
+    create(:user, :confirmed, email: "student@example.com")
   end
 
   def sign_in_user(user)
