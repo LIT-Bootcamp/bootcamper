@@ -33,8 +33,15 @@ class User < ApplicationRecord
   def avatar_must_be_an_image
     return unless avatar.attached?
 
-    errors.add(:avatar, :invalid) unless avatar.content_type.in?(%w[image/png image/jpeg image/webp])
+    detected_type = detected_avatar_content_type
+    errors.add(:avatar, :invalid) unless detected_type.in?(%w[image/png image/jpeg image/webp])
     errors.add(:avatar, :too_large) if avatar.byte_size > 5.megabytes
+  end
+
+  def detected_avatar_content_type
+    avatar.blob.open { |file| Marcel::MimeType.for(file, name: avatar.filename.to_s) }
+  rescue ActiveStorage::FileNotFoundError, Errno::ENOENT
+    avatar.content_type
   end
 
   def http_url?(url)
