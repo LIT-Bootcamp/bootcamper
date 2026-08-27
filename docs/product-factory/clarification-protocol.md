@@ -21,7 +21,7 @@ assumptions: []
 
 ## Ownership and versions
 
-Only the artifact owner edits its artifact. When an answer changes an artifact, its owner publishes a new immutable version, naming the immediate predecessor, change reason, source versions, assumptions, and unresolved questions. Other participants retain their findings in the round record; they never amend an owner artifact or its manifest.
+Only the artifact owner edits its artifact. When an answer changes an artifact, its owner publishes the next sequential version as a new immutable version, naming the immediate predecessor, change reason, source versions, assumptions, and unresolved questions. Validate the new version before updating its manifest; update `current_version` and `content_sha256` only after validation, and retain its immediate predecessor. Other participants retain their findings in the round record; they never amend an owner artifact or its manifest.
 
 ## Convergence and escalation
 

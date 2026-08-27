@@ -69,6 +69,13 @@ RSpec.describe "Product factory agent contracts" do
     expect(content).to include("Only call GitHub when backlog-idea explicitly authorizes the exact Project and repository")
   end
 
+  it "limits BA edits to BA-owned artifacts" do
+    content = File.read(AGENT_ROOT.join("bootcamper-business-analyst.toml"))
+
+    expect(content).to include("Only edit BA-owned EPIC, Gherkin, and coverage artifacts")
+    expect(content).to include("Do not edit IDEA artifacts")
+  end
+
   it "defines bounded, owner-only clarification rounds" do
     content = File.read(Rails.root.join("docs/product-factory/clarification-protocol.md"))
 
@@ -80,6 +87,10 @@ RSpec.describe "Product factory agent contracts" do
     expect(content).to include("assumptions")
     expect(content).to include("Only the artifact owner edits its artifact")
     expect(content).to include("new immutable version")
+    expect(content).to include("next sequential version")
+    expect(content).to include("Validate the new version before updating its manifest")
+    expect(content).to match(/current_version.*content_sha256.*only after validation/)
+    expect(content).to include("retain its immediate predecessor")
     expect(content).to include("escalation packet")
   end
 end
