@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   root "home#index"
 
   get "account", to: "account#show", as: :account
+  patch "account", to: "account#update"
 
   namespace :admin do
     root "overview#show"

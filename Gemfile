@@ -16,6 +16,7 @@ gem "devise", "5.0.1"
 group :development, :test do
   gem "debug"
   gem "rspec-rails", "~> 8.0"
+  gem "capybara", "~> 3.40"
   gem "rubocop", "1.90.0", require: false
   gem "rubocop-rails", "2.37.0", require: false
   gem "rubocop-rspec", "3.10.2", require: false

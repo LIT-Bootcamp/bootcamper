@@ -70,4 +70,35 @@ RSpec.describe User do
       expect(user).to be_email_verified
     end
   end
+
+  describe "profile fields" do
+    it "accepts optional profile details" do
+      expect(described_class.new(valid_attributes.merge(profile_attributes))).to be_valid
+    end
+
+    it "rejects non-http profile URLs", :aggregate_failures do
+      user = described_class.new(valid_attributes.merge(profile_urls: "javascript:alert(1)"))
+
+      expect(user).not_to be_valid
+      expect(user.errors[:profile_urls]).to be_present
+    end
+
+    it "rejects a non-image avatar", :aggregate_failures do
+      user = described_class.new(valid_attributes)
+      user.avatar.attach(io: StringIO.new("not an image"), filename: "avatar.txt", content_type: "text/plain")
+
+      expect(user).not_to be_valid
+      expect(user.errors[:avatar]).to be_present
+    end
+
+    def profile_attributes
+      {
+        display_name: "Ada",
+        technical_skills: "Ruby\nSQL",
+        interests: "Learning design",
+        github_url: "https://github.com/ada",
+        profile_urls: "https://example.com/ada\nhttps://linkedin.com/in/ada"
+      }
+    end
+  end
 end
