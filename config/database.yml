@@ -2,23 +2,23 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
-  host: <%= Rails.application.credentials.fetch(:database).fetch(:host) %>
-  username: <%= Rails.application.credentials.fetch(:database).fetch(:username) %>
-  password: <%= Rails.application.credentials.fetch(:database).fetch(:password) %>
+  host: <%= ENV.fetch("DATABASE_HOST") { Rails.application.credentials.fetch(:database).fetch(:host) } %>
+  username: <%= ENV.fetch("DATABASE_USERNAME") { Rails.application.credentials.fetch(:database).fetch(:username) } %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD") { Rails.application.credentials.fetch(:database).fetch(:password) } %>
   gssencmode: disable
 
 development:
   <<: *default
-  database: <%= Rails.application.credentials.fetch(:database).fetch(:name) %>
+  database: <%= ENV.fetch("DATABASE_NAME") { Rails.application.credentials.fetch(:database).fetch(:name) } %>
 
 docker:
   <<: *default
-  database: <%= Rails.application.credentials.fetch(:database).fetch(:name) %>
+  database: <%= ENV.fetch("DATABASE_NAME") { Rails.application.credentials.fetch(:database).fetch(:name) } %>
 
 test:
   <<: *default
-  database: <%= Rails.application.credentials.fetch(:database).fetch(:name) %>
+  database: <%= ENV.fetch("DATABASE_NAME") { Rails.application.credentials.fetch(:database).fetch(:name) } %>
 
 production:
   <<: *default
-  database: <%= Rails.application.credentials.fetch(:database).fetch(:name) %>
+  database: <%= ENV.fetch("DATABASE_NAME") { Rails.application.credentials.fetch(:database).fetch(:name) } %>
