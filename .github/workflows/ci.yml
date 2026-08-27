@@ -30,4 +30,7 @@ jobs:
           curl --fail --retry 10 --retry-delay 2 http://localhost:3000/
       - name: Tear down services
         if: always()
+        env:
+          RAILS_MASTER_KEY: dummy
+          POSTGRES_PASSWORD: dummy
         run: docker compose down
