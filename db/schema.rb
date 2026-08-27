@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_27_230001) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_27_235000) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -41,7 +42,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_27_230001) do
     t.datetime "confirmed_at"
     t.datetime "created_at", null: false
     t.string "display_name"
-    t.string "email", null: false
+    t.citext "email", null: false
     t.string "encrypted_password", null: false
     t.string "github_url"
     t.text "interests"
@@ -52,7 +53,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_27_230001) do
     t.text "technical_skills"
     t.string "unconfirmed_email"
     t.datetime "updated_at", null: false
-    t.index "lower((email)::text)", name: "index_users_on_lower_email", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.check_constraint "role::text = ANY (ARRAY['student'::character varying::text, 'admin'::character varying::text])", name: "users_role_check"

@@ -1,0 +1,22 @@
+# Rails engine records are framework-managed rather than application models.
+ActionText::RichText:
+  enabled: false
+ActiveStorage::Attachment:
+  enabled: false
+ActiveStorage::Blob:
+  enabled: false
+ActiveStorage::VariantRecord:
+  enabled: false
+
+# Devise owns password hashing and generates collision-resistant tokens. The
+# database constraints remain the concurrency-safe source of truth.
+User:
+  encrypted_password:
+    NullConstraintChecker:
+      enabled: false
+  index_users_on_confirmation_token:
+    UniqueIndexChecker:
+      enabled: false
+  index_users_on_reset_password_token:
+    UniqueIndexChecker:
+      enabled: false
