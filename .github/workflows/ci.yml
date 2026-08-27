@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build application image
-        run: docker build --tag bootcamper-web:ci .
+        run: docker build --target runtime --tag bootcamper-web:ci .
       - name: Prepare database and run tests
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_TEST }}
