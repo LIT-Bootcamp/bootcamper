@@ -11,6 +11,6 @@ COPY Gemfile Gemfile.lock ./
 RUN bundle config set --local deployment true && bundle install --jobs 4 --retry 3
 
 COPY . .
-RUN SECRET_KEY_BASE_DUMMY=1 REQUIRE_MASTER_KEY=false RAILS_ENV=production bin/rails tailwindcss:build
+RUN SECRET_KEY_BASE_DUMMY=1 REQUIRE_MASTER_KEY=false DATABASE_HOST=localhost DATABASE_USERNAME=postgres DATABASE_PASSWORD=postgres DATABASE_NAME=bootcamper_build RAILS_ENV=production bin/rails tailwindcss:build
 EXPOSE 3000
 CMD ["bin/rails", "server", "-b", "0.0.0.0"]
