@@ -1,0 +1,4 @@
+interface:
+  display_name: "Analyze Product Idea"
+  short_description: "Turn one approved idea into Gherkin epics"
+  default_prompt: "Use $idea-analyze with an IDEA ID to approve and analyze that product idea."
