@@ -1,6 +1,4 @@
-# Rails engine records are framework-managed rather than application models.
-ActionText::RichText:
-  enabled: false
+# Active Storage records are framework-managed rather than application models.
 ActiveStorage::Attachment:
   enabled: false
 ActiveStorage::Blob:
