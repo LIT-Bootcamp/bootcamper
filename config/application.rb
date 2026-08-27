@@ -25,7 +25,7 @@ module Bootcamper
     credentials_dir = Rails.root.join("config", "credentials")
     config.credentials.content_path = credentials_dir.join("#{Rails.env}.yml.enc")
     config.credentials.key_path = credentials_dir.join("#{Rails.env}.key")
-    config.require_master_key = ENV.fetch("REQUIRE_MASTER_KEY", "true") == "true"
+    config.require_master_key = ENV.fetch("REQUIRE_MASTER_KEY") { "true" } == "true"
     config.i18n.default_locale = :uk
     config.i18n.available_locales = %i[uk en]
     config.i18n.fallbacks = [ :uk ]
