@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ideation"
+  short_description: "Research and rank product ideas"
+  default_prompt: "Use $ideation to research Bootcamper and create versioned product ideas."
