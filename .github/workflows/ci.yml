@@ -15,12 +15,12 @@ jobs:
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_TEST }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD_TEST }}
-        run: docker compose run --rm -e RAILS_ENV=test -e DATABASE_NAME=bootcamper_test web sh -c "bin/rails db:prepare && bundle exec rspec"
+        run: docker compose run --rm -e RAILS_ENV=test -e DATABASE_NAME=bootcamper_test web sh -c "bin/rails tailwindcss:build && bin/rails db:prepare && bundle exec rspec"
       - name: Run quality gates
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_TEST }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD_TEST }}
-        run: docker compose run --rm -e RAILS_ENV=test -e DATABASE_NAME=bootcamper_test web sh -c "bin/rails db:prepare && bin/quality"
+        run: docker compose run --rm -e RAILS_ENV=test -e DATABASE_NAME=bootcamper_test web sh -c "bin/rails tailwindcss:build && bin/rails db:prepare && bin/quality"
       - name: Start services and smoke test
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY_DEVELOPMENT }}
