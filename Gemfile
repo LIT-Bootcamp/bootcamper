@@ -11,7 +11,7 @@ gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
 gem "tailwindcss-rails", "~> 4.6"
-gem "devise", "5.0.1"
+gem "devise", "~> 5.0.4"
 
 group :development, :test do
   gem "debug"
