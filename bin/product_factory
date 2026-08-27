@@ -1,0 +1,83 @@
+#!/bin/sh
+exec mise exec ruby@4.0.6 -- ruby -x "$0" "$@"
+#!ruby
+
+require "json"
+require "open3"
+require "optparse"
+require_relative "../lib/product_factory"
+
+options = { source_ids: [], output_ids: [], external_changes: [] }
+parser = OptionParser.new do |opts|
+  opts.on("--root PATH") { |value| options[:root] = value }
+  opts.on("--phase NAME") { |value| options[:phase] = value }
+  opts.on("--run-id ID") { |value| options[:run_id] = value }
+  opts.on("--ticket ID") { |value| options[:ticket] = value }
+  opts.on("--status STATUS") { |value| options[:status] = value }
+  opts.on("--source-id ID") { |value| options[:source_ids] << value }
+  opts.on("--output-id ID") { |value| options[:output_ids] << value }
+  opts.on("--external-change CHANGE") { |value| options[:external_changes] << value }
+  opts.on("--error MESSAGE") { |value| options[:error] = value }
+end
+
+command = ARGV.shift
+parser.parse!(ARGV)
+
+def required!(options, *keys)
+  missing = keys.reject { |key| options[key] }
+  raise OptionParser::MissingArgument, missing.join(", ") unless missing.empty?
+end
+
+def run_for(root, id)
+  path = Pathname(root).join("factory-log", "#{id}-started.yml")
+  raise ProductFactory::ValidationError, "unknown run #{id}" unless path.file?
+
+  ProductFactory::Run.new(path: path, id: id)
+end
+
+def claim_registry(root)
+  stdout, stderr, status = Open3.capture3("git", "-C", root, "rev-parse", "--git-common-dir")
+  raise ProductFactory::ValidationError, stderr.strip unless status.success?
+
+  ProductFactory::ClaimRegistry.new(git_common_dir: File.expand_path(stdout.strip, root))
+end
+
+begin
+  case command
+  when "validate"
+    required!(options, :root)
+    ProductFactory::Repository.new(root: options[:root]).validate!
+    puts JSON.generate(valid: true)
+  when "changes"
+    required!(options, :root, :phase)
+    changes = ProductFactory::Repository.new(root: options[:root]).changes(phase: options[:phase]).map(&:to_h)
+    puts JSON.generate(changes: changes)
+  when "start-run"
+    required!(options, :root, :phase)
+    run = ProductFactory::Run.start(root: options[:root], phase: options[:phase], source_ids: options[:source_ids])
+    puts JSON.generate(run_id: run.id)
+  when "finish-run"
+    required!(options, :root, :run_id, :status)
+    run_for(options[:root], options[:run_id]).finish!(status: options[:status], output_ids: options[:output_ids], external_changes: options[:external_changes], error: options[:error])
+    puts JSON.generate(run_id: options[:run_id], status: options[:status])
+  when "next-ticket"
+    required!(options, :root, :run_id)
+    ticket = ProductFactory::Repository.new(root: options[:root]).next_ticket
+    exit 3 unless ticket
+    ticket_id = YAML.safe_load(File.read(ticket), aliases: false).fetch("id")
+    claim_registry(options[:root]).claim!(ticket_id: ticket_id, run_id: options[:run_id])
+    puts JSON.generate(ticket: ticket_id, manifest: ticket.to_s)
+  when "release-ticket"
+    required!(options, :root, :run_id, :ticket)
+    claim_registry(options[:root]).release!(ticket_id: options[:ticket], run_id: options[:run_id])
+    puts JSON.generate(ticket: options[:ticket], released: true)
+  else
+    raise OptionParser::InvalidOption, command || "command"
+  end
+rescue ProductFactory::ValidationError, OptionParser::ParseError, ArgumentError => error
+  warn error.message
+  exit 2
+rescue ProductFactory::ClaimConflict => error
+  warn error.message
+  exit 4
+end
