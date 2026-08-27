@@ -85,9 +85,39 @@ en:
     password_confirmation: "Confirm password"
     submit: "Create account"
     success_title: "Account created"
-    success_message: "Your account has been created. Further access steps will appear when account setup is complete."
+    success_message: "Your account has been created. Check your email to verify your address."
     errors:
       heading: "Check the details you entered"
+  sessions:
+    eyebrow: "Return to your journey"
+    title: "Sign in to your account"
+    intro: "Continue learning in your Bootcamper space."
+    email: "Email"
+    password: "Password"
+    submit: "Sign in"
+    register_prompt: "No account yet? Create one"
+  account:
+    eyebrow: "Your space"
+    title: "Your account"
+    intro: "You are signed in as %{email}. More learning opportunities will appear here."
+  admin:
+    access_denied: "You do not have access to this workspace."
+    eyebrow: "Administration"
+    title: "Admin workspace"
+    intro: "Manage the learning experience from one focused space."
+    empty_title: "Nothing here yet"
+    empty_message: "Admin tools will appear here as they are introduced."
+  password_reset:
+    eyebrow: "Secure recovery"
+    request_title: "Reset your password"
+    request_intro: "Enter your email and we will send instructions if an account exists."
+    request_success: "If an account exists for this address, instructions have been sent."
+    request_submit: "Send instructions"
+    edit_title: "Create a new password"
+    edit_intro: "Choose a new password for your account."
+    password: "New password"
+    password_confirmation: "Confirm new password"
+    edit_submit: "Save new password"
   errors:
     format: "%{message}"
     messages:
@@ -98,3 +128,32 @@ en:
       too_long: "is too long (maximum is %{count} characters)"
       confirmation: "doesn't match"
       inclusion: "is not included in the list"
+  confirmation:
+    success_title: "Email verified"
+    success_message: "Your email has been verified. Your account is ready for the next steps."
+    invalid_title: "Invalid confirmation link"
+    invalid_message: "This link has already been used or has expired."
+  devise:
+    failure:
+      invalid: "Email or password is incorrect"
+      not_found_in_database: "Email or password is incorrect"
+      unconfirmed: "Confirm your email before signing in"
+    sessions:
+      signed_in: "Signed in successfully"
+      signed_out: "Signed out successfully"
+    passwords:
+      send_instructions: "If an account exists for this address, instructions have been sent."
+      send_paranoid_instructions: "If an account exists for this address, instructions have been sent."
+      updated_not_active: "Your password has been changed. Sign in with your new password."
+      no_token: "That password reset link is invalid."
+    errors:
+      invalid: "That password reset link is invalid or expired."
+    mailer:
+      confirmation_instructions:
+        greeting: "Welcome %{email}!"
+        intro: "You can confirm your account email through the link below:"
+        action: "Confirm my account"
+      reset_password_instructions:
+        greeting: "Welcome %{email}!"
+        intro: "Use the link below to create a new password:"
+        action: "Create a new password"

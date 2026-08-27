@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Student registration" do
+  before { ActionMailer::Base.deliveries.clear }
+
   it "renders the Ukrainian registration form", :aggregate_failures do
     get new_user_registration_path
 
@@ -14,6 +16,15 @@ RSpec.describe "Student registration" do
     expect(response).to redirect_to(registration_success_path)
     expect(User.find_by(email: "student@example.com")).to have_attributes(role: "student", encrypted_password: a_string_matching(/\A\$2/))
     expect(request.session.keys).not_to include("warden.user.user.key")
+  end
+
+  it "sends one confirmation link after account creation", :aggregate_failures do
+    submit_registration
+
+    confirmation_email = ActionMailer::Base.deliveries.last
+    expect(ActionMailer::Base.deliveries.size).to eq(1)
+    expect(confirmation_email.to).to eq([ "student@example.com" ])
+    expect(confirmation_email.body.to_s).to include("/register/confirm?confirmation_token=")
   end
 
   it "shows a truthful account-created state" do

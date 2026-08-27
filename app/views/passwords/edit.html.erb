@@ -1,0 +1,32 @@
+<% content_for :title, t("password_reset.edit_title") %>
+
+<section class="mx-auto max-w-xl px-4" aria-labelledby="password-reset-edit-title">
+  <div class="rounded-card border border-border bg-surface-raised p-6 shadow-lifted md:p-8">
+    <p class="font-body text-xs font-semibold uppercase tracking-[0.2em] text-teal"><%= t("password_reset.eyebrow") %></p>
+    <h1 id="password-reset-edit-title" class="mt-2 font-display text-3xl font-bold text-ink"><%= t("password_reset.edit_title") %></h1>
+    <p class="mt-3 font-body text-sm text-ink-muted"><%= t("password_reset.edit_intro") %></p>
+
+    <% if resource.errors.any? %>
+      <div class="mt-6 rounded-control border border-danger/50 bg-danger/10 p-4 text-sm text-danger" role="alert">
+        <ul class="list-disc space-y-1 pl-5">
+          <% resource.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: resource, scope: resource_name, url: password_reset_path, method: :patch, class: "mt-8 space-y-5" do |form| %>
+      <%= form.hidden_field :reset_password_token, value: resource.reset_password_token %>
+      <div>
+        <%= form.label :password, t("password_reset.password"), class: "font-body text-sm font-semibold text-ink" %>
+        <%= form.password_field :password, autocomplete: "new-password", required: true, class: "mt-2 w-full rounded-control border border-border bg-surface px-3 py-2 text-ink" %>
+      </div>
+      <div>
+        <%= form.label :password_confirmation, t("password_reset.password_confirmation"), class: "font-body text-sm font-semibold text-ink" %>
+        <%= form.password_field :password_confirmation, autocomplete: "new-password", required: true, class: "mt-2 w-full rounded-control border border-border bg-surface px-3 py-2 text-ink" %>
+      </div>
+      <%= form.submit t("password_reset.edit_submit"), class: "w-full rounded-pill bg-magenta px-4 py-3 font-body text-sm font-semibold text-surface shadow-lifted transition hover:bg-magenta/90" %>
+    <% end %>
+  </div>
+</section>

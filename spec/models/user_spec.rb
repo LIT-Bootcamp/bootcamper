@@ -56,4 +56,18 @@ RSpec.describe User do
       expect(user).to be_valid_password("correct horse battery")
     end
   end
+
+  describe "email verification" do
+    it "is false before confirmation" do
+      expect(described_class.new(valid_attributes)).not_to be_email_verified
+    end
+
+    it "is true after confirmation" do
+      user = described_class.create!(valid_attributes)
+
+      user.confirm
+
+      expect(user).to be_email_verified
+    end
+  end
 end

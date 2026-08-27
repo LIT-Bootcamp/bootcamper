@@ -10,17 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_26_200000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_26_210000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "users", force: :cascade do |t|
+    t.datetime "confirmation_sent_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
     t.datetime "created_at", null: false
     t.string "email", null: false
     t.string "encrypted_password", null: false
     t.string "role", default: "student", null: false
+    t.string "unconfirmed_email"
     t.datetime "updated_at", null: false
     t.index "lower((email)::text)", name: "index_users_on_lower_email", unique: true
-    t.check_constraint "role::text = ANY (ARRAY['student'::character varying::text, 'admin'::character varying::text])", name: "users_role_check"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.check_constraint "role::text = ANY (ARRAY['student'::character varying, 'admin'::character varying]::text[])", name: "users_role_check"
   end
 end

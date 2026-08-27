@@ -3,8 +3,9 @@
     <span aria-hidden="true">A</span>
   </button>
   <div class="cyber-panel absolute right-0 top-12 hidden min-w-52 rounded-card bg-surface-raised p-2 shadow-lifted" data-dropdown-target="menu" role="menu">
-    <% [["profile", "/profile"], ["settings", "#"], ["notifications", "#"], ["help", "#"], ["sign_out", "#"]].each do |key, path| %>
+    <% [["profile", account_path]].each do |key, path| %>
       <%= link_to t("navigation.profile_items.#{key}"), path, class: "block rounded-control px-3 py-2 font-body text-sm font-medium text-ink-muted hover:bg-teal/10 hover:text-teal", role: "menuitem", data: { action: ("click->dropdown#close" if path == "#") } %>
     <% end %>
+    <%= button_to t("navigation.profile_items.sign_out"), logout_path, method: :delete, class: "block w-full rounded-control px-3 py-2 text-left font-body text-sm font-medium text-ink-muted hover:bg-teal/10 hover:text-teal", role: "menuitem", form: { data: { action: "click->dropdown#close" } } %>
   </div>
 </div>

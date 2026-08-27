@@ -10,6 +10,7 @@ Rails.application.configure do
   config.action_dispatch.show_exceptions = :rescuable
   config.active_storage.service = :test
   config.action_mailer.delivery_method = :test
+  config.action_mailer.default_url_options = { host: "www.example.com" }
   config.active_job.queue_adapter = :test
   config.active_support.deprecation = :stderr
 end
