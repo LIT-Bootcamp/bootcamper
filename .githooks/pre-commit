@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eu
+
+if [ "${BOOTCAMPER_RELEASE_AGENT:-}" != "lead_bootcamper" ]; then
+  echo "Only lead_bootcamper may create commits. Use bin/lead_bootcamper commit." >&2
+  exit 1
+fi
