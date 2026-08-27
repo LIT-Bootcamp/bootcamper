@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   normalizes :email, with: ->(email) { email.strip.downcase }
 
-  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  validates :email, presence: true, uniqueness: true
   validate :profile_urls_must_be_http_urls
   validate :github_url_must_be_http_url
   validate :avatar_must_be_an_image
