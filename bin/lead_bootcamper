@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+
+case "${1:-}" in
+  push) shift; BOOTCAMPER_PUSH_AGENT=lead_bootcamper git push "$@" ;;
+  commit) shift; git commit "$@" ;;
+  pr) shift; gh pr create "$@" ;;
+  *) echo "Usage: bin/lead_bootcamper {push|commit|pr} [args...]" >&2; exit 64 ;;
+esac
