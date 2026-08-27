@@ -17,6 +17,10 @@ RUN bundle install --jobs 4 --retry 3
 
 COPY . .
 
+FROM development AS test
+
+ENV RAILS_ENV=test
+
 FROM base AS production-build
 
 ENV RAILS_ENV=production \
