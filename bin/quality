@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 checks = [
+  "droast --no-roast --fail-on warning .",
   "bundle exec rubocop",
   "bundle exec fasterer",
   "bundle exec brakeman --no-pager --exit-on-warn",

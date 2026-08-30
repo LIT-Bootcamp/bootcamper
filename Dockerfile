@@ -1,3 +1,5 @@
+FROM immanuwell/droast:1.6.1 AS droast
+
 FROM ruby:4.0.6-bookworm AS base
 
 WORKDIR /app
@@ -12,9 +14,12 @@ ENV RAILS_ENV=docker \
 
 RUN apt-get update -qq && apt-get install -y --no-install-recommends build-essential libpq-dev && rm -rf /var/lib/apt/lists/*
 
+COPY --from=droast /usr/local/bin/droast /usr/local/bin/droast
+
 COPY Gemfile Gemfile.lock ./
 RUN bundle install --jobs 4 --retry 3
 
+# droast ignore=DF007 reason=".dockerignore limits the Rails build context"
 COPY . .
 
 FROM base AS production-build
@@ -28,6 +33,7 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends build-essen
 COPY Gemfile Gemfile.lock ./
 RUN bundle install --jobs 4 --retry 3
 
+# droast ignore=DF007 reason=".dockerignore limits the Rails build context"
 COPY . .
 RUN SECRET_KEY_BASE_DUMMY=1 REQUIRE_MASTER_KEY=false APP_HOST=build.invalid DATABASE_URL=postgresql:///bootcamper_build bin/rails tailwindcss:build
 

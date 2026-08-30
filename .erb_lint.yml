@@ -6,3 +6,5 @@ linters:
     rubocop_config:
       inherit_from:
         - .rubocop.yml
+      Layout/TrailingEmptyLines:
+        Enabled: false
