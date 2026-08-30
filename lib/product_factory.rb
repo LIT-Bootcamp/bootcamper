@@ -318,7 +318,7 @@ module ProductFactory
       body = metadata_match ? content[metadata_match.end(0)..].to_s.strip : content.strip
       heading = body.lines.find { |line| line.match?(/\A#\s+/) }.to_s.sub(/\A#\s+/, "").strip
       parts = manifest_path.each_filename.to_a
-      item["title"] = heading.empty? ? item["id"] : heading
+      item["title"] = heading unless heading.empty?
       item["body"] = body
       item["idea_id"] = parts.find { |part| part.match?(/\AIDEA-\d{3,}(?:-|$)/) }&.match(/\AIDEA-\d{3,}/)&.to_s
       item["epic_id"] = parts.find { |part| part.match?(/\AEPIC-\d{3,}(?:-|$)/) }&.match(/\AEPIC-\d{3,}/)&.to_s
@@ -365,15 +365,21 @@ module ProductFactory
 
     def self.move!(source_root:, destination_root:, id:)
       source = Pathname(source_root).join("factory-log", "#{id}-started.yml")
+      source_finished = source.dirname.join("#{id}-finished.yml")
       destination_directory = Pathname(destination_root).join("factory-log")
       destination = destination_directory.join(source.basename)
       finished = destination_directory.join("#{id}-finished.yml")
+      raise ValidationError, "run #{id} is already finished" if source_finished.exist? || finished.exist?
+      return new(path: destination, id: id) if !source.exist? && destination.file?
       raise ValidationError, "unknown run #{id}" unless source.file?
-      raise ValidationError, "run #{id} already exists at destination" if destination.exist? || finished.exist?
 
       FileUtils.mkdir_p(destination_directory)
       content = File.binread(source)
-      File.open(destination, "wx") { |file| file.write(content) }
+      if destination.exist?
+        raise ValidationError, "run #{id} destination differs from source" unless File.binread(destination) == content
+      else
+        File.open(destination, "wx") { |file| file.write(content) }
+      end
       raise ValidationError, "run #{id} move verification failed" unless File.binread(destination) == content
 
       File.delete(source)

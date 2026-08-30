@@ -16,6 +16,18 @@ module ProductFactory
       "Source Version" => "current_version",
       "Factory Run" => "factory_run"
     }.freeze
+    PROJECT_FIELD_TYPES = {
+      "Idea" => "TEXT",
+      "Epic" => "TEXT",
+      "Ticket ID" => "TEXT",
+      "Priority" => "NUMBER",
+      "Status" => "SINGLE_SELECT",
+      "Estimate" => "NUMBER",
+      "Dependencies" => "TEXT",
+      "Source Version" => "NUMBER",
+      "Factory Run" => "TEXT"
+    }.freeze
+    STATUS_OPTIONS = %w[draft backlog-ready available in-progress in-review ready-for-human-merge done blocked superseded escalated].freeze
 
     def initialize(local:, remote:)
       @local = normalize_local(local)
@@ -23,14 +35,16 @@ module ProductFactory
     end
 
     def operations
-      operations = []
+      operations = schema_operations
+      return sorted(operations) if operations.any? { |item| item.action == :escalate }
+
       issues_by_ticket = remote_issues.filter_map do |issue|
         ids = issue_ticket_ids(issue)
         [ ids.first, issue ] if ids.one?
       end.group_by(&:first).transform_values { |pairs| pairs.map(&:last) }
       conflicts = mapping_conflicts(issues_by_ticket)
 
-      (@local.keys | issues_by_ticket.keys).sort.each do |ticket_id|
+      (@local.keys | issues_by_ticket.keys | conflicts.keys).sort.each do |ticket_id|
         matches = issues_by_ticket.fetch(ticket_id, [])
         local_ticket = @local[ticket_id]
 
@@ -90,9 +104,7 @@ module ProductFactory
         operations.concat(project_field_operations(ticket_id, number, local_ticket, fields))
       end
 
-      operations.sort_by do |item|
-        [ item.ticket_id, item.action.to_s, item.attributes.fetch("field", ""), item.issue_number.to_i ]
-      end
+      sorted(operations)
     end
 
     private
@@ -110,10 +122,14 @@ module ProductFactory
     end
 
     def issue_ticket_ids(issue)
-      ids = issue["body"].to_s.scan(TICKET_MARKER).flatten.map(&:upcase)
+      ids = issue_marker_ids(issue)
       explicit = issue["ticket_id"].to_s.upcase
       ids << explicit if explicit.match?(/\ATICKET-\d{3,}\z/)
       ids.uniq.sort
+    end
+
+    def issue_marker_ids(issue)
+      issue["body"].to_s.scan(TICKET_MARKER).flatten.map(&:upcase)
     end
 
     def mapping_conflicts(issues_by_ticket)
@@ -124,6 +140,8 @@ module ProductFactory
       remote_issues.each do |issue|
         ids = issue_ticket_ids(issue)
         ids.each { |ticket_id| conflicts[ticket_id] << issue_number(issue) } if ids.length > 1
+        markers = issue_marker_ids(issue)
+        markers.uniq.each { |ticket_id| conflicts[ticket_id] << issue_number(issue) } if markers.length > markers.uniq.length
       end
 
       @local.group_by { |_ticket_id, ticket| ticket["github_issue"]&.to_i }.each do |number, tickets|
@@ -217,6 +235,27 @@ module ProductFactory
       end
     end
 
+    def schema_operations
+      fields = @remote.key?("project_fields") || @remote.key?(:project_fields) ? Array(@remote["project_fields"] || @remote[:project_fields]) : nil
+      return [ operation(:escalate, nil, nil, "reason" => "GitHub Project field snapshot is missing") ] unless fields
+
+      indexed = fields.map { |field| stringify_keys(field) }.to_h { |field| [ field["name"], field ] }
+      PROJECT_FIELD_TYPES.filter_map do |name, data_type|
+        field = indexed[name]
+        if field.nil?
+          attributes = { "field" => name, "data_type" => data_type }
+          attributes["options"] = STATUS_OPTIONS if name == "Status"
+          operation(:project_field_create, nil, nil, attributes)
+        elsif field["data_type"].to_s.upcase != data_type ||
+            (name == "Status" && (STATUS_OPTIONS - Array(field["options"]).map(&:to_s)).any?)
+          operation(:escalate, nil, nil,
+            "reason" => "incompatible GitHub Project field",
+            "field" => name,
+            "expected_type" => data_type)
+        end
+      end
+    end
+
     def missing_projection_fields(ticket)
       %w[title body idea_id epic_id factory_run].select { |field| ticket[field].to_s.strip.empty? }
     end
@@ -236,6 +275,12 @@ module ProductFactory
 
     def operation(action, ticket_id, issue_number, attributes)
       GitHubOperation.new(action, ticket_id, issue_number, attributes)
+    end
+
+    def sorted(operations)
+      operations.sort_by do |item|
+        [ item.ticket_id.to_s, item.action.to_s, item.attributes.fetch("field", ""), item.issue_number.to_i ]
+      end
     end
 
     def stringify_keys(hash)

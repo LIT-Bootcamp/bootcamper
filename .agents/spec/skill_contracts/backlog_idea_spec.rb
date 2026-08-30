@@ -36,6 +36,8 @@ RSpec.describe "Backlog reconciliation skill contract" do
     expect(procedure).to include("--limit 1000")
     expect(procedure).to include("Immediately before apply")
     expect(procedure).to include("Compare their hashes")
+    expect(procedure).to include("local projection digest")
+    expect(procedure).to include("repository base commit")
   end
 
   it "requires project authorization and configures the complete managed field set" do
@@ -47,6 +49,9 @@ RSpec.describe "Backlog reconciliation skill contract" do
     expect(procedure).to include("one field per invocation")
     expect(procedure).to include("journal entry")
     expect(procedure).to include("explicit Project-add operation")
+    expect(procedure).to include("gh project field-list")
+    expect(procedure).to include("gh project field-create")
+    expect(procedure).to include("incompatible type")
     expect(content).to include(
       "Idea", "Epic", "Ticket ID", "Priority", "Status", "Estimate", "Dependencies",
       "Source Version", "Factory Run"

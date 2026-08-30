@@ -34,12 +34,21 @@ RSpec.describe ProductFactory::GitHubPlan do
     }.merge(overrides.transform_keys(&:to_s))
   end
 
-  def remote(issues: [], project_items: [], pull_requests: [], branches: [])
+  def project_fields
+    ProductFactory::GitHubPlan::PROJECT_FIELD_TYPES.map do |name, data_type|
+      field = { "name" => name, "data_type" => data_type }
+      field["options"] = ProductFactory::GitHubPlan::STATUS_OPTIONS if name == "Status"
+      field
+    end
+  end
+
+  def remote(issues: [], project_items: [], pull_requests: [], branches: [], project_fields: self.project_fields)
     {
       "issues" => issues,
       "project_items" => project_items,
       "pull_requests" => pull_requests,
-      "branches" => branches
+      "branches" => branches,
+      "project_fields" => project_fields
     }
   end
 
@@ -63,6 +72,32 @@ RSpec.describe ProductFactory::GitHubPlan do
     expect(operations.select { |operation| operation.action == :project_field }.map { |operation| operation.attributes.fetch("field") }).to contain_exactly(
       "Idea", "Epic", "Ticket ID", "Priority", "Status", "Estimate", "Dependencies", "Source Version", "Factory Run"
     )
+  end
+
+  it "previews creation of every missing GitHub Project field" do
+    operations = plan({}, remote(project_fields: []))
+
+    schema = operations.select { |operation| operation.action == :project_field_create }
+    expect(schema.map { |operation| operation.attributes.fetch("field") }).to contain_exactly(
+      "Idea", "Epic", "Ticket ID", "Priority", "Status", "Estimate", "Dependencies", "Source Version", "Factory Run"
+    )
+    expect(schema.find { |operation| operation.attributes["field"] == "Status" }.attributes).to include(
+      "data_type" => "SINGLE_SELECT",
+      "options" => ProductFactory::GitHubPlan::STATUS_OPTIONS
+    )
+  end
+
+  it "escalates an incompatible same-name GitHub Project field" do
+    fields = project_fields.map(&:dup)
+    fields.find { |field| field["name"] == "Priority" }["data_type"] = "TEXT"
+
+    expect(plan({}, remote(project_fields: fields))).to eq([
+      ProductFactory::GitHubOperation.new(:escalate, nil, nil, {
+        "reason" => "incompatible GitHub Project field",
+        "field" => "Priority",
+        "expected_type" => "NUMBER"
+      })
+    ])
   end
 
   it "updates Git-authoritative issue content and changed managed project fields" do
@@ -130,6 +165,16 @@ RSpec.describe ProductFactory::GitHubPlan do
     )
 
     expect(operations.select { |operation| operation.action == :escalate }.map(&:ticket_id)).to contain_exactly("TICKET-001", "TICKET-002")
+  end
+
+  it "escalates remote-only conflicting and repeated markers" do
+    conflicting = issue(body: "#{MARKER}\n<!-- product-factory-ticket-id: TICKET-002 -->")
+    repeated = issue(number: 43, body: "#{MARKER}\n#{MARKER}")
+
+    operations = plan({}, remote(issues: [ conflicting, repeated ]))
+
+    expect(operations.select { |operation| operation.action == :escalate }.map(&:ticket_id)).to contain_exactly("TICKET-001", "TICKET-002")
+    expect(operations.find { |operation| operation.ticket_id == "TICKET-001" }.attributes.fetch("issue_numbers")).to contain_exactly(42, 43)
   end
 
   it "escalates when an explicit remote ID disagrees with the body marker" do

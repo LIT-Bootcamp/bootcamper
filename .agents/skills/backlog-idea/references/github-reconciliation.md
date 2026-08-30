@@ -8,7 +8,8 @@ Use this procedure only after the skill has produced a saved preview and the hum
 2. Confirm the authorized repository and Bootcamper Project identifiers. Do not infer a different target.
 3. Capture every issue with `gh issue list --state all --limit 1000 --json number,title,body,state,url` and every Project item with `gh project item-list ... --limit 1000 --format json`. Verify the returned counts against the corresponding repository and Project totals; paginate through the API instead when 1000 is insufficient. Capture branch and pull-request state needed to protect active implementation.
 4. Feed the recorded JSON and canonical ticket hashes to `ProductFactory::GitHubPlan`. Save its deterministic preview before apply.
-5. Immediately before apply, recapture issues, Project items, branches, and pull requests. Compare their hashes with the authorized snapshot. Abort, record the drift, and regenerate the preview if any reconciliation-relevant state changed.
+5. Save the validated local projection digest and repository base commit alongside the remote hashes and preview.
+6. Immediately before apply, revalidate the canonical artifacts and recompute the local projection digest and base commit. Recapture issues, Project fields, Project items, branches, and pull requests. Compare their hashes, including every local and remote digest, with the authorized snapshot. Abort, record the drift, and regenerate the preview if any reconciliation-relevant state changed.
 
 ## Issue operations
 
@@ -24,7 +25,11 @@ After a successful create, record the returned issue number in the TICKET manife
 
 ## Project fields
 
-The preview must contain an explicit Project-add operation before field operations whenever an issue is not already a Project item. The managed fields are `Idea`, `Epic`, `Ticket ID`, `Priority`, `Status`, `Estimate`, `Dependencies`, `Source Version`, and `Factory Run`. Resolve field and option IDs from the authorized Project. Run `gh project item-edit` for one field per invocation. Append a journal entry immediately after each successful field update with run ID, ticket ID, issue number, field, previous value, and new value.
+Before planning item changes, inspect the complete schema with `gh project field-list ... --format json`. The preview must include one schema operation for every missing managed field and an explicit Project-add operation before field operations whenever an issue is not already a Project item. Escalate a same-name field with an incompatible type or an incompatible `Status` option set.
+
+Create missing fields with `gh project field-create`, using text for `Idea`, `Epic`, `Ticket ID`, `Dependencies`, and `Factory Run`; number for `Priority`, `Estimate`, and `Source Version`; and single-select for `Status` with all factory lifecycle values. Journal every schema mutation. The managed fields are `Idea`, `Epic`, `Ticket ID`, `Priority`, `Status`, `Estimate`, `Dependencies`, `Source Version`, and `Factory Run`.
+
+Resolve field and option IDs from the authorized Project only after the schema operations succeed. Run `gh project item-edit` for one field per invocation. Append a journal entry immediately after each successful field update with run ID, ticket ID, issue number, field, previous value, and new value.
 
 Ignore fields outside this list. Git is authoritative for managed values, but never erase implementation evidence to repair drift.
 

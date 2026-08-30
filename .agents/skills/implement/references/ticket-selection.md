@@ -19,7 +19,7 @@ The required order is claim, then isolation:
 
 1. derive a collision-resistant branch name from the stable ticket ID and run ID;
 2. create a separate ticket branch and worktree from the intended base;
-3. move the started run record from the coordinator product root to the ticket worktree with `bin/product_factory move-run`, verifying the destination bytes before the source is removed;
+3. move the unfinished started run record from the coordinator product root to the ticket worktree with `bin/product_factory move-run`, verifying the destination bytes before the source is removed; the command is restart-safe for an identical partial copy and rejects any already-finished run;
 4. record both names and the absolute worktree path in the run evidence;
 5. make product, application, test, task-record, and remaining factory-run changes only in that worktree.
 

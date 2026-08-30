@@ -310,6 +310,23 @@ RSpec.describe ProductFactory::Repository do
       )
     end
   end
+
+  it "does not synthesize a destructive title when the immutable ticket has no heading" do
+    with_product do |root|
+      directory = write_manifest(root, id: "TICKET-001", kind: "ticket")
+      File.write(directory.join("v001.md"), <<~MARKDOWN)
+        ---
+        run_id: RUN-20260827T120000Z-a1b2c3
+        ---
+        Body without a title.
+      MARKDOWN
+
+      item = described_class.new(root: root).snapshot.fetch("TICKET-001")
+
+      expect(item).not_to have_key("title")
+      expect(item.fetch("body")).to include("Body without a title.")
+    end
+  end
 end
 
 RSpec.describe ProductFactory::Run do
@@ -331,6 +348,37 @@ RSpec.describe ProductFactory::Run do
         expect(Pathname(source).join("factory-log", "#{run.id}-started.yml")).not_to exist
         expect(Pathname(destination).join("factory-log", "#{run.id}-started.yml")).to exist
         expect { moved.finish!(status: "success", output_ids: [ "TICKET-001" ]) }.not_to raise_error
+      end
+    end
+  end
+
+  it "rejects moving a run that already has a terminal record" do
+    Dir.mktmpdir("product-factory-run-source") do |source|
+      Dir.mktmpdir("product-factory-run-destination") do |destination|
+        run = described_class.start(root: source, phase: "implement", source_ids: [])
+        run.finish!(status: "success", output_ids: [])
+
+        expect {
+          described_class.move!(source_root: source, destination_root: destination, id: run.id)
+        }.to raise_error(ProductFactory::ValidationError, /already finished/)
+      end
+    end
+  end
+
+  it "completes an interrupted identical move without duplicating the run" do
+    Dir.mktmpdir("product-factory-run-source") do |source|
+      Dir.mktmpdir("product-factory-run-destination") do |destination|
+        run = described_class.start(root: source, phase: "implement", source_ids: [])
+        source_path = Pathname(source).join("factory-log", "#{run.id}-started.yml")
+        destination_path = Pathname(destination).join("factory-log", source_path.basename)
+        FileUtils.mkdir_p(destination_path.dirname)
+        FileUtils.cp(source_path, destination_path)
+
+        moved = described_class.move!(source_root: source, destination_root: destination, id: run.id)
+
+        expect(source_path).not_to exist
+        expect(destination_path).to exist
+        expect { moved.finish!(status: "success", output_ids: []) }.not_to raise_error
       end
     end
   end
