@@ -1,0 +1,11 @@
+id: TICKET-003
+kind: ticket
+current_version: 1
+state: backlog-ready
+source_versions: { EPIC-001: 2 }
+content_sha256: bef62fcc1c101a10f54cf4b31c60dc89fe86f53433c017e8b288ec207f39b2df
+github_issue:
+dependencies: [TICKET-002]
+priority: 3
+estimate_days: 1.5
+scenarios: [SCENARIO-009, SCENARIO-010, SCENARIO-011]

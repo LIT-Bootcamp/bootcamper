@@ -1,0 +1,9 @@
+scenarios:
+  - { id: SCENARIO-013, tickets: [TICKET-005] }
+  - { id: SCENARIO-014, tickets: [TICKET-005] }
+  - { id: SCENARIO-015, tickets: [TICKET-005] }
+  - { id: SCENARIO-016, tickets: [TICKET-005] }
+  - { id: SCENARIO-017, tickets: [TICKET-006] }
+  - { id: SCENARIO-018, tickets: [TICKET-006] }
+  - { id: SCENARIO-019, tickets: [TICKET-006] }
+  - { id: SCENARIO-020, tickets: [TICKET-004] }
