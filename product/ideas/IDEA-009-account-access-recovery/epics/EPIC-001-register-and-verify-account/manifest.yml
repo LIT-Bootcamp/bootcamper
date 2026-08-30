@@ -1,0 +1,11 @@
+id: EPIC-001
+kind: epic
+current_version: 1
+state: BA-ready
+source_versions:
+  IDEA-009: 2
+content_sha256: d0c4b31a0353f3fc4105c1958fdf7596bb8f681eae40fa6e57e074569d78baa8
+github_issue:
+dependencies: []
+priority: 1
+estimate_days: 0

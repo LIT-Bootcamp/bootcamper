@@ -20,7 +20,7 @@ RSpec.describe "Local quality gate" do # rubocop:disable RSpec/DescribeClass
   end
 
   it "runs quality before push" do
-    expect(pre_push).to include("RAILS_ENV=test bin/quality")
+    expect(pre_push).to include("env -u GIT_DIR -u GIT_WORK_TREE RAILS_ENV=test bin/quality")
   end
 
   it "runs tests before push" do

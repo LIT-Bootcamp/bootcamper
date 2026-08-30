@@ -1,0 +1,11 @@
+id: IDEA-001
+kind: idea
+current_version: 2
+state: proposed
+source_versions:
+  IDEA-001: 1
+content_sha256: 99ad4119d2c8de7f6635102b05e3d3426672300ece10b048787162bd9557db99
+github_issue:
+dependencies: []
+priority: 6
+estimate_days: 0

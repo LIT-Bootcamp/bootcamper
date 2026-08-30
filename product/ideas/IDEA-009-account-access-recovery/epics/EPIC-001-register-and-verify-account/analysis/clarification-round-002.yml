@@ -1,0 +1,18 @@
+round: 2
+questions:
+  - id: Q2
+    artifact_version: IDEA-009/v002
+    question: Must an inactive learner verify their email before ordinary sign-in?
+    recommendation: confirmation_required
+  - id: Q7
+    artifact_version: IDEA-009/v002
+    question: May an administrator-blocked account complete confirmation or credential recovery?
+    recommendation: completion_allowed_but_access_remains_blocked
+answers:
+  - { question_id: Q2, answer: Confirmation is required before ordinary sign-in. }
+  - { question_id: Q7, answer: A blocked account may complete confirmation and credential recovery but remains blocked. }
+resolved: [Q2, Q7]
+open: []
+assumptions:
+  - Email confirmation is required before ordinary sign-in.
+  - Confirmation and recovery do not override an administrative block.

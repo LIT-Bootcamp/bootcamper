@@ -1,0 +1,119 @@
+---
+run_id: RUN-20260830T180637Z-97fbd8
+phase: ideation
+skill: ideation
+started_at: '2026-08-30T18:06:37Z'
+finished_at:
+source_ids:
+- IDEA-001
+- IDEA-002
+source_snapshot:
+  IDEA-001:
+    id: IDEA-001
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: 22cbf1aea0a05db2f07b1b23cfec90889f00fe841014e61bb906aa9c7f273542
+    github_issue:
+    dependencies: []
+    priority: 1
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-001-interactive-lessons/idea/manifest.yml
+    dependency_safe: false
+  IDEA-002:
+    id: IDEA-002
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: c3f1dfd75ebde1601ea76ccd7440a1a9057a501fae5972301cda789d919830cc
+    github_issue:
+    dependencies: []
+    priority: 2
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-002-learning-programs/idea/manifest.yml
+    dependency_safe: false
+  IDEA-003:
+    id: IDEA-003
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: ff148dcec504be429cd1c6d74a1f458fcbf1062355a55c3ff2a6dc45809b19f2
+    github_issue:
+    dependencies: []
+    priority: 3
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-003-assessment-feedback/idea/manifest.yml
+    dependency_safe: false
+  IDEA-004:
+    id: IDEA-004
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: 621d8d07442f20ec67bb11d30b97d61de2e1266fce631a0e3df2f17f5c5d6a4d
+    github_issue:
+    dependencies: []
+    priority: 4
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-004-progress-evidence/idea/manifest.yml
+    dependency_safe: false
+  IDEA-005:
+    id: IDEA-005
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: 3ca41510cf25b64197ec878920a82e546cea70673e860871747fb5ed8775268d
+    github_issue:
+    dependencies: []
+    priority: 5
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-005-mentor-guided-journey/idea/manifest.yml
+    dependency_safe: false
+  IDEA-006:
+    id: IDEA-006
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: 7cdfa9376374f942b1a2935be93b437076e93411bbcc2d6c148041d58a163dfa
+    github_issue:
+    dependencies: []
+    priority: 6
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-006-trusted-mentoring/idea/manifest.yml
+    dependency_safe: false
+  IDEA-007:
+    id: IDEA-007
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: f8361ccb46e156e499e3d5c4b32deedd3946d9ec53b8a40df6151c8e00a97746
+    github_issue:
+    dependencies: []
+    priority: 7
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-007-live-lectures/idea/manifest.yml
+    dependency_safe: false
+  IDEA-008:
+    id: IDEA-008
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: eb79279a0d574930e8064b6463af6c38ce086951f22e1e2d99824ec821617d68
+    github_issue:
+    dependencies: []
+    priority: 8
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-008-advanced-authoring/idea/manifest.yml
+    dependency_safe: false
+output_ids: []
+status: started
+external_changes: []
+error:
+next_action:

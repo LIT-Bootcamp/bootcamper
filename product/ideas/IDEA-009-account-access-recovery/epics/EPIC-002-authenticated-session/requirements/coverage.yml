@@ -1,0 +1,13 @@
+requirements:
+  - requirement_id: REQUIREMENT-006
+    happy_path: SCENARIO-013
+    edge_or_error: [SCENARIO-014, SCENARIO-015, SCENARIO-016]
+  - requirement_id: REQUIREMENT-007
+    happy_path: SCENARIO-017
+    edge_or_error: [SCENARIO-018]
+  - requirement_id: REQUIREMENT-008
+    happy_path: SCENARIO-019
+    edge_or_error: []
+  - requirement_id: REQUIREMENT-009
+    happy_path: SCENARIO-020
+    edge_or_error: []

@@ -1,0 +1,20 @@
+round: 1
+questions:
+  - { id: Q1, artifact_version: IDEA-009/v002, question: What identifier does a learner use to register sign in and request recovery? }
+  - { id: Q2, artifact_version: IDEA-009/v002, question: Is email confirmation mandatory before ordinary sign-in only before protected actions or optional? }
+  - { id: Q3, artifact_version: IDEA-009/v002, question: What information must a visitor provide to create the initial learner account? }
+  - { id: Q4, artifact_version: IDEA-009/v002, question: What do blocked and inactive mean and which access flows may each use? }
+  - { id: Q5, artifact_version: IDEA-009/v002, question: When may an unauthenticated flow disclose account existence? }
+  - { id: Q6, artifact_version: IDEA-009/v002, question: What happens to existing sessions after successful recovery? }
+answers:
+  - { question_id: Q1, answer: Email only accepted as a product assumption. }
+  - { question_id: Q2, answer: The approved IDEA does not decide the confirmation gate. }
+  - { question_id: Q3, answer: Email and password only accepted as the minimal product assumption. }
+  - { question_id: Q4, answer: Inactive means created but unverified; resend and recovery are allowed while sign-in depends on Q2. Blocked means an administrator denied access; sign-in is denied while confirmation and recovery remain undecided. }
+  - { question_id: Q5, answer: Show a generic acknowledgement until ownership is proven; disclose account-specific information only within a proven account context. }
+  - { question_id: Q6, answer: Successful recovery ends all existing sessions. }
+resolved: [Q1, Q3, Q5, Q6]
+open: [Q2, Q4]
+assumptions:
+  - Email is the sole account identifier.
+  - Registration requires only email and password.

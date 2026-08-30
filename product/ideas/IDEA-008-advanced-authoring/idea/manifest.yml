@@ -1,0 +1,10 @@
+id: IDEA-008
+kind: idea
+current_version: 1
+state: proposed
+source_versions: {}
+content_sha256: eb79279a0d574930e8064b6463af6c38ce086951f22e1e2d99824ec821617d68
+github_issue:
+dependencies: []
+priority: 18
+estimate_days: 0

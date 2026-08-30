@@ -1,0 +1,14 @@
+id: IDEA-009
+kind: idea
+current_version: 3
+state: analyzed
+source_versions:
+  IDEA-009: 2
+  EPIC-001: 1
+  EPIC-002: 1
+  EPIC-003: 1
+content_sha256: 6a38c5d99acc8e2f76189f8e072175f8d1ebd0c2189aa79a717f9afde526d050
+github_issue:
+dependencies: []
+priority: 1
+estimate_days: 0
