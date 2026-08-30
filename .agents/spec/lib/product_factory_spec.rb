@@ -4,7 +4,7 @@ require "open3"
 require "tmpdir"
 require "yaml"
 
-require_relative "../../lib/product_factory"
+require_relative "../../../lib/product_factory"
 
 RSpec.describe ProductFactory::Validator do
   def with_product

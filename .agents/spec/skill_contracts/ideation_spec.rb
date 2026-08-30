@@ -2,11 +2,13 @@
 
 require "rails_helper"
 
+# Contract specs intentionally assert several independent required phrases.
+# rubocop:disable RSpec/DescribeClass, RSpec/ExampleLength, RSpec/MultipleExpectations
 RSpec.describe "Ideation skill contract" do
-  SKILL_ROOT = Rails.root.join(".agents/skills/ideation")
+  let(:skill_root) { Rails.root.join(".agents/skills/ideation") }
 
   it "uses the isolated named Ideator and keeps ideation out of technical sources" do
-    content = File.read(SKILL_ROOT.join("SKILL.md"))
+    content = File.read(skill_root.join("SKILL.md"))
 
     expect(content).to include("bootcamper_ideator")
     expect(content).to include("no inherited conversation")
@@ -14,7 +16,7 @@ RSpec.describe "Ideation skill contract" do
   end
 
   it "refreshes stale or changed research and cites its evidence" do
-    content = File.read(SKILL_ROOT.join("SKILL.md"))
+    content = File.read(skill_root.join("SKILL.md"))
 
     expect(content).to include("older than 30 days")
     expect(content).to include("cited assumption changed")
@@ -23,7 +25,7 @@ RSpec.describe "Ideation skill contract" do
   end
 
   it "deduplicates, scores, validates, and records the ideation outcome" do
-    content = File.read(SKILL_ROOT.join("SKILL.md"))
+    content = File.read(skill_root.join("SKILL.md"))
 
     expect(content).to include("semantic comparison")
     expect(content).to include("User benefit")
@@ -39,8 +41,8 @@ RSpec.describe "Ideation skill contract" do
   end
 
   it "declares the requested interface and versioned IDEA format" do
-    metadata = File.read(SKILL_ROOT.join("agents/openai.yaml"))
-    format = File.read(SKILL_ROOT.join("references/idea-format.md"))
+    metadata = File.read(skill_root.join("agents/openai.yaml"))
+    format = File.read(skill_root.join("references/idea-format.md"))
 
     expect(metadata).to include('display_name: "Ideation"')
     expect(metadata).to include('short_description: "Research and rank product ideas"')
@@ -52,3 +54,4 @@ RSpec.describe "Ideation skill contract" do
     expect(format).to include("factory run entry")
   end
 end
+# rubocop:enable RSpec/DescribeClass, RSpec/ExampleLength, RSpec/MultipleExpectations
