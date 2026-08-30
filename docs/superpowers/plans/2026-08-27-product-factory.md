@@ -32,7 +32,7 @@
 - Create: `docs/product-factory/artifact-contract.md`
 - Create: `lib/product_factory.rb`
 - Create: `bin/product_factory`
-- Create: `spec/lib/product_factory_spec.rb`
+- Create: `.agents/spec/lib/product_factory_spec.rb`
 - Create: `product/factory-log/.gitkeep`
 - Create: `product/research/.gitkeep`
 - Create: `product/ideas/.gitkeep`
@@ -106,7 +106,7 @@ end
 
 - [ ] **Step 3: Run the specs and confirm the expected failure**
 
-Run: `mise exec ruby@4.0.6 -- bundle exec rspec spec/lib/product_factory_spec.rb`
+Run: `mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/lib/product_factory_spec.rb`
 
 Expected: FAIL because `ProductFactory` and the CLI do not exist.
 
@@ -149,7 +149,7 @@ Resolve the shared claim directory with `git rev-parse --git-common-dir`. Guard 
 Run:
 
 ```bash
-mise exec ruby@4.0.6 -- bundle exec rspec spec/lib/product_factory_spec.rb
+mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/lib/product_factory_spec.rb
 bin/product_factory validate --root product
 git diff --check
 ```
@@ -159,7 +159,7 @@ Expected: all specs pass, validation succeeds on the empty scaffold, and `git di
 - [ ] **Step 7: Commit through the lead workflow**
 
 ```bash
-git add docs/product-factory/artifact-contract.md lib/product_factory.rb bin/product_factory spec/lib/product_factory_spec.rb product
+git add docs/product-factory/artifact-contract.md lib/product_factory.rb bin/product_factory .agents/spec/lib/product_factory_spec.rb product
 bin/lead_bootcamper commit -m "feat: add product factory contracts"
 ```
 
@@ -171,7 +171,7 @@ bin/lead_bootcamper commit -m "feat: add product factory contracts"
 - Create: `.codex/agents/bootcamper-technical-lead.toml`
 - Create: `.codex/agents/bootcamper-backlogger.toml`
 - Create: `docs/product-factory/clarification-protocol.md`
-- Create: `spec/agent_contracts/product_factory_agents_spec.rb`
+- Create: `.agents/spec/agent_contracts/product_factory_agents_spec.rb`
 
 **Interfaces:**
 - Consumes: artifact contract from Task 1
@@ -183,7 +183,7 @@ Parse TOML as text because Ruby has no installed TOML parser. Assert each file h
 
 - [ ] **Step 2: Run the specs and confirm missing files fail**
 
-Run: `mise exec ruby@4.0.6 -- bundle exec rspec spec/agent_contracts/product_factory_agents_spec.rb`
+Run: `mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/agent_contracts/product_factory_agents_spec.rb`
 
 Expected: FAIL with missing agent contract paths.
 
@@ -211,7 +211,7 @@ Define three-round maximum, numbered questions, direct answers, resolved/open se
 Run:
 
 ```bash
-mise exec ruby@4.0.6 -- bundle exec rspec spec/agent_contracts/product_factory_agents_spec.rb
+mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/agent_contracts/product_factory_agents_spec.rb
 git diff --check
 ```
 
@@ -220,7 +220,7 @@ Expected: PASS and no whitespace errors.
 - [ ] **Step 6: Commit through the lead workflow**
 
 ```bash
-git add .codex/agents/bootcamper-*.toml docs/product-factory/clarification-protocol.md spec/agent_contracts/product_factory_agents_spec.rb
+git add .codex/agents/bootcamper-*.toml docs/product-factory/clarification-protocol.md .agents/spec/agent_contracts/product_factory_agents_spec.rb
 bin/lead_bootcamper commit -m "feat: add product factory agents"
 ```
 
@@ -230,7 +230,7 @@ bin/lead_bootcamper commit -m "feat: add product factory agents"
 - Create: `.agents/skills/ideation/SKILL.md`
 - Create: `.agents/skills/ideation/agents/openai.yaml`
 - Create: `.agents/skills/ideation/references/idea-format.md`
-- Create: `spec/skill_contracts/ideation_spec.rb`
+- Create: `.agents/spec/skill_contracts/ideation_spec.rb`
 
 **Interfaces:**
 - Consumes: product docs, backlog, prior IDEA manifests, and research verified within 30 days
@@ -242,7 +242,7 @@ Assert the skill requires the named Ideator with isolated context, checks resear
 
 - [ ] **Step 2: Run the spec and confirm it fails**
 
-Run: `mise exec ruby@4.0.6 -- bundle exec rspec spec/skill_contracts/ideation_spec.rb`
+Run: `mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/skill_contracts/ideation_spec.rb`
 
 Expected: FAIL because `.agents/skills/ideation/SKILL.md` does not exist.
 
@@ -265,7 +265,7 @@ Run:
 
 ```bash
 python3 /Users/Denys_Zemlianoi/.codex/skills/.system/skill-creator/scripts/quick_validate.py .agents/skills/ideation
-mise exec ruby@4.0.6 -- bundle exec rspec spec/skill_contracts/ideation_spec.rb
+mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/skill_contracts/ideation_spec.rb
 git diff --check
 ```
 
@@ -274,7 +274,7 @@ Expected: validator and spec pass.
 - [ ] **Step 5: Commit through the lead workflow**
 
 ```bash
-git add .agents/skills/ideation spec/skill_contracts/ideation_spec.rb
+git add .agents/skills/ideation .agents/spec/skill_contracts/ideation_spec.rb
 bin/lead_bootcamper commit -m "feat: add ideation skill"
 ```
 
@@ -284,7 +284,7 @@ bin/lead_bootcamper commit -m "feat: add ideation skill"
 - Create: `.agents/skills/idea-analyze/SKILL.md`
 - Create: `.agents/skills/idea-analyze/agents/openai.yaml`
 - Create: `.agents/skills/idea-analyze/references/epic-and-gherkin-format.md`
-- Create: `spec/skill_contracts/idea_analyze_spec.rb`
+- Create: `.agents/spec/skill_contracts/idea_analyze_spec.rb`
 
 **Interfaces:**
 - Consumes: an explicit `IDEA-ID` in `proposed` state and the clarification protocol
@@ -296,7 +296,7 @@ Assert the invocation itself records `human-approved`, BA and Ideator use at mos
 
 - [ ] **Step 2: Confirm failure**
 
-Run: `mise exec ruby@4.0.6 -- bundle exec rspec spec/skill_contracts/idea_analyze_spec.rb`
+Run: `mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/skill_contracts/idea_analyze_spec.rb`
 
 Expected: FAIL because the skill is absent.
 
@@ -320,7 +320,7 @@ Run quick validation for `.agents/skills/idea-analyze`, its focused RSpec file, 
 - [ ] **Step 6: Commit through the lead workflow**
 
 ```bash
-git add .agents/skills/idea-analyze spec/skill_contracts/idea_analyze_spec.rb
+git add .agents/skills/idea-analyze .agents/spec/skill_contracts/idea_analyze_spec.rb
 bin/lead_bootcamper commit -m "feat: add idea analysis skill"
 ```
 
@@ -330,7 +330,7 @@ bin/lead_bootcamper commit -m "feat: add idea analysis skill"
 - Create: `.agents/skills/documentation-analyze/SKILL.md`
 - Create: `.agents/skills/documentation-analyze/agents/openai.yaml`
 - Create: `.agents/skills/documentation-analyze/references/ticket-format.md`
-- Create: `spec/skill_contracts/documentation_analyze_spec.rb`
+- Create: `.agents/spec/skill_contracts/documentation_analyze_spec.rb`
 
 **Interfaces:**
 - Consumes: every new or changed `BA-ready` EPIC version and the clarification protocol
@@ -342,7 +342,7 @@ Assert full-repository incremental scanning, optional IDEA filter, TL-to-BA thre
 
 - [ ] **Step 2: Confirm failure**
 
-Run: `mise exec ruby@4.0.6 -- bundle exec rspec spec/skill_contracts/documentation_analyze_spec.rb`
+Run: `mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/skill_contracts/documentation_analyze_spec.rb`
 
 Expected: FAIL because the skill is absent.
 
@@ -366,7 +366,7 @@ Run quick validation, focused RSpec, `bin/product_factory validate --root produc
 - [ ] **Step 6: Commit through the lead workflow**
 
 ```bash
-git add .agents/skills/documentation-analyze spec/skill_contracts/documentation_analyze_spec.rb
+git add .agents/skills/documentation-analyze .agents/spec/skill_contracts/documentation_analyze_spec.rb
 bin/lead_bootcamper commit -m "feat: add documentation analysis skill"
 ```
 
@@ -377,8 +377,8 @@ bin/lead_bootcamper commit -m "feat: add documentation analysis skill"
 - Create: `.agents/skills/backlog-idea/agents/openai.yaml`
 - Create: `.agents/skills/backlog-idea/references/github-reconciliation.md`
 - Create: `lib/product_factory/github_plan.rb`
-- Create: `spec/lib/product_factory/github_plan_spec.rb`
-- Create: `spec/skill_contracts/backlog_idea_spec.rb`
+- Create: `.agents/spec/lib/product_factory/github_plan_spec.rb`
+- Create: `.agents/spec/skill_contracts/backlog_idea_spec.rb`
 
 **Interfaces:**
 - Consumes: current ticket manifests, last successful backlog run, `gh issue list --json ...`, and `gh project item-list ... --format json`
@@ -396,7 +396,7 @@ The planner must be pure: it accepts local and remote hashes and returns operati
 
 - [ ] **Step 2: Confirm failure**
 
-Run: `mise exec ruby@4.0.6 -- bundle exec rspec spec/lib/product_factory/github_plan_spec.rb`
+Run: `mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/lib/product_factory/github_plan_spec.rb`
 
 Expected: FAIL because `ProductFactory::GitHubPlan` is absent.
 
@@ -424,7 +424,7 @@ interface:
 Run:
 
 ```bash
-mise exec ruby@4.0.6 -- bundle exec rspec spec/lib/product_factory/github_plan_spec.rb spec/skill_contracts/backlog_idea_spec.rb
+mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/lib/product_factory/github_plan_spec.rb .agents/spec/skill_contracts/backlog_idea_spec.rb
 python3 /Users/Denys_Zemlianoi/.codex/skills/.system/skill-creator/scripts/quick_validate.py .agents/skills/backlog-idea
 git diff --check
 ```
@@ -434,7 +434,7 @@ Expected: all pass. Do not run a live reconciliation during this task.
 - [ ] **Step 7: Commit through the lead workflow**
 
 ```bash
-git add .agents/skills/backlog-idea lib/product_factory/github_plan.rb spec/lib/product_factory/github_plan_spec.rb spec/skill_contracts/backlog_idea_spec.rb
+git add .agents/skills/backlog-idea lib/product_factory/github_plan.rb .agents/spec/lib/product_factory/github_plan_spec.rb .agents/spec/skill_contracts/backlog_idea_spec.rb
 bin/lead_bootcamper commit -m "feat: add backlog reconciliation"
 ```
 
@@ -445,7 +445,7 @@ bin/lead_bootcamper commit -m "feat: add backlog reconciliation"
 - Modify: `.agents/skills/implement-rails-ticket/references/preflight-and-approval.md`
 - Modify: `.agents/skills/deliver-rails-ticket/SKILL.md`
 - Modify: `.agents/skills/deliver-rails-ticket/references/review-and-close.md`
-- Create: `spec/skill_contracts/factory_delivery_mode_spec.rb`
+- Create: `.agents/spec/skill_contracts/factory_delivery_mode_spec.rb`
 
 **Interfaces:**
 - Consumes: an explicitly user-selected ticket in ordinary mode, or a claimed factory ticket whose IDEA lineage records human approval
@@ -468,7 +468,7 @@ Assert factory mode may not merge, expand ticket scope, waive consequential ambi
 
 - [ ] **Step 2: Confirm failure**
 
-Run: `mise exec ruby@4.0.6 -- bundle exec rspec spec/skill_contracts/factory_delivery_mode_spec.rb`
+Run: `mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/skill_contracts/factory_delivery_mode_spec.rb`
 
 Expected: FAIL because current skills reject backlog selection and lack factory mode.
 
@@ -485,7 +485,7 @@ Lead may commit, push, and open the PR. It must stop with the ticket at `ready-f
 Run:
 
 ```bash
-mise exec ruby@4.0.6 -- bundle exec rspec spec/skill_contracts/factory_delivery_mode_spec.rb
+mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/skill_contracts/factory_delivery_mode_spec.rb
 git diff --check
 ```
 
@@ -494,7 +494,7 @@ Expected: factory and ordinary contracts both pass.
 - [ ] **Step 6: Commit through the lead workflow**
 
 ```bash
-git add .agents/skills/implement-rails-ticket .agents/skills/deliver-rails-ticket spec/skill_contracts/factory_delivery_mode_spec.rb
+git add .agents/skills/implement-rails-ticket .agents/skills/deliver-rails-ticket .agents/spec/skill_contracts/factory_delivery_mode_spec.rb
 bin/lead_bootcamper commit -m "feat: support factory ticket delivery"
 ```
 
@@ -504,7 +504,7 @@ bin/lead_bootcamper commit -m "feat: support factory ticket delivery"
 - Create: `.agents/skills/implement/SKILL.md`
 - Create: `.agents/skills/implement/agents/openai.yaml`
 - Create: `.agents/skills/implement/references/ticket-selection.md`
-- Create: `spec/skill_contracts/implement_spec.rb`
+- Create: `.agents/spec/skill_contracts/implement_spec.rb`
 
 **Interfaces:**
 - Consumes: `bin/product_factory next-ticket`, claim registry, ticket version, and factory mode from Task 7
@@ -516,7 +516,7 @@ Assert priority/dependency-safe selection, one ticket per invocation, shared cla
 
 - [ ] **Step 2: Confirm failure**
 
-Run: `mise exec ruby@4.0.6 -- bundle exec rspec spec/skill_contracts/implement_spec.rb`
+Run: `mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/skill_contracts/implement_spec.rb`
 
 Expected: FAIL because `.agents/skills/implement/SKILL.md` does not exist.
 
@@ -552,15 +552,15 @@ Run quick validation, focused RSpec, and `git diff --check`. Expected: all pass.
 - [ ] **Step 6: Commit through the lead workflow**
 
 ```bash
-git add .agents/skills/implement spec/skill_contracts/implement_spec.rb
+git add .agents/skills/implement .agents/spec/skill_contracts/implement_spec.rb
 bin/lead_bootcamper commit -m "feat: add factory implementation skill"
 ```
 
 ### Task 9: Run end-to-end fixture validation and document invocation
 
 **Files:**
-- Create: `spec/fixtures/product_factory/approved_idea/**`
-- Create: `spec/system/product_factory_pipeline_spec.rb`
+- Create: `.agents/spec/fixtures/product_factory/approved_idea/**`
+- Create: `.agents/spec/system/product_factory_pipeline_spec.rb`
 - Modify: `README.md`
 
 **Interfaces:**
@@ -587,7 +587,7 @@ Feed recorded GitHub JSON to `GitHubPlan`; do not contact GitHub.
 
 - [ ] **Step 3: Run the spec and fix only integration defects**
 
-Run: `mise exec ruby@4.0.6 -- bundle exec rspec spec/system/product_factory_pipeline_spec.rb`
+Run: `mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/system/product_factory_pipeline_spec.rb`
 
 Expected before fixes: FAIL on the first mismatched shared contract. Apply the minimum fix to the owning Task 1-8 file, then rerun until PASS.
 
@@ -610,7 +610,7 @@ Explain in one sentence that Git artifacts are canonical, each phase is incremen
 Run:
 
 ```bash
-mise exec ruby@4.0.6 -- bundle exec rspec spec/lib/product_factory_spec.rb spec/lib/product_factory/github_plan_spec.rb spec/agent_contracts spec/skill_contracts spec/system/product_factory_pipeline_spec.rb
+mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec/lib/product_factory_spec.rb .agents/spec/lib/product_factory/github_plan_spec.rb .agents/spec/agent_contracts .agents/spec/skill_contracts .agents/spec/system/product_factory_pipeline_spec.rb
 for skill in ideation idea-analyze documentation-analyze backlog-idea implement; do python3 /Users/Denys_Zemlianoi/.codex/skills/.system/skill-creator/scripts/quick_validate.py ".agents/skills/$skill"; done
 git diff --check
 ```
@@ -624,7 +624,7 @@ In a temporary copy of the fixture, invoke each skill with its realistic command
 - [ ] **Step 7: Commit through the lead workflow**
 
 ```bash
-git add spec/fixtures/product_factory spec/system/product_factory_pipeline_spec.rb README.md
+git add .agents/spec/fixtures/product_factory .agents/spec/system/product_factory_pipeline_spec.rb README.md
 bin/lead_bootcamper commit -m "test: verify product factory pipeline"
 ```
 

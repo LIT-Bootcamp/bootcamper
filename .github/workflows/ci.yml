@@ -146,7 +146,7 @@ jobs:
           -e DATABASE_PASSWORD=postgres
           -e DATABASE_NAME=bootcamper_test
           $TEST_IMAGE
-          sh -c "bin/rails db:prepare && bundle exec rspec"
+          sh -c "bin/rails db:prepare && bundle exec rspec && env -u CI bin/product_factory test"
       - name: Share coverage report
         if: always()
         uses: actions/upload-artifact@v7

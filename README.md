@@ -75,3 +75,15 @@ database consistency, ERB Lint, and the frozen AnnotateRb schema check. All
 checks fail closed; Bundler Audit therefore requires network access.
 
 CI supplies `RAILS_MASTER_KEY_DEVELOPMENT` and `POSTGRES_PASSWORD_DEVELOPMENT` for the development build/smoke steps, and `RAILS_MASTER_KEY_TEST` and `POSTGRES_PASSWORD_TEST` for test/quality steps. Each password must match `database.password` in its corresponding encrypted credentials file. Missing secrets, encrypted files, or required `database` entries fail boot with a non-secret diagnostic.
+
+## Product Factory
+
+Git artifacts are canonical, every phase is incremental, and a human must merge every pull request. See the [factory design](docs/superpowers/specs/2026-08-27-product-factory-design.md) and [artifact contract](docs/product-factory/artifact-contract.md).
+
+```text
+$ideation
+$idea-analyze IDEA-001
+$documentation-analyze
+$backlog-idea
+$implement
+```

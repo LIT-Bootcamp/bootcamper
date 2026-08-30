@@ -27,3 +27,20 @@ Consequential questions can affect scope, behavior, architecture, dependencies, 
 Forward every answer to the same engineer and request a resolved plan containing bounded steps, explicit non-goals, TDD or alternative verification by change type, expected components and data changes, risks, rollout/rollback considerations, reversible assumptions, and the self-review/immutable-handoff plan.
 
 Ask the user to approve execution of that exact plan. Record approval only after a clear affirmative response. Any material revision requires fresh approval.
+
+## Factory Mode Preflight
+
+Factory Mode may skip per-ticket plan approval only after read-only verification of the complete factory envelope:
+
+```yaml
+factory_mode: true
+ticket_state: in-progress
+claim_run_id: RUN-...
+idea_state: analyzed
+epic_state: TL-approved
+dependencies_satisfied: true
+```
+
+Resolve the canonical immutable ticket version and prove that it belongs to a human-approved IDEA lineage, the referenced EPIC is `TL-approved`, the ticket is `in-progress`, every dependency is satisfied, and the claim registry contains an active claim for the same ticket and `claim_run_id`. A stale claim, conflicting version, failed dependency, or incomplete lineage is `BLOCKED`; do not fall back to ordinary mode silently.
+
+Send the immutable ticket version, acceptance criteria, explicit non-goals, allowed scope, lineage evidence, dependency evidence, and claim identity to the same engineer as the approved scope boundary. The engineer still identifies risks, test strategy, reversible assumptions, and consequential ambiguity, but does not ask for approval of a substitute implementation plan. Stop before mutation for any unanswered consequential question. When material evidence changes behavior, architecture, dependencies, public contracts, security/privacy, cost, data integrity, migration strategy, or destructive effects, require a newly approved immutable ticket version; approval of the original lineage does not waive that change.

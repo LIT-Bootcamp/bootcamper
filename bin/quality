@@ -21,7 +21,7 @@ list = ARGV.delete("--list")
 group = ARGV.shift || "all"
 abort("Usage: bin/quality [be|fe|checks|all]") unless ARGV.empty? && (group == "all" || groups.key?(group))
 
-checks = group == "all" ? groups.values.flatten : groups.fetch(group)
+checks = group == "all" ? [ "droast --no-roast --fail-on warning .", *groups.values.flatten ] : groups.fetch(group)
 
 if list
   puts checks

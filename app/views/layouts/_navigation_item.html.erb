@@ -3,7 +3,7 @@
 <% key, path = item %>
 <% active = request.path == path %>
 <li>
-  <%= link_to path, class: ["group flex min-h-11 items-center gap-2 rounded-pill px-3 py-2 font-body text-sm font-semibold transition-colors", mobile ? "min-h-14 flex-col justify-center gap-0.5 px-1 text-[0.68rem]" : nil, horizontal ? "whitespace-nowrap border border-transparent hover:border-border" : nil, active ? "border-teal/60 bg-teal/15 text-teal shadow-[0_0_0.75rem_rgb(34_230_255_/_0.12)]" : "text-ink-muted hover:bg-teal/10 hover:text-ink"].compact.join(" "), aria: { current: ("page" if active) } do %>
+  <%= link_to path, class: [ "group flex min-h-11 items-center gap-2 rounded-pill px-3 py-2 font-body text-sm font-semibold transition-colors", mobile ? "min-h-14 flex-col justify-center gap-0.5 px-1 text-[0.68rem]" : nil, horizontal ? "whitespace-nowrap border border-transparent hover:border-border" : nil, active ? "border-teal/60 bg-teal/15 text-teal shadow-[0_0_0.75rem_rgb(34_230_255_/_0.12)]" : "text-ink-muted hover:bg-teal/10 hover:text-ink" ].compact.join(" "), aria: { current: ("page" if active) } do %>
     <span class="text-copper group-hover:text-teal"><%= render "layouts/navigation_icon", key: key %></span>
     <span><%= t("navigation.items.#{key}") %></span>
   <% end %>

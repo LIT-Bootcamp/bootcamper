@@ -1,0 +1,35 @@
+{
+  "project_fields": {
+    "totalCount": 0,
+    "nodes": []
+  },
+  "issues": [
+    {
+      "number": 201,
+      "state": "CLOSED",
+      "title": "TICKET-001 accept application",
+      "body": "Observable goal for TICKET-001.\n\n<!-- product-factory-ticket-id: TICKET-001 -->"
+    },
+    {
+      "number": 202,
+      "state": "OPEN",
+      "title": "TICKET-002 show next action",
+      "body": "Observable goal for TICKET-002.\n\n<!-- product-factory-ticket-id: TICKET-002 -->"
+    },
+    {
+      "number": 203,
+      "state": "OPEN",
+      "title": "TICKET-003 remove legacy path",
+      "body": "Observable goal for TICKET-003.\n\n<!-- product-factory-ticket-id: TICKET-003 -->"
+    }
+  ],
+  "project_items": [],
+  "pull_requests": [
+    {
+      "ticket_id": "TICKET-001",
+      "number": 301,
+      "state": "MERGED"
+    }
+  ],
+  "branches": []
+}
