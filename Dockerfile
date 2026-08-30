@@ -21,6 +21,8 @@ FROM development AS test
 
 ENV RAILS_ENV=test
 
+RUN REQUIRE_MASTER_KEY=false DATABASE_URL=postgresql:///bootcamper_build bin/rails tailwindcss:build
+
 FROM base AS production-build
 
 ENV RAILS_ENV=production \
