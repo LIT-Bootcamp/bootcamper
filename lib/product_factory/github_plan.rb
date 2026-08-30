@@ -24,17 +24,20 @@ module ProductFactory
 
     def operations
       operations = []
-      issues_by_ticket = remote_issues.group_by { |issue| issue_ticket_id(issue) }.reject { |ticket_id, _issues| ticket_id.nil? }
-      ambiguous = ambiguous_ticket_ids(issues_by_ticket)
+      issues_by_ticket = remote_issues.filter_map do |issue|
+        ids = issue_ticket_ids(issue)
+        [ ids.first, issue ] if ids.one?
+      end.group_by(&:first).transform_values { |pairs| pairs.map(&:last) }
+      conflicts = mapping_conflicts(issues_by_ticket)
 
       (@local.keys | issues_by_ticket.keys).sort.each do |ticket_id|
         matches = issues_by_ticket.fetch(ticket_id, [])
         local_ticket = @local[ticket_id]
 
-        if ambiguous.include?(ticket_id) || conflicting_manifest_mapping?(local_ticket, matches)
+        if conflicts.key?(ticket_id)
           operations << operation(:escalate, ticket_id, nil,
             "reason" => "ambiguous stable Ticket ID mapping",
-            "issue_numbers" => matches.map { |issue| issue_number(issue) }.compact.sort)
+            "issue_numbers" => conflicts.fetch(ticket_id).to_a.compact.sort)
           next
         end
 
@@ -51,6 +54,14 @@ module ProductFactory
           next
         end
 
+        missing_projection = missing_projection_fields(local_ticket)
+        unless missing_projection.empty?
+          operations << operation(:escalate, ticket_id, issue && issue_number(issue),
+            "reason" => "canonical ticket projection is incomplete",
+            "missing_fields" => missing_projection)
+          next
+        end
+
         merged = merged_pull_request(ticket_id)
         if merged && local_ticket["state"] != "done"
           operations << operation(:complete_merged, ticket_id, issue && issue_number(issue),
@@ -60,6 +71,7 @@ module ProductFactory
 
         if issue.nil?
           operations << operation(:create, ticket_id, nil, issue_attributes(local_ticket))
+          operations << operation(:project_add, ticket_id, nil, {})
           operations.concat(project_field_operations(ticket_id, nil, local_ticket, {}))
           next
         end
@@ -72,7 +84,9 @@ module ProductFactory
           operations << operation(:update, ticket_id, number, desired_issue)
         end
 
-        fields = project_item_fields(number)
+        item = project_item(number)
+        operations << operation(:project_add, ticket_id, number, {}) unless item
+        fields = item ? stringify_keys(item["fields"] || {}) : {}
         operations.concat(project_field_operations(ticket_id, number, local_ticket, fields))
       end
 
@@ -95,23 +109,40 @@ module ProductFactory
       Array(@remote["issues"] || @remote[:issues]).map { |issue| stringify_keys(issue) }
     end
 
-    def issue_ticket_id(issue)
+    def issue_ticket_ids(issue)
+      ids = issue["body"].to_s.scan(TICKET_MARKER).flatten.map(&:upcase)
       explicit = issue["ticket_id"].to_s.upcase
-      return explicit if explicit.match?(/\ATICKET-\d{3,}\z/)
-
-      issue["body"].to_s[TICKET_MARKER, 1]&.upcase
+      ids << explicit if explicit.match?(/\ATICKET-\d{3,}\z/)
+      ids.uniq.sort
     end
 
-    def ambiguous_ticket_ids(issues_by_ticket)
-      issues_by_ticket.select { |_ticket_id, issues| issues.length > 1 }.keys
-    end
+    def mapping_conflicts(issues_by_ticket)
+      conflicts = Hash.new { |hash, key| hash[key] = [] }
+      issues_by_ticket.each do |ticket_id, issues|
+        issues.each { |issue| conflicts[ticket_id] << issue_number(issue) } if issues.length > 1
+      end
+      remote_issues.each do |issue|
+        ids = issue_ticket_ids(issue)
+        ids.each { |ticket_id| conflicts[ticket_id] << issue_number(issue) } if ids.length > 1
+      end
 
-    def conflicting_manifest_mapping?(local_ticket, matches)
-      return false unless local_ticket && local_ticket["github_issue"]
+      @local.group_by { |_ticket_id, ticket| ticket["github_issue"]&.to_i }.each do |number, tickets|
+        next unless number && tickets.length > 1
 
-      mapped_number = local_ticket["github_issue"].to_i
-      marked_numbers = matches.map { |issue| issue_number(issue) }
-      marked_numbers.any? && !marked_numbers.include?(mapped_number) || marked_numbers.length > 1
+        tickets.each { |ticket_id, _ticket| conflicts[ticket_id] << number }
+      end
+
+      @local.each do |ticket_id, ticket|
+        next unless ticket["github_issue"]
+
+        number = ticket["github_issue"].to_i
+        issue = remote_issues.find { |candidate| issue_number(candidate) == number }
+        ids = issue ? issue_ticket_ids(issue) : []
+        next if ids.empty? || ids == [ ticket_id ]
+
+        ([ ticket_id ] + ids).uniq.each { |id| conflicts[id] << number }
+      end
+      conflicts.transform_values(&:uniq)
     end
 
     def mapped_issue(local_ticket, matches)
@@ -150,7 +181,7 @@ module ProductFactory
 
     def issue_attributes(ticket)
       {
-        "title" => ticket["title"].to_s.empty? ? ticket.fetch("id") : ticket["title"].to_s,
+        "title" => ticket.fetch("title").to_s,
         "body" => body_with_marker(ticket["body"], ticket.fetch("id"))
       }
     end
@@ -180,11 +211,14 @@ module ProductFactory
       end
     end
 
-    def project_item_fields(issue_number)
-      item = Array(@remote["project_items"] || @remote[:project_items]).map { |entry| stringify_keys(entry) }.find do |entry|
+    def project_item(issue_number)
+      Array(@remote["project_items"] || @remote[:project_items]).map { |entry| stringify_keys(entry) }.find do |entry|
         entry["issue_number"].to_i == issue_number.to_i
       end
-      stringify_keys(item && item["fields"] || {})
+    end
+
+    def missing_projection_fields(ticket)
+      %w[title body idea_id epic_id factory_run].select { |field| ticket[field].to_s.strip.empty? }
     end
 
     def active_ticket?(ticket)

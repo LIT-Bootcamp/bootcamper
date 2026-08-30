@@ -16,6 +16,7 @@ RSpec.describe "Product factory implementation skill contract" do
     expect(content).to include("bin/product_factory next-ticket --root product --run-id")
     expect(content).to include("exactly one ticket per invocation")
     expect(content).to include("claim before creating a branch or worktree")
+    expect(content).to include("bin/product_factory move-run")
     expect(selection).to include("highest-priority")
     expect(selection).to include("dependencies are satisfied")
     expect(selection).to include("shared Git common directory")
@@ -27,6 +28,7 @@ RSpec.describe "Product factory implementation skill contract" do
     content = File.read(skill_root.join("SKILL.md"))
 
     expect(content).to include("new immutable ticket version")
+    expect(content).to include("temporary product-tree copy")
     expect(content).to include("in-progress")
     expect(content).to include("deliver-rails-ticket")
     expect(content).to include("factory_mode: true")

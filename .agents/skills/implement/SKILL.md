@@ -22,7 +22,9 @@ If `next-ticket` returns exit status 3, finish the run as `no-op` and report tha
 
 After the claim succeeds, create a separate ticket branch and worktree as described in the reference. In that worktree, read the selected manifest and immutable ticket body, its source EPIC and IDEA versions, dependencies, and acceptance evidence. Verify that the IDEA is `analyzed`, the EPIC is `TL-approved`, the ticket is `available`, and all dependencies remain satisfied.
 
-Publish a new immutable ticket version with state `in-progress`, the immediate predecessor, this run ID, and a non-empty reason. Validate the new version before updating the manifest and changelog.
+Move the started run record into the ticket worktree with `bin/product_factory move-run --root COORDINATOR_PRODUCT_ROOT --destination-root TICKET_WORKTREE/product --run-id RUN-ID`, verify that it no longer exists in the coordinator tree, and run every later factory command from the ticket worktree.
+
+Publish a new immutable ticket version with state `in-progress`, the immediate predecessor, this run ID, and a non-empty reason. Stage the new version and proposed manifest together in a temporary product-tree copy, validate that complete candidate, then publish the version and manifest together before updating the changelog.
 
 Invoke the project-local `deliver-rails-ticket` skill in factory mode with this packet:
 

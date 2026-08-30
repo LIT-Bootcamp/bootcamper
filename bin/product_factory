@@ -15,6 +15,7 @@ require_relative "../lib/product_factory"
 options = { source_ids: [], output_ids: [], external_changes: [] }
 parser = OptionParser.new do |opts|
   opts.on("--root PATH") { |value| options[:root] = value }
+  opts.on("--destination-root PATH") { |value| options[:destination_root] = value }
   opts.on("--phase NAME") { |value| options[:phase] = value }
   opts.on("--run-id ID") { |value| options[:run_id] = value }
   opts.on("--ticket ID") { |value| options[:ticket] = value }
@@ -65,6 +66,10 @@ begin
     required!(options, :root, :run_id, :status)
     run_for(options[:root], options[:run_id]).finish!(status: options[:status], output_ids: options[:output_ids], external_changes: options[:external_changes], error: options[:error])
     puts JSON.generate(run_id: options[:run_id], status: options[:status])
+  when "move-run"
+    required!(options, :root, :destination_root, :run_id)
+    ProductFactory::Run.move!(source_root: options[:root], destination_root: options[:destination_root], id: options[:run_id])
+    puts JSON.generate(run_id: options[:run_id], root: options[:destination_root])
   when "next-ticket"
     required!(options, :root, :run_id)
     ticket = ProductFactory::Repository.new(root: options[:root]).next_ticket

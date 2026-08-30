@@ -19,14 +19,15 @@ The required order is claim, then isolation:
 
 1. derive a collision-resistant branch name from the stable ticket ID and run ID;
 2. create a separate ticket branch and worktree from the intended base;
-3. record both names and the absolute worktree path in the run evidence;
-4. make product, application, test, and task-record changes only in that worktree.
+3. move the started run record from the coordinator product root to the ticket worktree with `bin/product_factory move-run`, verifying the destination bytes before the source is removed;
+4. record both names and the absolute worktree path in the run evidence;
+5. make product, application, test, task-record, and remaining factory-run changes only in that worktree.
 
 Before delivery, re-read the selected manifest in the worktree. If it no longer matches the claimed `available` version or its dependencies are no longer satisfied, do not repair history or select a replacement. Preserve the worktree, release the transient claim, and escalate with the observed versions.
 
 ## Lifecycle publication
 
-Each lifecycle change creates a new immutable ticket version rather than editing the prior version. Publish `in-progress` before implementation, `in-review` before independent review, and `ready-for-human-merge` only after the pull request exists and all factory delivery gates pass. Each version names its immediate predecessor, run ID, author, source versions, state, and non-empty reason. Validate before changing the manifest or changelog.
+Each lifecycle change creates a new immutable ticket version rather than editing the prior version. Publish `in-progress` before implementation, `in-review` before independent review, and `ready-for-human-merge` only after the pull request exists and all factory delivery gates pass. Each version names its immediate predecessor, run ID, author, source versions, state, and non-empty reason. Validate the proposed version and manifest together in a temporary product-tree copy, then publish both together before changing the changelog.
 
 ## Cleanup and recovery
 

@@ -6,8 +6,9 @@ Use this procedure only after the skill has produced a saved preview and the hum
 
 1. Run `gh auth status` and verify the active token has repository access and the required project scope (`project`). Stop before mutation if either is absent.
 2. Confirm the authorized repository and Bootcamper Project identifiers. Do not infer a different target.
-3. Capture issues with `gh issue list --state all --json number,title,body,state,url` and Project items with `gh project item-list ... --format json`. Capture branch and pull-request state needed to protect active implementation.
+3. Capture every issue with `gh issue list --state all --limit 1000 --json number,title,body,state,url` and every Project item with `gh project item-list ... --limit 1000 --format json`. Verify the returned counts against the corresponding repository and Project totals; paginate through the API instead when 1000 is insufficient. Capture branch and pull-request state needed to protect active implementation.
 4. Feed the recorded JSON and canonical ticket hashes to `ProductFactory::GitHubPlan`. Save its deterministic preview before apply.
+5. Immediately before apply, recapture issues, Project items, branches, and pull requests. Compare their hashes with the authorized snapshot. Abort, record the drift, and regenerate the preview if any reconciliation-relevant state changed.
 
 ## Issue operations
 
@@ -23,7 +24,7 @@ After a successful create, record the returned issue number in the TICKET manife
 
 ## Project fields
 
-The managed fields are `Idea`, `Epic`, `Ticket ID`, `Priority`, `Status`, `Estimate`, `Dependencies`, `Source Version`, and `Factory Run`. Resolve field and option IDs from the authorized Project. Run `gh project item-edit` for one field per invocation. Append a journal entry immediately after each successful field update with run ID, ticket ID, issue number, field, previous value, and new value.
+The preview must contain an explicit Project-add operation before field operations whenever an issue is not already a Project item. The managed fields are `Idea`, `Epic`, `Ticket ID`, `Priority`, `Status`, `Estimate`, `Dependencies`, `Source Version`, and `Factory Run`. Resolve field and option IDs from the authorized Project. Run `gh project item-edit` for one field per invocation. Append a journal entry immediately after each successful field update with run ID, ticket ID, issue number, field, previous value, and new value.
 
 Ignore fields outside this list. Git is authoritative for managed values, but never erase implementation evidence to repair drift.
 

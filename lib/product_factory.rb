@@ -296,7 +296,9 @@ module ProductFactory
         manifest = YAML.safe_load(File.read(path), aliases: false)
         next unless manifest.is_a?(Hash) && manifest["id"]
 
-        [ manifest["id"], manifest.merge("manifest_path" => path.to_s) ]
+        item = manifest.merge("manifest_path" => path.to_s)
+        enrich_ticket_projection!(item, path) if manifest["kind"] == "ticket"
+        [ manifest["id"], item ]
       rescue Psych::Exception
         nil
       end.to_h
@@ -307,6 +309,23 @@ module ProductFactory
     end
 
     private
+
+    def enrich_ticket_projection!(item, manifest_path)
+      current = manifest_path.dirname.join(format("v%03d.md", item["current_version"]))
+      content = current.file? ? File.binread(current).gsub("\r\n", "\n") : ""
+      metadata_match = content.match(/\A---\n(.*?)\n---\n/m)
+      metadata = metadata_match ? YAML.safe_load(metadata_match[1], aliases: false) || {} : {}
+      body = metadata_match ? content[metadata_match.end(0)..].to_s.strip : content.strip
+      heading = body.lines.find { |line| line.match?(/\A#\s+/) }.to_s.sub(/\A#\s+/, "").strip
+      parts = manifest_path.each_filename.to_a
+      item["title"] = heading.empty? ? item["id"] : heading
+      item["body"] = body
+      item["idea_id"] = parts.find { |part| part.match?(/\AIDEA-\d{3,}(?:-|$)/) }&.match(/\AIDEA-\d{3,}/)&.to_s
+      item["epic_id"] = parts.find { |part| part.match?(/\AEPIC-\d{3,}(?:-|$)/) }&.match(/\AEPIC-\d{3,}/)&.to_s
+      item["factory_run"] = metadata["run_id"]
+    rescue Psych::Exception
+      nil
+    end
 
     def successful_snapshot(phase)
       records = @root.join("factory-log").glob("*-finished.yml").filter_map do |path|
@@ -342,6 +361,25 @@ module ProductFactory
     def initialize(path:, id:)
       @path = Pathname(path)
       @id = id
+    end
+
+    def self.move!(source_root:, destination_root:, id:)
+      source = Pathname(source_root).join("factory-log", "#{id}-started.yml")
+      destination_directory = Pathname(destination_root).join("factory-log")
+      destination = destination_directory.join(source.basename)
+      finished = destination_directory.join("#{id}-finished.yml")
+      raise ValidationError, "unknown run #{id}" unless source.file?
+      raise ValidationError, "run #{id} already exists at destination" if destination.exist? || finished.exist?
+
+      FileUtils.mkdir_p(destination_directory)
+      content = File.binread(source)
+      File.open(destination, "wx") { |file| file.write(content) }
+      raise ValidationError, "run #{id} move verification failed" unless File.binread(destination) == content
+
+      File.delete(source)
+      new(path: destination, id: id)
+    rescue Errno::EEXIST
+      raise ValidationError, "run #{id} already exists at destination"
     end
 
     def finish!(status:, output_ids:, external_changes: [], error: nil)

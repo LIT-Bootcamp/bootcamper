@@ -59,6 +59,7 @@ RSpec.describe ProductFactory::GitHubPlan do
       "title" => "Add course catalog",
       "body" => include(MARKER)
     )
+    expect(operations).to include(have_attributes(action: :project_add, ticket_id: "TICKET-001", issue_number: nil))
     expect(operations.select { |operation| operation.action == :project_field }.map { |operation| operation.attributes.fetch("field") }).to contain_exactly(
       "Idea", "Epic", "Ticket ID", "Priority", "Status", "Estimate", "Dependencies", "Source Version", "Factory Run"
     )
@@ -91,6 +92,13 @@ RSpec.describe ProductFactory::GitHubPlan do
     expect(operations).to include(have_attributes(action: :reopen, ticket_id: "TICKET-001", issue_number: 42))
   end
 
+  it "adds an existing mapped issue to the Project before field updates" do
+    operations = plan({ "TICKET-001" => ticket(github_issue: 42) }, remote(issues: [ issue ]))
+
+    expect(operations).to include(have_attributes(action: :project_add, ticket_id: "TICKET-001", issue_number: 42))
+    expect(operations).to include(have_attributes(action: :project_field, ticket_id: "TICKET-001", issue_number: 42))
+  end
+
   it "returns no operations when managed content is unchanged and ignores unmanaged manual drift" do
     fields = {
       "Idea" => "IDEA-001", "Epic" => "EPIC-001", "Ticket ID" => "TICKET-001", "Priority" => "1",
@@ -110,6 +118,53 @@ RSpec.describe ProductFactory::GitHubPlan do
       ProductFactory::GitHubOperation.new(:escalate, "TICKET-001", nil, {
         "reason" => "ambiguous stable Ticket ID mapping",
         "issue_numbers" => [ 42, 43 ]
+      })
+    ])
+  end
+
+  it "escalates when one issue contains conflicting markers" do
+    conflicting = issue(body: "#{MARKER}\n<!-- product-factory-ticket-id: TICKET-002 -->")
+    operations = plan(
+      { "TICKET-001" => ticket(github_issue: 42), "TICKET-002" => ticket(id: "TICKET-002") },
+      remote(issues: [ conflicting ])
+    )
+
+    expect(operations.select { |operation| operation.action == :escalate }.map(&:ticket_id)).to contain_exactly("TICKET-001", "TICKET-002")
+  end
+
+  it "escalates when an explicit remote ID disagrees with the body marker" do
+    conflicting = issue(ticket_id: "TICKET-002")
+    operations = plan(
+      { "TICKET-001" => ticket(github_issue: 42), "TICKET-002" => ticket(id: "TICKET-002") },
+      remote(issues: [ conflicting ])
+    )
+
+    expect(operations.select { |operation| operation.action == :escalate }.map(&:ticket_id)).to contain_exactly("TICKET-001", "TICKET-002")
+  end
+
+  it "escalates when local manifests claim the same GitHub issue" do
+    operations = plan(
+      {
+        "TICKET-001" => ticket(github_issue: 42),
+        "TICKET-002" => ticket(id: "TICKET-002", github_issue: 42)
+      },
+      remote(issues: [ issue ])
+    )
+
+    expect(operations.select { |operation| operation.action == :escalate }.map(&:ticket_id)).to contain_exactly("TICKET-001", "TICKET-002")
+  end
+
+  it "does not erase GitHub content when canonical projection values are missing" do
+    incomplete = ticket(github_issue: 42)
+    incomplete.delete("title")
+    incomplete.delete("body")
+
+    operations = plan({ "TICKET-001" => incomplete }, remote(issues: [ issue ]))
+
+    expect(operations).to eq([
+      ProductFactory::GitHubOperation.new(:escalate, "TICKET-001", 42, {
+        "reason" => "canonical ticket projection is incomplete",
+        "missing_fields" => [ "title", "body" ]
       })
     ])
   end

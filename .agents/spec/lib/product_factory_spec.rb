@@ -286,6 +286,30 @@ RSpec.describe ProductFactory::Repository do
       expect(described_class.new(root: root).next_ticket).not_to eq(slow.join("manifest.yml"))
     end
   end
+
+  it "derives GitHub projection data from the immutable ticket and lineage path" do
+    with_product do |root|
+      directory = write_manifest(root, id: "TICKET-001", kind: "ticket")
+      version = directory.join("v001.md")
+      File.write(version, <<~MARKDOWN)
+        ---
+        run_id: RUN-20260827T120000Z-a1b2c3
+        ---
+        # TICKET-001 Publish catalog
+
+        Show the public catalog.
+      MARKDOWN
+
+      item = described_class.new(root: root).snapshot.fetch("TICKET-001")
+
+      expect(item).to include(
+        "title" => "TICKET-001 Publish catalog",
+        "body" => include("Show the public catalog."),
+        "idea_id" => "IDEA-001",
+        "factory_run" => "RUN-20260827T120000Z-a1b2c3"
+      )
+    end
+  end
 end
 
 RSpec.describe ProductFactory::Run do
@@ -295,6 +319,19 @@ RSpec.describe ProductFactory::Run do
       run.finish!(status: "success", output_ids: [ "IDEA-001" ])
 
       expect { run.finish!(status: "escalated", output_ids: [], error: "late rewrite") }.to raise_error(ProductFactory::ValidationError, /already finished/)
+    end
+  end
+
+  it "moves an unfinished run into a ticket worktree root" do
+    Dir.mktmpdir("product-factory-run-source") do |source|
+      Dir.mktmpdir("product-factory-run-destination") do |destination|
+        run = described_class.start(root: source, phase: "implement", source_ids: [])
+        moved = described_class.move!(source_root: source, destination_root: destination, id: run.id)
+
+        expect(Pathname(source).join("factory-log", "#{run.id}-started.yml")).not_to exist
+        expect(Pathname(destination).join("factory-log", "#{run.id}-started.yml")).to exist
+        expect { moved.finish!(status: "success", output_ids: [ "TICKET-001" ]) }.not_to raise_error
+      end
     end
   end
 end
@@ -327,6 +364,31 @@ RSpec.describe "bin/product_factory" do
 
       expect(status).to be_success, stderr
       expect(JSON.parse(stdout)).to include("valid" => true)
+    end
+  end
+
+  it "moves and finishes a run through the CLI in another worktree root" do
+    Dir.mktmpdir("product-factory-cli-source") do |source|
+      Dir.mktmpdir("product-factory-cli-destination") do |destination|
+        started, stderr, status = Open3.capture3(
+          "bin/product_factory", "start-run", "--root", source, "--phase", "implement"
+        )
+        expect(status).to be_success, stderr
+        run_id = JSON.parse(started).fetch("run_id")
+
+        _stdout, stderr, status = Open3.capture3(
+          "bin/product_factory", "move-run", "--root", source,
+          "--destination-root", destination, "--run-id", run_id
+        )
+        expect(status).to be_success, stderr
+
+        _stdout, stderr, status = Open3.capture3(
+          "bin/product_factory", "finish-run", "--root", destination,
+          "--run-id", run_id, "--status", "success"
+        )
+        expect(status).to be_success, stderr
+        expect(Pathname(destination).join("factory-log", "#{run_id}-finished.yml")).to exist
+      end
     end
   end
 end
