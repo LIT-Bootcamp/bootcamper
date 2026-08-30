@@ -26,4 +26,12 @@ RSpec.describe "Local quality gate" do # rubocop:disable RSpec/DescribeClass
   it "runs tests before push" do
     expect(pre_push).to include("RAILS_ENV=test bundle exec rspec")
   end
+
+  it "tests factory tooling separately from Rails coverage", :aggregate_failures do
+    spec_helper = File.read(File.expand_path("../spec_helper.rb", __dir__))
+    workflow = File.read(File.expand_path("../../.github/workflows/ci.yml", __dir__))
+
+    expect(spec_helper).to include('skip "/lib/product_factory"')
+    expect(workflow).to include("bundle exec rspec && env -u CI bin/product_factory test")
+  end
 end

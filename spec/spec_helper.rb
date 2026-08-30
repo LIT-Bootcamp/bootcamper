@@ -3,6 +3,7 @@ require "simplecov"
 SimpleCov.start "rails" do
   enable_coverage :branch
   skip "/spec/"
+  skip "/lib/product_factory"
   minimum_coverage line: 99, branch: 84 if ENV["CI"]
 end
 
