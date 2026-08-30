@@ -1,7 +1,7 @@
 class PasswordsController < Devise::PasswordsController
   def create
     super
-  rescue ActionMailer::Error, Net::SMTPError, SocketError, SystemCallError, Timeout::Error => error
+  rescue SocketError, SystemCallError, Timeout::Error => error
     Rails.logger.warn("Password reset delivery unavailable (#{error.class})")
     redirect_to new_password_reset_path, notice: I18n.t("devise.passwords.send_paranoid_instructions")
   end

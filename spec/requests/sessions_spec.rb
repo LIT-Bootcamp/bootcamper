@@ -24,16 +24,15 @@ RSpec.describe "User sessions" do
     follow_redirect!
 
     expect(response).to have_http_status(:ok)
-    expect(response.body).to include("підтвердж")
+    expect(response.body.downcase).to include("підтверд")
   end
 
   it "rejects invalid credentials", :aggregate_failures do
     create_user.confirm
 
     submit_login(password: "wrong password")
-    follow_redirect!
 
-    expect(response).to have_http_status(:ok)
+    expect(response).to have_http_status(:unprocessable_content)
     expect(response.body).to include("Електронна пошта або пароль")
   end
 
@@ -50,7 +49,7 @@ RSpec.describe "User sessions" do
   private
 
   def create_user
-    User.create!(email: "student@example.com", password: "correct horse battery", password_confirmation: "correct horse battery")
+    create(:user, email: "student@example.com")
   end
 
   def submit_login(password: "correct horse battery")

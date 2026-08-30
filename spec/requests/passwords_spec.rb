@@ -16,7 +16,7 @@ RSpec.describe "Password recovery" do
     ActionMailer::Base.deliveries.clear
     unknown_response = request_reset_for("unknown@example.com")
 
-    expect(known_response).to eq(unknown_response)
+    expect(normalize_tokens(known_response)).to eq(normalize_tokens(unknown_response))
   end
 
   it "sends one reset link for a known address", :aggregate_failures do
@@ -30,7 +30,7 @@ RSpec.describe "Password recovery" do
 
   it "keeps the generic response when reset delivery fails", :aggregate_failures do
     user = create_user
-    allow(UserMailer).to receive(:reset_password_instructions).and_raise(ActionMailer::Error, "delivery unavailable")
+    allow(UserMailer).to receive(:reset_password_instructions).and_raise(SocketError, "delivery unavailable")
 
     response_body = request_reset_for(user.email)
 
@@ -84,7 +84,9 @@ RSpec.describe "Password recovery" do
   private
 
   def create_user
-    User.create!(email: "student@example.com", password: "correct horse battery", password_confirmation: "correct horse battery")
+    user = create(:user, email: "student@example.com")
+    ActionMailer::Base.deliveries.clear
+    user
   end
 
   def create_reset_user
@@ -92,8 +94,11 @@ RSpec.describe "Password recovery" do
   end
 
   def apply_reset(token)
+    get edit_password_reset_path, params: { reset_password_token: token }
+    csrf_token = response.body[/name="csrf-token" content="([^"]+)/, 1]
     patch password_reset_path,
-      params: { user: { reset_password_token: token, password: "new horse battery", password_confirmation: "new horse battery" } }
+      params: { user: { reset_password_token: token, password: "new horse battery", password_confirmation: "new horse battery" } },
+      headers: { "X-CSRF-Token" => csrf_token }
   end
 
   def apply_reset_twice(token)
@@ -101,9 +106,17 @@ RSpec.describe "Password recovery" do
   end
 
   def request_reset_for(email)
-    post password_reset_path, params: { user: { email: } }
+    get new_password_reset_path
+    csrf_token = response.body[/name="csrf-token" content="([^"]+)/, 1]
+    post password_reset_path,
+      params: { user: { email: } },
+      headers: { "X-CSRF-Token" => csrf_token }
     follow_redirect!
     response.body
+  end
+
+  def normalize_tokens(body)
+    body.gsub(/(csrf-token" content="|authenticity_token" value=")[^"]+/, '\\1TOKEN')
   end
 
   def reset_token_from_last_email

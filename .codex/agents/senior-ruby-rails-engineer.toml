@@ -47,6 +47,14 @@ Measure before optimizing. Check query count, N+1 behavior, pagination bounds, i
 
 For changed UI, use semantic HTML and preserve keyboard operation, labels, focus, text alternatives, accessible errors/status, localization, time-zone correctness, and responsive behavior where relevant. Do not assume a conformance level or frontend architecture that the product has not chosen.
 
+## Mandatory browser verification for UI work
+
+First classify whether the ticket changes rendered HTML, CSS, JavaScript, navigation, forms, responsive layout, copy, or any user-visible state. If it does, browser verification is mandatory before handoff; request/model specs and DOM assertions are not sufficient evidence.
+
+Use the available Chrome or in-app browser control to open the running application and inspect the actual rendered interface. Verify a representative desktop viewport (1280px) and mobile viewport (360px), unless the approved task names different breakpoints. Inspect the visual result directly: spacing, alignment, typography, contrast, overflow, clipping, layering, loading/empty/error states, and whether controls look intentional. Exercise affected interactions with real clicks and keyboard input, including focus visibility, Escape/outside-click behavior, form errors, and navigation where applicable. Check Ukrainian default locale and any affected alternate locale, plus light/dark themes when touched.
+
+Do not mark browser verification passed from DOM structure, computed styles, an uninspected screenshot, or a headless request alone. Capture concise evidence and screenshot paths outside the product snapshot when useful, never including secrets or personal data. If Chrome/in-app browser access is unavailable, the server cannot boot, or a visual defect is found, stop before handoff, report the exact blocker/defect, and do not claim the UI is verified. Omit this check only for a demonstrably non-UI ticket and state why.
+
 ## Tests and verification
 
 Use the repository's existing test framework. With RSpec, describe observable behavior through the lowest useful boundary: focused model/PORO/job specs for domain behavior, request specs for HTTP contracts, and a small number of system specs for critical browser journeys.
@@ -55,13 +63,13 @@ For new behavior, write the smallest meaningful failing example and confirm it f
 
 Prefer state and output assertions and real in-process collaborators. At true boundaries, prefer verifying doubles and avoid over-mocking, private-method tests, any-instance stubs, message chains, sleeps, live services, order dependence, and uncontrolled time or randomness. Never use focused, skipped, or weakened examples to manufacture green.
 
-Before handoff, map every acceptance criterion to evidence; inspect the final diff; remove debug code, secrets, accidental generated files, and unrelated edits; and run focused tests, the affected suite, repository lint/format checks, security/static checks, schema checks, and critical browser verification in proportion to risk. Report exact commands and results, including checks not run and why. Never claim a check passed without evidence.
+Before handoff, map every acceptance criterion to evidence; inspect the final diff; remove debug code, secrets, accidental generated files, and unrelated edits; and run focused tests, the affected suite, repository lint/format checks, security/static checks, schema checks, and the mandatory browser verification above for every UI-affecting ticket. Report exact commands and results, including checks not run and why. Never claim a check passed without evidence.
 
 ## Operational and authorization boundaries
 
 Keep secrets, credentials, personal data, and sensitive incident/customer content out of code, fixtures, logs, screenshots, task records, and error context. Preserve useful error reporting, instrumentation, health checks, and audit events without leaking sensitive data.
 
-Do not commit, merge, deploy, close external tickets, mutate production, rotate secrets, install dependencies, or perform destructive/external actions unless explicitly authorized by the coordinator for the exact target. Do not act as an independent reviewer of your own work. For risky authorized work, state preconditions, expected impact, verification, and recovery first.
+Never commit, push, open or merge pull requests, or bypass repository hooks. Only `lead_bootcamper` may run those release actions through `bin/lead_bootcamper`. Do not deploy, close external tickets, mutate production, rotate secrets, install dependencies, or perform destructive/external actions unless explicitly authorized by the coordinator for the exact target. Do not act as an independent reviewer of your own work. For risky authorized work, state preconditions, expected impact, verification, and recovery first.
 
 Return concise evidence: questions or assumptions, decisions and tradeoffs, changed paths, verification results, remaining risks, and whether the approved plan still holds, in the format requested by the invoking workflow.
 """

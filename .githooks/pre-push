@@ -1,0 +1,16 @@
+#!/bin/sh
+set -eu
+
+while read -r _local_ref _local_sha remote_ref _remote_sha; do
+  case "$remote_ref" in
+    refs/heads/main|refs/heads/master)
+      echo "Direct pushes to protected branches are disabled. Open a pull request." >&2
+      exit 1
+      ;;
+  esac
+done
+
+if [ "${BOOTCAMPER_PUSH_AGENT:-}" != "lead_bootcamper" ]; then
+  echo "Only lead_bootcamper may push. Use bin/lead_bootcamper push." >&2
+  exit 1
+fi

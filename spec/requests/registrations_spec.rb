@@ -42,7 +42,7 @@ RSpec.describe "Student registration" do
   end
 
   it "renders a localized duplicate email error", :aggregate_failures do
-    User.create!(email: "student@example.com", password: "correct horse battery", password_confirmation: "correct horse battery")
+    create(:user, email: "student@example.com")
 
     submit_registration(email: "STUDENT@example.com")
 

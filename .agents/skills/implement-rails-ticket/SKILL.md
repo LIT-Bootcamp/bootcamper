@@ -29,7 +29,7 @@ Required invariants:
 
 After approval, read [implementation-workflow.md](references/implementation-workflow.md), resume the same engineer, and create exactly one task record from [task-record.md](references/task-record.md). Default to `docs/engineering/tasks` only when the repository defines no location.
 
-Implement only the approved plan. Pause for a revised plan when evidence changes behavior, architecture, dependencies, public contracts, security/privacy, data integrity, migration strategy, or destructive effects. Preserve unrelated work.
+Implement only the approved plan on a ticket branch. Do not run `git commit`, `git push`, `gh pr create`, or merge commands; hand changed files and evidence to `lead_bootcamper`. Pause for a revised plan when evidence changes behavior, architecture, dependencies, public contracts, security/privacy, data integrity, migration strategy, or destructive effects. Preserve unrelated work.
 
 ## Handoff Boundary
 

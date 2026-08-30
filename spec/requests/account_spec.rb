@@ -18,7 +18,7 @@ RSpec.describe "Account access" do
   private
 
   def create_confirmed_user
-    User.create!(email: "student@example.com", password: "correct horse battery", password_confirmation: "correct horse battery").tap(&:confirm)
+    create(:user, :confirmed)
   end
 
   def request_account_as_anonymous
@@ -45,6 +45,6 @@ RSpec.describe "Account access" do
   def expect_account_navigation
     expect(response.body).to include("Твій обліковий запис")
     expect(response.body).to include("href=\"/account\"")
-      .and not_include("href=\"/tasks\"", "href=\"/team\"", "href=\"/calendar\"", "href=\"/profile\"")
+    expect(response.body).not_to include("href=\"/tasks\"", "href=\"/team\"", "href=\"/calendar\"", "href=\"/profile\"")
   end
 end

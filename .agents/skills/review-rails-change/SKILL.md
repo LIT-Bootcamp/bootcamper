@@ -26,6 +26,6 @@ Verify snapshot identity before inspection and after checks. The reviewer inspec
 
 Prioritize correctness, acceptance criteria, authorization/security, privacy, data integrity, migrations, concurrency/idempotency, regressions, Rails/Ruby/test conventions, maintainability, accessibility, and missing tests in proportion to the change.
 
-Report with [findings-format.md](references/findings-format.md). Do not edit tracked files, create commits, or communicate with the other reviewer before the initial verdict.
+Report with [findings-format.md](references/findings-format.md). Do not edit tracked files, create commits, push, open pull requests, or communicate with the other reviewer before the initial verdict.
 
 End with exactly one: `APPROVE` (no open Critical or Major findings), `CHANGES REQUIRED` (at least one Critical or Major finding), or `BLOCKED` (the immutable snapshot, isolation, or evidence needed for responsible review is unavailable).
