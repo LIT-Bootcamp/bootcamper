@@ -204,7 +204,7 @@ jobs:
           -e DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/bootcamper_smoke
           bootcamper-runtime:ci
       - name: Verify HTTP response
-        run: 'curl --fail --retry 10 --retry-delay 2 --header "X-Forwarded-Proto: https" http://127.0.0.1:3000/'
+        run: 'curl --fail --retry 10 --retry-delay 2 --retry-connrefused --header "X-Forwarded-Proto: https" http://127.0.0.1:3000/'
       - name: Show server logs
         if: failure()
         run: docker logs bootcamper-smoke || true
