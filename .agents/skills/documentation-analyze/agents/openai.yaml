@@ -1,0 +1,4 @@
+interface:
+  display_name: "Analyze Product Documentation"
+  short_description: "Turn changed Gherkin epics into atomic tickets"
+  default_prompt: "Use $documentation-analyze to incrementally review ready epics and create technical tickets."
