@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reconcile Product Backlog"
+  short_description: "Sync changed factory tickets to GitHub"
+  default_prompt: "Use $backlog-idea to incrementally reconcile product tickets with the Bootcamper GitHub Project."

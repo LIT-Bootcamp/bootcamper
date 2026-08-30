@@ -6,6 +6,7 @@ require "pathname"
 require "securerandom"
 require "time"
 require "yaml"
+require_relative "product_factory/github_plan"
 
 module ProductFactory
   Change = Data.define(:id, :kind, :status, :current_version, :previous_version)
