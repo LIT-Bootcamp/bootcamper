@@ -16,5 +16,5 @@ if [ "${BOOTCAMPER_PUSH_AGENT:-}" != "lead_bootcamper" ]; then
 fi
 
 RAILS_ENV=test bin/rails db:prepare
-RAILS_ENV=test bin/quality
+env -u GIT_DIR -u GIT_WORK_TREE RAILS_ENV=test bin/quality
 RAILS_ENV=test bundle exec rspec
