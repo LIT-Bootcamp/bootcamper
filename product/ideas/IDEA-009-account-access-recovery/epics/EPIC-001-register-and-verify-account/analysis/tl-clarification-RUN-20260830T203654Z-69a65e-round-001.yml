@@ -1,0 +1,21 @@
+round: 1
+questions:
+  - { id: Q1, artifact_version: EPIC-001/v001, question: Must duplicate registration visibly match successful registration? }
+  - { id: Q2, artifact_version: EPIC-001/v001, question: Where is confirmation resend available? }
+  - { id: Q3, artifact_version: EPIC-002/v001, question: What does a blocked sign-in disclose? }
+  - { id: Q4, artifact_version: EPIC-002/v001, question: Does this initiative include administrative block and unblock actions? }
+  - { id: Q5, artifact_version: EPIC-003/v001, question: Which password is old and which is its replacement? }
+  - { id: Q6, artifact_version: EPIC-002/v001, question: What happens to sessions when an account is blocked? }
+  - { id: Q7, artifact_version: EPIC-001/v001, question: Which confirmation proofs are superseded by a resend? }
+answers:
+  - { question_id: Q1, answer: Duplicate registration visibly matches success including the instruction to check email. }
+  - { question_id: Q2, answer: Resend is available through a public email form and after inactive sign-in. }
+  - { question_id: Q3, answer: Blocked sign-in uses the same generic invalid-credentials response. }
+  - { question_id: Q4, answer: Administrative block and unblock actions are outside IDEA-009. }
+  - { question_id: Q5, answer: Old password is forgotten and replacement password is new. }
+  - { question_id: Q6, answer: Blocking ends all sessions and unblocking requires a new sign-in. }
+  - { question_id: Q7, answer: A new confirmation proof supersedes every earlier proof for the account. }
+resolved: [Q1, Q2, Q3, Q4, Q5, Q6, Q7]
+open: []
+assumptions:
+  - Administrative blocking is supplied outside IDEA-009.

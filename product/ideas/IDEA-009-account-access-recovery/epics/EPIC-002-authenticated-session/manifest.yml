@@ -1,10 +1,11 @@
 id: EPIC-002
 kind: epic
-current_version: 1
-state: BA-ready
+current_version: 4
+state: TL-approved
 source_versions:
-  IDEA-009: 2
-content_sha256: 0e6b937e9408d1ab7f6580897a69c2c6c85796d4149b19e5ff4c01a78ec1cdf5
+  IDEA-009: 3
+  EPIC-002: 1
+content_sha256: 4dea7a4188946a12d87cb99538a6f02721a31b749567f92a7000f666655bb55f
 github_issue:
 dependencies: []
 priority: 2

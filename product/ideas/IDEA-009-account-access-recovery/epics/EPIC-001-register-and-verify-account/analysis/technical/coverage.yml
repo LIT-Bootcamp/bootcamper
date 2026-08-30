@@ -1,0 +1,13 @@
+scenarios:
+  - { id: SCENARIO-001, tickets: [TICKET-001] }
+  - { id: SCENARIO-002, tickets: [TICKET-001] }
+  - { id: SCENARIO-003, tickets: [TICKET-001] }
+  - { id: SCENARIO-004, tickets: [TICKET-002] }
+  - { id: SCENARIO-005, tickets: [TICKET-002] }
+  - { id: SCENARIO-006, tickets: [TICKET-002] }
+  - { id: SCENARIO-007, tickets: [TICKET-002] }
+  - { id: SCENARIO-008, tickets: [TICKET-002] }
+  - { id: SCENARIO-009, tickets: [TICKET-003] }
+  - { id: SCENARIO-010, tickets: [TICKET-003] }
+  - { id: SCENARIO-011, tickets: [TICKET-003] }
+  - { id: SCENARIO-012, tickets: [TICKET-002] }

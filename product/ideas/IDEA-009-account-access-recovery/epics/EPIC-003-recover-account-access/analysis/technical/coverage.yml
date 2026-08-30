@@ -1,0 +1,15 @@
+scenarios:
+  - { id: SCENARIO-021, tickets: [TICKET-007] }
+  - { id: SCENARIO-022, tickets: [TICKET-007] }
+  - { id: SCENARIO-023, tickets: [TICKET-007] }
+  - { id: SCENARIO-024, tickets: [TICKET-007] }
+  - { id: SCENARIO-025, tickets: [TICKET-008] }
+  - { id: SCENARIO-026, tickets: [TICKET-008] }
+  - { id: SCENARIO-027, tickets: [TICKET-008] }
+  - { id: SCENARIO-028, tickets: [TICKET-008] }
+  - { id: SCENARIO-029, tickets: [TICKET-008] }
+  - { id: SCENARIO-030, tickets: [TICKET-008] }
+  - { id: SCENARIO-031, tickets: [TICKET-009] }
+  - { id: SCENARIO-032, tickets: [TICKET-009] }
+  - { id: SCENARIO-033, tickets: [TICKET-009] }
+  - { id: SCENARIO-034, tickets: [TICKET-010] }
