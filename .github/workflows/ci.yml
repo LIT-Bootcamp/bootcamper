@@ -63,7 +63,11 @@ jobs:
       - name: Load test image
         run: zstd --decompress --stdout /tmp/bootcamper-test.tar.zst | docker load
       - name: Run frontend linters
-        run: docker run --rm $TEST_IMAGE bin/quality fe
+        run: >-
+          docker run --rm
+          -e REQUIRE_MASTER_KEY=false
+          -e DATABASE_URL=postgresql:///bootcamper_build
+          $TEST_IMAGE bin/quality fe
 
   checks:
     name: Security and consistency
