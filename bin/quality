@@ -1,15 +1,32 @@
 #!/usr/bin/env ruby
 
-checks = [
-  "droast --no-roast --fail-on warning .",
-  "bundle exec rubocop",
-  "bundle exec fasterer",
-  "bundle exec brakeman --no-pager --exit-on-warn",
-  "bundle exec bundler-audit check --update",
-  "bundle exec database_consistency",
-  "bundle exec erb_lint --lint-all",
-  "bundle exec annotaterb models --frozen"
-]
+groups = {
+  "be" => [
+    "bundle exec rubocop --cache false",
+    "bundle exec fasterer"
+  ],
+  "fe" => [
+    "bundle exec erb_lint --lint-all",
+    "bin/rails tailwindcss:build"
+  ],
+  "checks" => [
+    "bundle exec brakeman --no-pager --exit-on-warn",
+    "bundle exec bundler-audit check --update",
+    "bundle exec database_consistency",
+    "bundle exec annotaterb models --frozen"
+  ]
+}
+
+list = ARGV.delete("--list")
+group = ARGV.shift || "all"
+abort("Usage: bin/quality [be|fe|checks|all]") unless ARGV.empty? && (group == "all" || groups.key?(group))
+
+checks = group == "all" ? [ "droast --no-roast --fail-on warning .", *groups.values.flatten ] : groups.fetch(group)
+
+if list
+  puts checks
+  exit
+end
 
 checks.each do |command|
   abort("Failed: #{command}") unless system(command)

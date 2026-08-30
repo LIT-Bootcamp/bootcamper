@@ -17,8 +17,6 @@ group :development, :test do
   gem "debug"
   gem "rspec-rails", "~> 8.0"
   gem "capybara", "~> 3.40"
-  gem "factory_bot_rails", "6.5.1"
-  gem "shoulda-matchers", "8.0.1"
   gem "rubocop", "1.90.0", require: false
   gem "rubocop-rails", "2.37.0", require: false
   gem "rubocop-rspec", "3.10.2", require: false
@@ -32,4 +30,10 @@ group :development, :test do
   gem "erb_lint", "0.9.0", require: false
   gem "annotaterb", "4.24.0", require: false
   gem "rubocop-rails-omakase", "1.1.0", require: false
+end
+
+group :test do
+  gem "factory_bot_rails"
+  gem "shoulda-matchers", require: false
+  gem "simplecov", require: false
 end

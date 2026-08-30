@@ -49,7 +49,7 @@ RSpec.describe "User sessions" do
   private
 
   def create_user
-    User.create!(email: "student@example.com", password: "correct horse battery", password_confirmation: "correct horse battery")
+    create(:user, email: "student@example.com")
   end
 
   def submit_login(password: "correct horse battery")

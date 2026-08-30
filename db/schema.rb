@@ -53,10 +53,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_27_235000) do
     t.text "technical_skills"
     t.string "unconfirmed_email"
     t.datetime "updated_at", null: false
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.check_constraint "role::text = ANY (ARRAY['student'::character varying, 'admin'::character varying]::text[])", name: "users_role_check"
+    t.check_constraint "role::text = ANY (ARRAY['student'::character varying::text, 'admin'::character varying::text])", name: "users_role_check"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

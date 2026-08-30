@@ -84,7 +84,7 @@ RSpec.describe "Password recovery" do
   private
 
   def create_user
-    user = User.create!(email: "student@example.com", password: "correct horse battery", password_confirmation: "correct horse battery")
+    user = create(:user, email: "student@example.com")
     ActionMailer::Base.deliveries.clear
     user
   end

@@ -1,7 +1,14 @@
+require "simplecov"
+
+SimpleCov.start "rails" do
+  enable_coverage :branch
+  skip "/spec/"
+  minimum_coverage line: 99, branch: 84 if ENV["CI"]
+end
+
 RSpec.configure do |config|
-  config.example_status_persistence_file_path = "tmp/rspec_examples.txt"
   config.disable_monkey_patching!
-  config.expect_with :rspec do |expectations|
-    expectations.include_chain_clauses_in_custom_matcher_descriptions = true
-  end
+  config.example_status_persistence_file_path = "tmp/rspec_examples.txt"
+  config.order = :random
+  Kernel.srand config.seed
 end

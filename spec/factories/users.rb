@@ -31,7 +31,6 @@ FactoryBot.define do
     sequence(:email) { |number| "student#{number}@example.com" }
     password { "correct horse battery" }
     password_confirmation { password }
-    role { :student }
 
     trait :confirmed do
       confirmed_at { Time.current }
@@ -39,6 +38,14 @@ FactoryBot.define do
 
     trait :admin do
       role { :admin }
+    end
+
+    trait :with_profile do
+      display_name { "Ada Lovelace" }
+      technical_skills { "Ruby\nSQL" }
+      interests { "Learning design" }
+      github_url { "https://github.com/ada" }
+      profile_urls { "https://example.com/ada\nhttps://linkedin.com/in/ada" }
     end
   end
 end

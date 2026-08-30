@@ -47,7 +47,7 @@ RSpec.describe "Email confirmation" do
   private
 
   def create_unconfirmed_user
-    User.create!(email: "student@example.com", password: "correct horse battery", password_confirmation: "correct horse battery")
+    create(:user, email: "student@example.com")
   end
 
   def confirmation_token_from_last_email
