@@ -119,6 +119,22 @@ RSpec.describe ProductFactory::GitHubPlan do
     ])
   end
 
+  it "escalates a GraphQL Project field snapshot without a valid totalCount" do
+    missing_count = { "nodes" => project_fields.fetch("nodes") }
+    invalid_count = project_fields.merge("totalCount" => "unknown")
+
+    expect(plan({}, remote(project_fields: missing_count))).to eq([
+      ProductFactory::GitHubOperation.new(:escalate, nil, nil, {
+        "reason" => "GitHub Project field snapshot lacks valid totalCount"
+      })
+    ])
+    expect(plan({}, remote(project_fields: invalid_count))).to eq([
+      ProductFactory::GitHubOperation.new(:escalate, nil, nil, {
+        "reason" => "GitHub Project field snapshot lacks valid totalCount"
+      })
+    ])
+  end
+
   it "rejects the lossy generic field-list shape instead of duplicating a field" do
     fields = {
       "totalCount" => 1,

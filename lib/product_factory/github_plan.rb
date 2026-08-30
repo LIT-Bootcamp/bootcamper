@@ -242,7 +242,11 @@ module ProductFactory
       return [ operation(:escalate, nil, nil, "reason" => "GitHub Project field snapshot is missing") ] unless raw
 
       fields, total_count = normalize_project_fields(raw)
-      if total_count && total_count != fields.length
+      unless total_count.is_a?(Integer) && total_count >= 0
+        return [ operation(:escalate, nil, nil,
+          "reason" => "GitHub Project field snapshot lacks valid totalCount") ]
+      end
+      if total_count != fields.length
         return [ operation(:escalate, nil, nil,
           "reason" => "GitHub Project field snapshot is incomplete",
           "expected_count" => total_count,
@@ -284,7 +288,8 @@ module ProductFactory
           "options" => Array(field["options"]).map { |option| option.is_a?(Hash) ? stringify_keys(option)["name"].to_s : option.to_s }
         }
       end
-      [ normalized, total_count&.to_i ]
+      parsed_total = Integer(total_count, exception: false)
+      [ normalized, parsed_total ]
     end
 
     def project_field_type(type_name)
