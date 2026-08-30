@@ -1,0 +1,19 @@
+---
+id: TICKET-002
+kind: ticket
+current_version: 3
+state: available
+source_versions: {}
+content_sha256: e3eee931e76f70684014ecff8cd5eb0e3c8e6154aaf4b38484b80cd9cf390c19
+github_issue: 202
+dependencies:
+- TICKET-001
+priority: 1
+estimate_days: 1
+scenarios:
+- SCENARIO-002
+title: TICKET-002 show next action
+body: Observable goal for TICKET-002.
+idea_id: IDEA-001
+epic_id: EPIC-001
+factory_run: RUN-20260827T120000Z-a1b2c3

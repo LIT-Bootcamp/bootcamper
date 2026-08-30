@@ -1,0 +1,18 @@
+---
+id: TICKET-001
+kind: ticket
+current_version: 7
+state: done
+source_versions: {}
+content_sha256: c5c810eae4fe234738b47f05f4d0f4aee2302191397890665bb79ee41727231b
+github_issue: 201
+dependencies: []
+priority: 1
+estimate_days: 1
+scenarios:
+- SCENARIO-001
+title: TICKET-001 accept application
+body: Observable goal for TICKET-001.
+idea_id: IDEA-001
+epic_id: EPIC-001
+factory_run: RUN-20260827T120000Z-a1b2c3

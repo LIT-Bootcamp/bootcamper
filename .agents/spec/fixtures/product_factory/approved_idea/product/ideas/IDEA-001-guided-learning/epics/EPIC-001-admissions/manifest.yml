@@ -1,0 +1,12 @@
+---
+id: EPIC-001
+kind: epic
+current_version: 3
+state: TL-review
+source_versions:
+  IDEA-001: 3
+content_sha256: 979cac4e7aa76f30b188577379b37c2674bd034a6206233fc79709ed807e3167
+github_issue:
+dependencies: []
+priority: 1
+estimate_days: 0

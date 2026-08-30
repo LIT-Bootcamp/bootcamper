@@ -1,0 +1,19 @@
+---
+id: TICKET-003
+kind: ticket
+current_version: 2
+state: superseded
+source_versions: {}
+content_sha256: d4290eceeb61f39da79eeb2ecfaf498067c112d1dbbf7eb28d91e22f7f5d086c
+github_issue: 203
+dependencies: []
+priority: 2
+estimate_days: 1
+scenarios:
+- SCENARIO-003
+- SCENARIO-004
+title: TICKET-003 remove legacy path
+body: Observable goal for TICKET-003.
+idea_id: IDEA-001
+epic_id: EPIC-002
+factory_run: RUN-20260827T120000Z-a1b2c3
