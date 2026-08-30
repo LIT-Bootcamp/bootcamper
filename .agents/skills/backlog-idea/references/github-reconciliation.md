@@ -25,7 +25,9 @@ After a successful create, record the returned issue number in the TICKET manife
 
 ## Project fields
 
-Before planning item changes, inspect the complete schema with `gh project field-list ... --format json`. The preview must include one schema operation for every missing managed field and an explicit Project-add operation before field operations whenever an issue is not already a Project item. Escalate a same-name field with an incompatible type or an incompatible `Status` option set.
+Before planning item changes, capture the complete field connection with `gh api graphql`. Query `totalCount`, page cursors, and nodes containing `id`, `name`, `__typename`, `dataType` for `ProjectV2Field`, and option `id`/`name` for `ProjectV2SingleSelectField`. Follow `pageInfo.endCursor` until `hasNextPage` is false, then store a normalized `project_fields` hash with `totalCount` and all `nodes`. Do not use `gh project field-list --format json` as planner input because its generic field type does not preserve text-versus-number data types.
+
+The planner verifies `totalCount`, normalizes GraphQL `dataType`, maps `ProjectV2SingleSelectField` to `SINGLE_SELECT`, and normalizes option objects by name. The preview must include one schema operation for every missing managed field and an explicit Project-add operation before field operations whenever an issue is not already a Project item. Escalate an incomplete field snapshot, a same-name field with an incompatible type, or an incompatible `Status` option set.
 
 Create missing fields with `gh project field-create`, using text for `Idea`, `Epic`, `Ticket ID`, `Dependencies`, and `Factory Run`; number for `Priority`, `Estimate`, and `Source Version`; and single-select for `Status` with all factory lifecycle values. Journal every schema mutation. The managed fields are `Idea`, `Epic`, `Ticket ID`, `Priority`, `Status`, `Estimate`, `Dependencies`, `Source Version`, and `Factory Run`.
 

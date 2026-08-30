@@ -36,7 +36,9 @@ module ProductFactory
 
     def operations
       operations = schema_operations
-      return sorted(operations) if operations.any? { |item| item.action == :escalate }
+      if operations.any? { |item| item.action == :escalate }
+        return sorted(operations.select { |item| item.action == :escalate })
+      end
 
       issues_by_ticket = remote_issues.filter_map do |issue|
         ids = issue_ticket_ids(issue)
@@ -236,10 +238,18 @@ module ProductFactory
     end
 
     def schema_operations
-      fields = @remote.key?("project_fields") || @remote.key?(:project_fields) ? Array(@remote["project_fields"] || @remote[:project_fields]) : nil
-      return [ operation(:escalate, nil, nil, "reason" => "GitHub Project field snapshot is missing") ] unless fields
+      raw = @remote["project_fields"] || @remote[:project_fields]
+      return [ operation(:escalate, nil, nil, "reason" => "GitHub Project field snapshot is missing") ] unless raw
 
-      indexed = fields.map { |field| stringify_keys(field) }.to_h { |field| [ field["name"], field ] }
+      fields, total_count = normalize_project_fields(raw)
+      if total_count && total_count != fields.length
+        return [ operation(:escalate, nil, nil,
+          "reason" => "GitHub Project field snapshot is incomplete",
+          "expected_count" => total_count,
+          "actual_count" => fields.length) ]
+      end
+
+      indexed = fields.to_h { |field| [ field["name"], field ] }
       PROJECT_FIELD_TYPES.filter_map do |name, data_type|
         field = indexed[name]
         if field.nil?
@@ -247,13 +257,41 @@ module ProductFactory
           attributes["options"] = STATUS_OPTIONS if name == "Status"
           operation(:project_field_create, nil, nil, attributes)
         elsif field["data_type"].to_s.upcase != data_type ||
-            (name == "Status" && (STATUS_OPTIONS - Array(field["options"]).map(&:to_s)).any?)
+            (name == "Status" && (STATUS_OPTIONS - field["options"]).any?)
           operation(:escalate, nil, nil,
             "reason" => "incompatible GitHub Project field",
             "field" => name,
             "expected_type" => data_type)
         end
       end
+    end
+
+    def normalize_project_fields(raw)
+      if raw.is_a?(Hash)
+        connection = stringify_keys(raw)
+        nodes = connection["nodes"] || connection["fields"] || []
+        total_count = connection["totalCount"] || connection["total_count"]
+      else
+        nodes = Array(raw)
+        total_count = nodes.length
+      end
+      normalized = Array(nodes).map do |entry|
+        field = stringify_keys(entry)
+        type = field["data_type"] || field["dataType"] || project_field_type(field["__typename"] || field["type"])
+        {
+          "name" => field["name"],
+          "data_type" => type.to_s.upcase,
+          "options" => Array(field["options"]).map { |option| option.is_a?(Hash) ? stringify_keys(option)["name"].to_s : option.to_s }
+        }
+      end
+      [ normalized, total_count&.to_i ]
+    end
+
+    def project_field_type(type_name)
+      {
+        "ProjectV2SingleSelectField" => "SINGLE_SELECT",
+        "ProjectV2IterationField" => "ITERATION"
+      }[type_name.to_s]
     end
 
     def missing_projection_fields(ticket)

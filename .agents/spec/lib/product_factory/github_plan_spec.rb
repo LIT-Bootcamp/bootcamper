@@ -35,11 +35,18 @@ RSpec.describe ProductFactory::GitHubPlan do
   end
 
   def project_fields
-    ProductFactory::GitHubPlan::PROJECT_FIELD_TYPES.map do |name, data_type|
-      field = { "name" => name, "data_type" => data_type }
-      field["options"] = ProductFactory::GitHubPlan::STATUS_OPTIONS if name == "Status"
+    nodes = ProductFactory::GitHubPlan::PROJECT_FIELD_TYPES.map do |name, data_type|
+      field = { "name" => name, "__typename" => "ProjectV2Field", "dataType" => data_type }
+      if name == "Status"
+        field = {
+          "name" => name,
+          "__typename" => "ProjectV2SingleSelectField",
+          "options" => ProductFactory::GitHubPlan::STATUS_OPTIONS.map { |option| { "name" => option } }
+        }
+      end
       field
     end
+    { "totalCount" => nodes.length, "nodes" => nodes }
   end
 
   def remote(issues: [], project_items: [], pull_requests: [], branches: [], project_fields: self.project_fields)
@@ -75,7 +82,7 @@ RSpec.describe ProductFactory::GitHubPlan do
   end
 
   it "previews creation of every missing GitHub Project field" do
-    operations = plan({}, remote(project_fields: []))
+    operations = plan({}, remote(project_fields: { "totalCount" => 0, "nodes" => [] }))
 
     schema = operations.select { |operation| operation.action == :project_field_create }
     expect(schema.map { |operation| operation.attributes.fetch("field") }).to contain_exactly(
@@ -88,10 +95,39 @@ RSpec.describe ProductFactory::GitHubPlan do
   end
 
   it "escalates an incompatible same-name GitHub Project field" do
-    fields = project_fields.map(&:dup)
-    fields.find { |field| field["name"] == "Priority" }["data_type"] = "TEXT"
+    fields = Marshal.load(Marshal.dump(project_fields))
+    fields.fetch("nodes").find { |field| field["name"] == "Priority" }["dataType"] = "TEXT"
 
     expect(plan({}, remote(project_fields: fields))).to eq([
+      ProductFactory::GitHubOperation.new(:escalate, nil, nil, {
+        "reason" => "incompatible GitHub Project field",
+        "field" => "Priority",
+        "expected_type" => "NUMBER"
+      })
+    ])
+  end
+
+  it "escalates an incomplete paginated Project field snapshot" do
+    fields = project_fields.merge("totalCount" => project_fields.fetch("totalCount") + 1)
+
+    expect(plan({}, remote(project_fields: fields))).to eq([
+      ProductFactory::GitHubOperation.new(:escalate, nil, nil, {
+        "reason" => "GitHub Project field snapshot is incomplete",
+        "expected_count" => 10,
+        "actual_count" => 9
+      })
+    ])
+  end
+
+  it "rejects the lossy generic field-list shape instead of duplicating a field" do
+    fields = {
+      "totalCount" => 1,
+      "fields" => [ { "name" => "Priority", "type" => "ProjectV2Field" } ]
+    }
+
+    operations = plan({}, remote(project_fields: fields))
+
+    expect(operations).to eq([
       ProductFactory::GitHubOperation.new(:escalate, nil, nil, {
         "reason" => "incompatible GitHub Project field",
         "field" => "Priority",

@@ -1,7 +1,8 @@
 {
-  "project_fields": [
-
-  ],
+  "project_fields": {
+    "totalCount": 0,
+    "nodes": []
+  },
   "issues": [
     {
       "number": 201,

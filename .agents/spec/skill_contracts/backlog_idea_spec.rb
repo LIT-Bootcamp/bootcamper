@@ -49,7 +49,11 @@ RSpec.describe "Backlog reconciliation skill contract" do
     expect(procedure).to include("one field per invocation")
     expect(procedure).to include("journal entry")
     expect(procedure).to include("explicit Project-add operation")
-    expect(procedure).to include("gh project field-list")
+    expect(procedure).to include("gh api graphql")
+    expect(procedure).to include("dataType")
+    expect(procedure).to include("ProjectV2SingleSelectField")
+    expect(procedure).to include("totalCount")
+    expect(procedure).to include("hasNextPage")
     expect(procedure).to include("gh project field-create")
     expect(procedure).to include("incompatible type")
     expect(content).to include(
