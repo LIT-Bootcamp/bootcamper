@@ -25,6 +25,27 @@ Required invariants:
 - The engineer produces the resolved plan after receiving those answers.
 - The user approves that exact plan. A material change invalidates approval.
 
+These invariants define ordinary mode. Factory Mode replaces only explicit ticket selection and per-ticket exact-plan approval as described below; every other gate remains in force.
+
+## Factory Mode
+
+Factory Mode is active only when the invoking orchestrator supplies and verifies all of:
+
+```yaml
+factory_mode: true
+ticket_state: in-progress
+claim_run_id: RUN-...
+idea_state: analyzed
+epic_state: TL-approved
+dependencies_satisfied: true
+```
+
+The coordinator must verify the canonical immutable ticket version, its human-approved IDEA lineage, its TL-approved EPIC, and an active claim owned by `claim_run_id`. Factory Mode consumes a ticket already selected and claimed by the product factory; it does not select backlog work or ask the user to select it again. Reject missing, stale, ambiguous, or mismatched state before mutation.
+
+The immutable ticket version is the approved scope boundary and replaces the ordinary resolved-plan approval step. Give it unchanged to the engineer, who may plan bounded execution inside that scope without another per-ticket approval. Factory Mode must not expand ticket scope, waive an unanswered consequential question, or treat the lineage approval as authorization for new product, security, privacy, cost, data, migration, destructive-operation, or public-contract commitments. Pause for human resolution when such ambiguity exists. If material evidence changes the approved boundary, stop for a new immutable ticket version with recorded approval rather than silently revising scope.
+
+Reuse the same engineer thread, task record, proportional TDD, self-review, immutable snapshot, remediation rules, and handoff used in ordinary mode. Dependencies, repository safety, security/privacy, data integrity, and verification gates are unchanged.
+
 ## Implementation
 
 After approval, read [implementation-workflow.md](references/implementation-workflow.md), resume the same engineer, and create exactly one task record from [task-record.md](references/task-record.md). Default to `docs/engineering/tasks` only when the repository defines no location.
