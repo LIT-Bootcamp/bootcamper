@@ -47,7 +47,7 @@ module ProductFactory
       conflicts = mapping_conflicts(issues_by_ticket)
 
       (@local.keys | issues_by_ticket.keys | conflicts.keys).sort.each do |ticket_id|
-        matches = issues_by_ticket.fetch(ticket_id, [])
+        matches = issues_by_ticket.fetch(ticket_id) { [] }
         local_ticket = @local[ticket_id]
 
         if conflicts.key?(ticket_id)
@@ -253,6 +253,13 @@ module ProductFactory
           "actual_count" => fields.length) ]
       end
 
+      duplicates = fields.group_by { |field| field["name"] }.select { |name, matches| PROJECT_FIELD_TYPES.key?(name) && matches.length > 1 }
+      unless duplicates.empty?
+        return duplicates.keys.sort.map do |name|
+          operation(:escalate, nil, nil, "reason" => "ambiguous GitHub Project field", "field" => name)
+        end
+      end
+
       indexed = fields.to_h { |field| [ field["name"], field ] }
       PROJECT_FIELD_TYPES.filter_map do |name, data_type|
         field = indexed[name]
@@ -260,12 +267,16 @@ module ProductFactory
           attributes = { "field" => name, "data_type" => data_type }
           attributes["options"] = STATUS_OPTIONS if name == "Status"
           operation(:project_field_create, nil, nil, attributes)
-        elsif field["data_type"].to_s.upcase != data_type ||
-            (name == "Status" && (STATUS_OPTIONS - field["options"]).any?)
+        elsif field["data_type"].to_s.upcase != data_type
           operation(:escalate, nil, nil,
             "reason" => "incompatible GitHub Project field",
             "field" => name,
             "expected_type" => data_type)
+        elsif name == "Status" && field["options"].sort != STATUS_OPTIONS.sort
+          operation(:project_field_update, nil, nil,
+            "field" => name,
+            "data_type" => data_type,
+            "options" => STATUS_OPTIONS)
         end
       end
     end
@@ -322,7 +333,7 @@ module ProductFactory
 
     def sorted(operations)
       operations.sort_by do |item|
-        [ item.ticket_id.to_s, item.action.to_s, item.attributes.fetch("field", ""), item.issue_number.to_i ]
+        [ item.ticket_id.to_s, item.action.to_s, item.attributes.fetch("field") { "" }, item.issue_number.to_i ]
       end
     end
 

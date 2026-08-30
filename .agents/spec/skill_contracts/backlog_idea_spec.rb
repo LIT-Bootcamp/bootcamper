@@ -55,6 +55,9 @@ RSpec.describe "Backlog reconciliation skill contract" do
     expect(procedure).to include("totalCount")
     expect(procedure).to include("hasNextPage")
     expect(procedure).to include("gh project field-create")
+    expect(procedure).to include("project_field_update")
+    expect(procedure).to include("built-in `Status`")
+    expect(procedure).to include("duplicate managed field names")
     expect(procedure).to include("incompatible type")
     expect(content).to include(
       "Idea", "Epic", "Ticket ID", "Priority", "Status", "Estimate", "Dependencies",

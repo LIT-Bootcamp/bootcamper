@@ -63,7 +63,7 @@ module ProductFactory
       kind = manifest["kind"]
       error(id, "invalid stable ID") unless id.to_s.match?(/\A(?:IDEA|EPIC|TICKET)-\d{3,}\z/)
       error(id, "invalid kind") unless LIFECYCLES.key?(kind)
-      error(id, "invalid lifecycle state") unless LIFECYCLES.fetch(kind, []).include?(manifest["state"]) || EXCEPTIONAL_STATES.include?(manifest["state"])
+      error(id, "invalid lifecycle state") unless LIFECYCLES.fetch(kind) { [] }.include?(manifest["state"]) || EXCEPTIONAL_STATES.include?(manifest["state"])
       error(id, "invalid current version") unless manifest["current_version"].is_a?(Integer) && manifest["current_version"].positive?
       error(id, "invalid content hash") unless manifest["content_sha256"].to_s.match?(/\A[0-9a-f]{64}\z/)
       error(id, "dependencies must be an array") unless manifest["dependencies"].is_a?(Array)
@@ -129,7 +129,7 @@ module ProductFactory
     def validate_dependencies(artifacts)
       tickets = artifacts.select { |artifact| artifact[:manifest]["kind"] == "ticket" }.to_h { |artifact| [ artifact[:manifest]["id"], artifact[:manifest] ] }
       tickets.each do |id, manifest|
-        manifest.fetch("dependencies", []).each { |dependency| error(id, "missing dependency #{dependency}") unless tickets.key?(dependency) }
+        manifest.fetch("dependencies") { [] }.each { |dependency| error(id, "missing dependency #{dependency}") unless tickets.key?(dependency) }
       end
       visited = {}
       visiting = {}
@@ -144,7 +144,7 @@ module ProductFactory
       end
 
       visiting[id] = true
-      tickets.fetch(id).fetch("dependencies", []).each { |dependency| detect_cycle(dependency, tickets, visited, visiting) if tickets.key?(dependency) }
+      tickets.fetch(id).fetch("dependencies") { [] }.each { |dependency| detect_cycle(dependency, tickets, visited, visiting) if tickets.key?(dependency) }
       visiting.delete(id)
       visited[id] = true
     end

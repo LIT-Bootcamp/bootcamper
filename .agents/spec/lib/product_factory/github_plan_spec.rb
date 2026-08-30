@@ -107,6 +107,33 @@ RSpec.describe ProductFactory::GitHubPlan do
     ])
   end
 
+  it "updates the built-in Status options instead of blocking first reconciliation" do
+    fields = Marshal.load(Marshal.dump(project_fields))
+    status = fields.fetch("nodes").find { |field| field["name"] == "Status" }
+    status["options"] = %w[Todo In\ Progress Done].map { |name| { "name" => name } }
+
+    expect(plan({}, remote(project_fields: fields))).to include(
+      ProductFactory::GitHubOperation.new(:project_field_update, nil, nil, {
+        "field" => "Status",
+        "data_type" => "SINGLE_SELECT",
+        "options" => ProductFactory::GitHubPlan::STATUS_OPTIONS
+      })
+    )
+  end
+
+  it "escalates duplicate managed Project field names" do
+    fields = Marshal.load(Marshal.dump(project_fields))
+    fields["nodes"] << fields.fetch("nodes").first.merge("dataType" => "TEXT")
+    fields["totalCount"] += 1
+
+    expect(plan({}, remote(project_fields: fields))).to eq([
+      ProductFactory::GitHubOperation.new(:escalate, nil, nil, {
+        "reason" => "ambiguous GitHub Project field",
+        "field" => "Idea"
+      })
+    ])
+  end
+
   it "escalates an incomplete paginated Project field snapshot" do
     fields = project_fields.merge("totalCount" => project_fields.fetch("totalCount") + 1)
 
