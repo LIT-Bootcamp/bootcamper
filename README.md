@@ -48,6 +48,13 @@ Open <http://localhost:3000>. Stop the services without deleting the named datab
 docker compose down
 ```
 
+Compose uses the development image and compiles Tailwind after mounting the
+source directory. Build the separate non-root production image with:
+
+```sh
+docker build --target runtime --tag bootcamper-web:local .
+```
+
 ## Checks
 
 CI runs the same containerized checks:

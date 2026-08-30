@@ -14,3 +14,7 @@ if [ "${BOOTCAMPER_PUSH_AGENT:-}" != "lead_bootcamper" ]; then
   echo "Only lead_bootcamper may push. Use bin/lead_bootcamper push." >&2
   exit 1
 fi
+
+RAILS_ENV=test bin/rails db:prepare
+RAILS_ENV=test bin/quality
+RAILS_ENV=test bundle exec rspec
