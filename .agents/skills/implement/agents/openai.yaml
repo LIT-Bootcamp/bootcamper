@@ -1,0 +1,5 @@
+interface:
+  display_name: "Implement Next Product Ticket"
+  short_description: "Deliver the next ready ticket to a reviewed PR"
+  default_prompt: "Use $implement to claim and deliver the highest-priority available product ticket."
+
