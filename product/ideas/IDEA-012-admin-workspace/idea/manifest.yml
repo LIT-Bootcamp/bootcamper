@@ -1,10 +1,10 @@
-id: IDEA-007
+id: IDEA-012
 kind: idea
 current_version: 1
 state: proposed
 source_versions: {}
-content_sha256: f8361ccb46e156e499e3d5c4b32deedd3946d9ec53b8a40df6151c8e00a97746
+content_sha256: 41ca2894a20d2c249cc6e431917ba11edc0773d5c02bcba7af61bc256277e85e
 github_issue:
 dependencies: []
-priority: 17
+priority: 4
 estimate_days: 0
