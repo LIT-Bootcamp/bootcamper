@@ -130,6 +130,10 @@ uk:
     password: "Новий пароль"
     password_confirmation: "Підтвердження нового пароля"
     edit_submit: "Зберегти новий пароль"
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "Помилка перевірки: %{errors}"
   errors:
     format: "%{message}"
     messages:
