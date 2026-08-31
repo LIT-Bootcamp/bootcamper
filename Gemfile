@@ -12,6 +12,7 @@ gem "turbo-rails"
 gem "stimulus-rails"
 gem "tailwindcss-rails", "~> 4.6"
 gem "devise", "~> 5.0.4"
+gem "service_actor", "~> 5.0"
 
 group :development, :test do
   gem "debug"
