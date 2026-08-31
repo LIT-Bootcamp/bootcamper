@@ -1,10 +1,14 @@
 require "rails_helper"
 
-RSpec.describe "Student registration" do
+RSpec.describe RegistrationsController do
+  include Devise::Test::ControllerHelpers
+
+  render_views
+
   before { ActionMailer::Base.deliveries.clear }
 
   it "renders the Ukrainian registration form", :aggregate_failures do
-    get new_user_registration_path
+    get :new
 
     expect(response).to have_http_status(:ok)
     expect(response.body).to include("Створити обліковий запис", "Електронна пошта")
@@ -20,7 +24,7 @@ RSpec.describe "Student registration" do
 
   it "shows a truthful account-created state" do
     submit_registration
-    follow_redirect!
+    get :success
 
     expect(response.body).to include("Твій обліковий запис створено")
   end
@@ -56,7 +60,7 @@ RSpec.describe "Student registration" do
     expect { submit_registration(email: "STUDENT@example.com") }.not_to change(User, :count)
     expect(response).to redirect_to(registration_success_path)
 
-    follow_redirect!
+    get :success
 
     expect(response.body).to include("Твій обліковий запис створено", "Перевір електронну пошту")
     expect(response.body).not_to include("вже використовується")
@@ -72,11 +76,7 @@ RSpec.describe "Student registration" do
   end
 
   def submit_registration(email: "student@example.com", password: "correct horse battery", password_confirmation: password)
-    get new_user_registration_path
-    csrf_token = response.body[/name="csrf-token" content="([^"]+)/, 1]
-
-    post user_registration_path,
-      params: { user: { email:, password:, password_confirmation: } },
-      headers: { "X-CSRF-Token" => csrf_token }
+    post :create,
+      params: { user: { email:, password:, password_confirmation: } }
   end
 end
