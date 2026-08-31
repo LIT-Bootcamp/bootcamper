@@ -4,7 +4,7 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-    result = RegisterStudent.result(attributes: user_params.to_h)
+    result = Students::Register.result(attributes: user_params.to_h)
     @user = result.user
 
     return redirect_to(registration_success_path) if result.success? || result.acknowledged?

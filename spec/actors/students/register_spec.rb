@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe RegisterStudent do
+RSpec.describe Students::Register do
   let(:result) { described_class.result(attributes:) }
   let(:attributes) do
     {
