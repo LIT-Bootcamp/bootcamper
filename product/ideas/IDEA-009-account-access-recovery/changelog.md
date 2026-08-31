@@ -17,3 +17,4 @@
 - 2026-08-31 — `TICKET-001` v005 — `RUN-20260831T165115Z-911e5f` — Refresh the in-review snapshot after remediation round 1.
 - 2026-08-31 — `TICKET-001` v006 — `RUN-20260831T165115Z-911e5f` — Refresh the in-review snapshot after remediation round 2.
 - 2026-08-31 — `TICKET-001` v007 — `RUN-20260831T165115Z-911e5f` — Open pull request #156 and hand off for human merge.
+- 2026-09-01 — `TICKET-002` v003–v004 — `RUN-20260831T084434Z-a2b2c2` — Promote the confirmation-proof ticket to the execution-ready contract.
