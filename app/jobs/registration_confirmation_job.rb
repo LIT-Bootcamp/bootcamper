@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RegistrationConfirmationJob < ActiveJob::Base
   self.enqueue_after_transaction_commit = true
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Students
   class Register < Actor
     input :attributes, type: Hash
@@ -10,30 +12,25 @@ module Students
       user.role = :student
       user.skip_confirmation_notification!
 
-      if user.save
-        enqueue_confirmation_work(user)
-      elsif duplicate_email_only?
+      return enqueue_confirmation_work(user) if user.save
+
+      handle_failed_registration
+    end
+
+    private
+
+    def handle_failed_registration
+      if duplicate_email_only?
         enqueue_confirmation_work(existing_user, send_confirmation: false)
         self.acknowledged = true
       else
         user.errors.delete(:email, :taken)
         fail!(user:)
       end
-    rescue ActiveRecord::RecordNotUnique => error
-      raise unless duplicate_email_conflict?(error)
-
-      enqueue_confirmation_work(existing_user, send_confirmation: false)
-      self.acknowledged = true
     end
-
-    private
 
     def duplicate_email_only?
       user.errors.of_kind?(:email, :taken) && user.errors.attribute_names == [ :email ]
-    end
-
-    def duplicate_email_conflict?(error)
-      error.cause&.message.to_s.include?("index_users_on_email")
     end
 
     def existing_user
