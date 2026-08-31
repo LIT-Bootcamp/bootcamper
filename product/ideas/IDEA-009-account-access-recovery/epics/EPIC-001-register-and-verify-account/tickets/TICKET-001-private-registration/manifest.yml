@@ -1,11 +1,11 @@
 ---
 id: TICKET-001
 kind: ticket
-current_version: 6
-state: in-review
+current_version: 7
+state: ready-for-human-merge
 source_versions:
   EPIC-001: 2
-content_sha256: cffc8cde622afc83b61642e7ca41f0ba985b39b86fb114b1f65bfa452fe4d2ab
+content_sha256: 6629fc51d0f1f8a46d4bd01673c6ee457a4b55d3b413329e40d751b0dee19120
 github_issue: 140
 dependencies: []
 priority: 1
