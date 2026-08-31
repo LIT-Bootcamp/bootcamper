@@ -14,4 +14,12 @@ RSpec.describe Students::Register do
     expect(result).to be_success
     expect(result.user).to have_attributes(role: "student", confirmed_at: nil)
   end
+
+  it "keeps registration successful when confirmation work cannot be enqueued", :aggregate_failures do
+    allow(RegistrationConfirmationJob).to receive(:perform_later).and_raise(ActiveJob::EnqueueError, "queue unavailable")
+    allow(Rails.logger).to receive(:warn)
+
+    expect(result).to be_success
+    expect(Rails.logger).to have_received(:warn).with("Confirmation delivery unavailable (ActiveJob::EnqueueError)")
+  end
 end
