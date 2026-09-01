@@ -101,6 +101,14 @@ RSpec.describe User do
     end
   end
 
+  describe "blocked accounts" do
+    it "are inactive for authentication and use the generic failure message" do
+      user = build(:user, blocked: true)
+
+      expect([ user.active_for_authentication?, user.inactive_message ]).to eq([ false, :invalid ])
+    end
+  end
+
   describe "profile fields" do
     it "accepts optional profile details" do
       expect(build(:user, :with_profile)).to be_valid

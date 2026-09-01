@@ -10,4 +10,4 @@ scenarios:
   - { id: SCENARIO-009, tickets: [TICKET-003] }
   - { id: SCENARIO-010, tickets: [TICKET-003] }
   - { id: SCENARIO-011, tickets: [TICKET-003] }
-  - { id: SCENARIO-012, tickets: [TICKET-002] }
+  - { id: SCENARIO-012, tickets: [TICKET-002, TICKET-011] }

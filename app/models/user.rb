@@ -44,6 +44,14 @@ class User < ApplicationRecord
     confirmed?
   end
 
+  def active_for_authentication?
+    super && !blocked?
+  end
+
+  def inactive_message
+    blocked? ? :invalid : super
+  end
+
   private
 
   def profile_urls_must_be_http_urls
