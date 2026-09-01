@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  blocked                :boolean          default(FALSE), not null
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
@@ -42,6 +43,14 @@ class User < ApplicationRecord
 
   def email_verified?
     confirmed?
+  end
+
+  def active_for_authentication?
+    super && !blocked?
+  end
+
+  def inactive_message
+    blocked? ? :invalid : super
   end
 
   private

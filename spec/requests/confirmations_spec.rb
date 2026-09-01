@@ -25,6 +25,12 @@ RSpec.describe "Email confirmation" do
       .to change { user.reload.email_verified? }.from(false).to(true)
   end
 
+  it "confirms a blocked account without clearing its blocked state", :aggregate_failures do
+    user = blocked_unconfirmed_user
+    get confirmation_path, params: { confirmation_token: confirmation_token_from_last_email }
+    expect_blocked_user_confirmed(user)
+  end
+
   it "rejects a confirmation link after it is used" do
     create_unconfirmed_user
     token = confirmation_token_from_last_email
@@ -48,6 +54,16 @@ RSpec.describe "Email confirmation" do
 
   def create_unconfirmed_user
     create(:user, email: "student@example.com")
+  end
+
+  def blocked_unconfirmed_user
+    create_unconfirmed_user.tap { |user| user.update!(blocked: true) }
+  end
+
+  def expect_blocked_user_confirmed(user)
+    expect(response).to redirect_to(confirmation_success_path)
+    expect(user.reload).to be_email_verified
+    expect(user).to be_blocked
   end
 
   def confirmation_token_from_last_email

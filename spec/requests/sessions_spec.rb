@@ -27,6 +27,12 @@ RSpec.describe "User sessions" do
     expect(response.body.downcase).to include("підтверд")
   end
 
+  it "rejects a blocked user with the generic invalid-credentials response", :aggregate_failures do
+    reject_blocked_login
+    expect_generic_login_rejection
+    expect_no_authenticated_session
+  end
+
   it "rejects invalid credentials", :aggregate_failures do
     create_user.confirm
 
@@ -50,6 +56,24 @@ RSpec.describe "User sessions" do
 
   def create_user
     create(:user, email: "student@example.com")
+  end
+
+  def reject_blocked_login
+    user = create_user
+    user.confirm
+    user.update!(blocked: true)
+    submit_login
+    follow_redirect!
+  end
+
+  def expect_generic_login_rejection
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include("Електронна пошта або пароль")
+  end
+
+  def expect_no_authenticated_session
+    get account_path
+    expect(response).to redirect_to(login_path)
   end
 
   def submit_login(password: "correct horse battery")

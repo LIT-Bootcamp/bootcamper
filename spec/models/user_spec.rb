@@ -5,6 +5,7 @@ require "rails_helper"
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  blocked                :boolean          default(FALSE), not null
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
@@ -98,6 +99,14 @@ RSpec.describe User do
       user.confirm
 
       expect(user).to be_email_verified
+    end
+  end
+
+  describe "blocked accounts" do
+    it "are inactive for authentication and use the generic failure message" do
+      user = build(:user, blocked: true)
+
+      expect([ user.active_for_authentication?, user.inactive_message ]).to eq([ false, :invalid ])
     end
   end
 

@@ -1,0 +1,13 @@
+id: TICKET-011
+kind: ticket
+current_version: 3
+state: in-progress
+source_versions:
+  EPIC-001: 2
+content_sha256: 9659552ed50fc519525f49ba73e5a3429ffe8ec1c833c89a9424b37604ba96e9
+github_issue:
+dependencies: []
+priority: 2
+estimate_days: 1
+scenarios:
+- SCENARIO-012
