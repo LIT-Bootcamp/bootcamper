@@ -24,8 +24,8 @@ Rails.application.routes.draw do
   get "register", to: "registrations#new", as: :new_user_registration
   post "register", to: "registrations#create", as: :user_registration
   get "register/success", to: "registrations#success", as: :registration_success
-  get "register/confirm", to: "confirmations#show", as: :confirmation
-  get "register/confirmed", to: "confirmations#success", as: :confirmation_success
+  get "register/confirm", to: "email_confirmations#show", as: :confirmation
+  get "register/confirmed", to: "email_confirmations#success", as: :confirmation_success
 
   namespace :design do
     get "workshop-map", to: "workshop_maps#show", as: :workshop_map
