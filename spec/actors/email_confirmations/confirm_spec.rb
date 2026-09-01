@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Confirmations::Confirm do
+RSpec.describe EmailConfirmations::Confirm do
   before { ActionMailer::Base.deliveries.clear }
 
   it "returns a sign-in-ready variant for an active account", :aggregate_failures do

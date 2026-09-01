@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Confirmations
+module EmailConfirmations
   class Confirm < Actor
     input :confirmation_token, type: String
 

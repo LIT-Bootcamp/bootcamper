@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ConfirmationSuccessPresenter
   def initialize(success_variant:)
     @success_variant = success_variant
