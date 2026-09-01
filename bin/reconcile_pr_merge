@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+: "${GH_TOKEN:?GH_TOKEN is required}"
+: "${REPOSITORY:?REPOSITORY is required}"
+: "${PR_NUMBER:?PR_NUMBER is required}"
+pr="$(gh api "repos/$REPOSITORY/pulls/$PR_NUMBER")"
+if [ "$(jq -r '.base.ref' <<<"$pr")" != main ] || [ "$(jq -r '.merged' <<<"$pr")" != true ]; then
+  echo "PR #$PR_NUMBER is not merged into main; leaving Project unchanged."
+  exit 0
+fi
+
+marker_pattern='<!-- product-factory-ticket-id: TICKET-[0-9]{3} -->'
+markers="$(jq -r '.body // ""' <<<"$pr" | grep -oE "$marker_pattern" || true)"
+marker_count="$(printf '%s\n' "$markers" | sed '/^$/d' | wc -l | tr -d ' ')"
+if [ "$marker_count" -eq 0 ]; then
+  echo "PR #$PR_NUMBER has no Product Factory ticket marker; nothing to reconcile."
+  exit 0
+fi
+if [ "$marker_count" -ne 1 ]; then
+  echo "PR #$PR_NUMBER has $marker_count Product Factory ticket markers; refusing ambiguous reconciliation."
+  exit 0
+fi
+
+ticket_id="${markers#*product-factory-ticket-id: }"
+issue_number="$(gh api --paginate --slurp "repos/$REPOSITORY/issues?state=all&per_page=100" |
+  jq -r --arg marker "$markers" 'add | [ .[] | select(.pull_request == null) | select((.body // "") | contains($marker)) ] | if length == 1 then .[0].number else empty end')"
+if [ -z "$issue_number" ]; then
+  echo "Factory marker $ticket_id does not map to exactly one GitHub issue; leaving Project unchanged."
+  exit 0
+fi
+
+PROJECT_STATUS=done PROJECT_ITEM_NUMBER="$issue_number" GH_TOKEN="$GH_TOKEN" bin/project_status_update
