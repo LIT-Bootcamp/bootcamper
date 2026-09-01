@@ -27,7 +27,7 @@ jobs:
     name: Reconcile PR readiness
     if: >-
       github.event_name == 'pull_request_review' ||
-      github.event.workflow_run.conclusion == 'success'
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -39,6 +39,7 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
           REPOSITORY: ${{ github.repository }}
+          SOLO_MAINTAINER: ${{ vars.SOLO_MAINTAINER || 'false' }}
         run: ./bin/reconcile_pr_readiness
 
   reconcile-merged-ticket:

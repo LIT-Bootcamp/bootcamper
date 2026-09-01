@@ -38,9 +38,13 @@ if jq -e '[.[] | select(.state == "CHANGES_REQUESTED")] | length > 0' <<<"$revie
   echo "PR #$number has changes requested; leaving status unchanged." >&2
   exit 0
 fi
-if ! jq -e '[.[] | select(.state == "APPROVED")] | length > 0' <<<"$reviews" >/dev/null; then
-  echo "PR #$number has no approval; leaving status unchanged." >&2
-  exit 0
+if [ "${SOLO_MAINTAINER:-false}" = true ]; then
+  echo "SOLO_MAINTAINER=true: GitHub approval is waived; independent reviewer evidence remains required by the merge skill." >&2
+else
+  if ! jq -e '[.[] | select(.state == "APPROVED")] | length > 0' <<<"$reviews" >/dev/null; then
+    echo "PR #$number has no approval; set SOLO_MAINTAINER=true only for the documented solo-maintainer mode." >&2
+    exit 0
+  fi
 fi
 
 echo "$number"
