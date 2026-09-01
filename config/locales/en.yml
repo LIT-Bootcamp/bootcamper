@@ -144,6 +144,8 @@ en:
   confirmation:
     success_title: "Email verified"
     success_message: "Your email has been verified. Your account is ready for the next steps."
+    success_message_sign_in_available: "Your email has been verified. You can now sign in with your email and password."
+    success_message_still_blocked: "Your email has been verified. Sign-in is still unavailable for this account right now."
     invalid_title: "Invalid confirmation link"
     invalid_message: "This link has already been used or has expired."
   devise:
