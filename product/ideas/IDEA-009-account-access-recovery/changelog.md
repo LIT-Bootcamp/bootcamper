@@ -21,3 +21,4 @@
 - 2026-09-01 — `TICKET-002` v005 — `RUN-20260901T174752Z-30ca47` — Begin implementation of the claimed execution-ready ticket.
 - 2026-09-01 — `TICKET-002` v006 — `RUN-20260901T174752Z-30ca47` — Prepare the implementation handoff for review after focused lifecycle verification.
 - 2026-09-01 — `TICKET-002` v007 — `RUN-20260901T174752Z-30ca47` — Refresh the in-review snapshot after remediation of the success-guidance finding.
+- 2026-09-01 — `TICKET-002` v008 — `RUN-20260901T174752Z-30ca47` — Open pull request #166 and hand off for human merge.
