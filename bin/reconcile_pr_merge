@@ -19,16 +19,17 @@ if [ "$marker_count" -eq 0 ]; then
   exit 0
 fi
 if [ "$marker_count" -ne 1 ]; then
-  echo "PR #$PR_NUMBER has $marker_count Product Factory ticket markers; refusing ambiguous reconciliation."
-  exit 0
+  echo "PR #$PR_NUMBER has $marker_count Product Factory ticket markers; refusing ambiguous reconciliation." >&2
+  exit 1
 fi
 
-ticket_id="${markers#*product-factory-ticket-id: }"
+ticket_id="$(printf '%s\n' "$markers" | sed -nE 's/^<!-- product-factory-ticket-id: (TICKET-[0-9]{3}) -->$/\1/p')"
+marker="<!-- product-factory-ticket-id: $ticket_id -->"
 issue_number="$(gh api --paginate --slurp "repos/$REPOSITORY/issues?state=all&per_page=100" |
-  jq -r --arg marker "$markers" 'add | [ .[] | select(.pull_request == null) | select((.body // "") | contains($marker)) ] | if length == 1 then .[0].number else empty end')"
+  jq -r --arg marker "$marker" 'add | [ .[] | select(.pull_request == null) | select((.body // "") | contains($marker)) ] | if length == 1 then .[0].number else empty end')"
 if [ -z "$issue_number" ]; then
-  echo "Factory marker $ticket_id does not map to exactly one GitHub issue; leaving Project unchanged."
-  exit 0
+  echo "Factory marker $ticket_id does not map to exactly one GitHub issue; leaving Project unchanged." >&2
+  exit 1
 fi
 
 PROJECT_STATUS=done PROJECT_ITEM_NUMBER="$issue_number" GH_TOKEN="$GH_TOKEN" bin/project_status_update
