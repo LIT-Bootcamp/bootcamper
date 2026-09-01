@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+: "${GH_TOKEN:?GH_TOKEN is required}"
+: "${EVENT_NAME:?EVENT_NAME is required}"
+: "${REPOSITORY:?REPOSITORY is required}"
+
+if [ "$EVENT_NAME" = pull_request_review ]; then
+  number="${PR_NUMBER:-}"
+else
+  : "${HEAD_SHA:?HEAD_SHA is required for workflow_run events}"
+  number="$(gh api "repos/$REPOSITORY/commits/$HEAD_SHA/pulls" \
+    --header 'Accept: application/vnd.github+json' \
+    --jq '.[] | select(.base.ref == "main") | .number' | head -n 1)"
+fi
+
+if [ -z "$number" ]; then
+  echo "No pull request targeting main found for this event; nothing to reconcile." >&2
+  exit 0
+fi
+
+pr="$(gh api "repos/$REPOSITORY/pulls/$number")"
+if [ "$(jq -r '.base.ref' <<<"$pr")" != main ] || [ "$(jq -r '.state' <<<"$pr")" != open ]; then
+  echo "PR #$number is not an open PR targeting main; refusing status update." >&2
+  exit 0
+fi
+
+sha="$(jq -r '.head.sha' <<<"$pr")"
+checks="$(gh api "repos/$REPOSITORY/commits/$sha/check-runs" --header 'Accept: application/vnd.github+json')"
+if jq -e '[.check_runs[] | select(.status != "completed" or .conclusion != "success")] | length > 0' <<<"$checks" >/dev/null; then
+  echo "PR #$number still has pending or failing checks; leaving status unchanged." >&2
+  exit 0
+fi
+
+reviews="$(gh api "repos/$REPOSITORY/pulls/$number/reviews")"
+if jq -e '[.[] | select(.state == "CHANGES_REQUESTED")] | length > 0' <<<"$reviews" >/dev/null; then
+  echo "PR #$number has changes requested; leaving status unchanged." >&2
+  exit 0
+fi
+if ! jq -e '[.[] | select(.state == "APPROVED")] | length > 0' <<<"$reviews" >/dev/null; then
+  echo "PR #$number has no approval; leaving status unchanged." >&2
+  exit 0
+fi
+
+echo "$number"

@@ -1,0 +1,40 @@
+name: Mark PR ready for human merge
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+  pull_request_review:
+    types: [submitted, dismissed]
+
+permissions:
+  contents: read
+  pull-requests: read
+  repository-projects: write
+
+concurrency:
+  group: pr-readiness-${{ github.event.workflow_run.head_sha || github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  PROJECT_NUMBER: 1
+  PROJECT_STATUS: ready-for-human-merge
+
+jobs:
+  reconcile:
+    name: Reconcile PR readiness
+    if: >-
+      github.event_name == 'pull_request_review' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Reconcile project status
+        env:
+          GH_TOKEN: ${{ secrets.PROJECTS_TOKEN || github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          REPOSITORY: ${{ github.repository }}
+        run: ./bin/reconcile_pr_readiness
