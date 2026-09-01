@@ -7,6 +7,7 @@ set -euo pipefail
 : "${PR_NUMBER:?PR_NUMBER is required}"
 PROJECT_NUMBER="${PROJECT_NUMBER:-1}"
 PROJECT_STATUS="${PROJECT_STATUS:-ready-for-human-merge}"
+PROJECT_ITEM_NUMBER="${PROJECT_ITEM_NUMBER:-$PR_NUMBER}"
 
 owner="${REPOSITORY%%/*}"
 project="$(gh project view "$PROJECT_NUMBER" --owner "$owner" --format json)"
@@ -20,12 +21,12 @@ if [ -z "$field_id" ] || [ -z "$option_id" ]; then
 fi
 
 item_id="$(gh project item-list "$PROJECT_NUMBER" --owner "$owner" --limit 1000 --format json | \
-  jq -r --argjson number "$PR_NUMBER" '.items[] | select(.content.number == $number) | .id' | head -n 1)"
+  jq -r --argjson number "$PROJECT_ITEM_NUMBER" '.items[] | select(.content.number == $number) | .id' | head -n 1)"
 if [ -z "$item_id" ]; then
-  echo "PR #$PR_NUMBER has no item in Project $PROJECT_NUMBER; refusing update." >&2
+  echo "Project item #$PROJECT_ITEM_NUMBER has no item in Project $PROJECT_NUMBER; refusing update." >&2
   exit 1
 fi
 
 gh project item-edit --id "$item_id" --project-id "$project_id" \
   --field-id "$field_id" --single-select-option-id "$option_id"
-echo "PR #$PR_NUMBER marked $PROJECT_STATUS in Project $PROJECT_NUMBER."
+echo "Project item #$PROJECT_ITEM_NUMBER marked $PROJECT_STATUS in Project $PROJECT_NUMBER."

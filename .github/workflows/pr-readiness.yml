@@ -6,6 +6,8 @@ on:
     types: [completed]
   pull_request_review:
     types: [submitted, dismissed]
+  pull_request:
+    types: [closed]
 
 permissions:
   contents: read
@@ -38,3 +40,17 @@ jobs:
           HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
           REPOSITORY: ${{ github.repository }}
         run: ./bin/reconcile_pr_readiness
+
+  reconcile-merged-ticket:
+    name: Mark merged ticket done
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Reconcile merged ticket
+        env:
+          GH_TOKEN: ${{ secrets.PROJECTS_TOKEN || github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}
+        run: ./bin/reconcile_pr_merge
