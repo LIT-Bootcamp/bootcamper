@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+: "${EVENT_NAME:?EVENT_NAME is required}"
+: "${REPOSITORY:?REPOSITORY is required}"
+number="$(GH_TOKEN="$GH_TOKEN" bin/pr_readiness_gate)"
+[ -z "$number" ] && exit 0
+PR_NUMBER="$number" GH_TOKEN="$GH_TOKEN" bin/project_status_update

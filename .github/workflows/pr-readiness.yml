@@ -28,6 +28,8 @@ jobs:
       github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
       - name: Reconcile project status
         env:
           GH_TOKEN: ${{ secrets.PROJECTS_TOKEN || github.token }}
@@ -35,66 +37,4 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
           REPOSITORY: ${{ github.repository }}
-        run: |
-          set -euo pipefail
-
-          if [ "$EVENT_NAME" = pull_request_review ]; then
-            number="$PR_NUMBER"
-          else
-            number="$(gh api "repos/$REPOSITORY/commits/$HEAD_SHA/pulls" \
-              --header 'Accept: application/vnd.github+json' \
-              --jq '.[] | select(.base.ref == "main") | .number' | head -n 1)"
-          fi
-
-          if [ -z "$number" ]; then
-            echo "No pull request targeting main found for this event; nothing to reconcile."
-            exit 0
-          fi
-
-          pr="$(gh api "repos/$REPOSITORY/pulls/$number")"
-          base="$(jq -r '.base.ref' <<<"$pr")"
-          state="$(jq -r '.state' <<<"$pr")"
-          if [ "$base" != main ] || [ "$state" != open ]; then
-            echo "PR #$number is not an open PR targeting main; refusing status update."
-            exit 0
-          fi
-
-          sha="$(jq -r '.head.sha' <<<"$pr")"
-          checks="$(gh api "repos/$REPOSITORY/commits/$sha/check-runs" \
-            --header 'Accept: application/vnd.github+json')"
-          if jq -e '[.check_runs[] | select(.status != "completed" or .conclusion != "success")] | length > 0' <<<"$checks" >/dev/null; then
-            echo "PR #$number still has pending or failing checks; leaving status unchanged."
-            exit 0
-          fi
-
-          reviews="$(gh api "repos/$REPOSITORY/pulls/$number/reviews")"
-          if jq -e '[.[] | select(.state == "CHANGES_REQUESTED")] | length > 0' <<<"$reviews" >/dev/null; then
-            echo "PR #$number has changes requested; leaving status unchanged."
-            exit 0
-          fi
-          if ! jq -e '[.[] | select(.state == "APPROVED")] | length > 0' <<<"$reviews" >/dev/null; then
-            echo "PR #$number has no approval; leaving status unchanged."
-            exit 0
-          fi
-
-          owner="${REPOSITORY%%/*}"
-          project="$(gh project view "$PROJECT_NUMBER" --owner "$owner" --format json)"
-          project_id="$(jq -r '.id' <<<"$project")"
-          fields="$(gh api graphql -f query='query($id:ID!) { node(id:$id) { ... on ProjectV2 { fields(first:100) { nodes { ... on ProjectV2SingleSelectField { id name options { id name } } } } } } }' -F id="$project_id")"
-          field_id="$(jq -r --arg name Status '.data.node.fields.nodes[] | select(.name == $name) | .id' <<<"$fields")"
-          option_id="$(jq -r --arg name "$PROJECT_STATUS" '.data.node.fields.nodes[] | select(.name == "Status") | .options[] | select(.name == $name) | .id' <<<"$fields")"
-          if [ -z "$field_id" ] || [ -z "$option_id" ]; then
-            echo "Project $PROJECT_NUMBER has no Status/$PROJECT_STATUS option; refusing update." >&2
-            exit 1
-          fi
-
-          item_id="$(gh project item-list "$PROJECT_NUMBER" --owner "$owner" --limit 1000 --format json | \
-            jq -r --argjson number "$number" '.items[] | select(.content.number == $number) | .id' | head -n 1)"
-          if [ -z "$item_id" ]; then
-            echo "PR #$number has no item in Project $PROJECT_NUMBER; refusing update." >&2
-            exit 1
-          fi
-
-          gh project item-edit --id "$item_id" --project-id "$project_id" \
-            --field-id "$field_id" --single-select-option-id "$option_id"
-          echo "PR #$number marked $PROJECT_STATUS in Project $PROJECT_NUMBER."
+        run: ./bin/reconcile_pr_readiness
