@@ -1,10 +1,19 @@
 #!/bin/sh
-if [ "${1:-}" = "test" ]; then
-  shift
-  exec mise exec ruby@4.0.6 -- bundle exec rspec .agents/spec "$@"
+if command -v mise >/dev/null 2>&1; then
+  if [ "${1:-}" = "test" ]; then
+    shift
+    exec mise exec ruby@4.0.6 -- bundle exec rspec $(find .agents/spec -type f -name '*_spec.rb' -print) "$@"
+  fi
+
+  exec mise exec ruby@4.0.6 -- ruby -x "$0" "$@"
 fi
 
-exec mise exec ruby@4.0.6 -- ruby -x "$0" "$@"
+if [ "${1:-}" = "test" ]; then
+  shift
+  exec bundle exec rspec $(find .agents/spec -type f -name '*_spec.rb' -print) "$@"
+fi
+
+exec ruby -x "$0" "$@"
 #!ruby
 
 require "json"
