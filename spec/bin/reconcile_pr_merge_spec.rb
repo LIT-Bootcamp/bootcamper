@@ -5,7 +5,7 @@ require "open3"
 require "tmpdir"
 
 RSpec.describe "bin/reconcile_pr_merge" do
-  def run_reconciliation(pr_body:, issues:, push_succeeds: true)
+  def run_reconciliation(pr_body:, issues:, pull_requests: [], completion_tickets: nil, push_succeeds: true)
     Dir.mktmpdir("reconcile-pr-merge") do |dir|
       bin = File.join(dir, "bin")
       fake_bin = File.join(dir, "fake-bin")
@@ -26,10 +26,7 @@ RSpec.describe "bin/reconcile_pr_merge" do
         require "json"
 
         File.open(ENV.fetch("EVENTS_FILE"), "a") { |file| file.puts("complete:TICKET-011") }
-        puts JSON.generate(
-          "changed" => true,
-          "tickets" => [ { "id" => "TICKET-011", "state" => "done", "current_version" => 6, "github_issue" => 158 } ]
-        )
+        puts JSON.generate("changed" => true, "tickets" => JSON.parse(ENV.fetch("COMPLETION_TICKETS")))
       RUBY
       FileUtils.chmod(0o755, File.join(bin, "product_factory"))
 
@@ -49,7 +46,8 @@ RSpec.describe "bin/reconcile_pr_merge" do
         if ARGV == [ "api", "repos/example/bootcamper/pulls/160" ]
           puts ENV.fetch("PR_JSON")
         elsif ARGV.first(3) == [ "api", "--paginate", "--slurp" ]
-          puts JSON.generate([ JSON.parse(ENV.fetch("ISSUES_JSON")) ])
+          collection = ARGV.last.include?("/pulls?") ? "PULL_REQUESTS_JSON" : "ISSUES_JSON"
+          puts JSON.generate([ JSON.parse(ENV.fetch(collection)) ])
         else
           warn "unexpected gh arguments: \#{ARGV.inspect}"
           exit 64
@@ -66,6 +64,10 @@ RSpec.describe "bin/reconcile_pr_merge" do
           "merge_commit_sha" => "abc123", "merged_at" => "2026-09-01T18:00:00Z"
         ),
         "ISSUES_JSON" => JSON.generate(issues),
+        "PULL_REQUESTS_JSON" => JSON.generate(pull_requests),
+        "COMPLETION_TICKETS" => JSON.generate(completion_tickets || [
+          { "id" => "TICKET-011", "state" => "done", "current_version" => 6, "github_issue" => 158 }
+        ]),
         "RESULT_FILE" => result,
         "EVENTS_FILE" => events,
         "PUSH_SUCCEEDS" => push_succeeds.to_s,
@@ -121,6 +123,31 @@ RSpec.describe "bin/reconcile_pr_merge" do
     expect(events).to include("complete:TICKET-011", "push")
     expect(events.grep(/\Aproject:/)).to be_empty
     expect(result).to be_nil
+  end
+
+  it "preserves a newly unblocked ticket projection when it already has an active pull request" do
+    merged_marker = "<!-- product-factory-ticket-id: TICKET-011 -->"
+    active_marker = "<!-- product-factory-ticket-id: TICKET-002 -->"
+    issues = [
+      { "number" => 158, "body" => merged_marker },
+      { "number" => 141, "body" => active_marker }
+    ]
+    tickets = [
+      { "id" => "TICKET-011", "state" => "done", "current_version" => 6, "github_issue" => 158 },
+      { "id" => "TICKET-002", "state" => "available", "current_version" => 5, "github_issue" => 141 }
+    ]
+
+    stdout, stderr, status, _result, events = run_reconciliation(
+      pr_body: merged_marker,
+      issues: issues,
+      pull_requests: [ { "number" => 166, "body" => active_marker } ],
+      completion_tickets: tickets
+    )
+
+    expect(status).to be_success
+    expect(stderr).to eq("")
+    expect(stdout).to include("TICKET-002 has active PR #166; preserving active delivery projection")
+    expect(events.grep(/project:/)).to eq([ "project:done:158:6" ])
   end
 end
 # rubocop:enable RSpec/DescribeClass, RSpec/ExampleLength, RSpec/MultipleExpectations

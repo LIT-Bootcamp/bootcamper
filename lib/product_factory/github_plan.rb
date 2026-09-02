@@ -188,9 +188,14 @@ module ProductFactory
 
     def protected_implementation?(ticket_id)
       branches = Array(@remote["branches"] || @remote[:branches]).map { |branch| stringify_keys(branch) }
-      pull_requests = Array(@remote["pull_requests"] || @remote[:pull_requests]).map { |pull_request| stringify_keys(pull_request) }
       branches.any? { |branch| branch["ticket_id"] == ticket_id } ||
-        pull_requests.any? { |pull_request| pull_request["ticket_id"] == ticket_id && pull_request["state"].to_s.upcase != "MERGED" && pull_request["state"].to_s.upcase != "CLOSED" }
+        active_pull_request?(ticket_id)
+    end
+
+    def active_pull_request?(ticket_id)
+      Array(@remote["pull_requests"] || @remote[:pull_requests]).map { |pull_request| stringify_keys(pull_request) }.any? do |pull_request|
+        pull_request["ticket_id"] == ticket_id && !%w[MERGED CLOSED].include?(pull_request["state"].to_s.upcase)
+      end
     end
 
     def merged_pull_request(ticket_id)
@@ -217,6 +222,7 @@ module ProductFactory
 
     def project_field_operations(ticket_id, issue_number, ticket, remote_fields)
       desired_project_fields(ticket).filter_map do |field, value|
+        next if active_pull_request?(ticket_id) && %w[Status Source\ Version Factory\ Run].include?(field)
         next if issue_number && remote_fields[field].to_s == value
 
         operation(:project_field, ticket_id, issue_number, "field" => field, "value" => value)

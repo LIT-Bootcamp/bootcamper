@@ -26,6 +26,7 @@ fi
 ticket_id="$(printf '%s\n' "$markers" | sed -nE 's/^<!-- product-factory-ticket-id: (TICKET-[0-9]{3}) -->$/\1/p')"
 marker="<!-- product-factory-ticket-id: $ticket_id -->"
 issues="$(gh api --paginate --slurp "repos/$REPOSITORY/issues?state=all&per_page=100")"
+pull_requests="$(gh api --paginate --slurp "repos/$REPOSITORY/pulls?state=open&base=main&per_page=100")"
 issue_number="$(printf '%s' "$issues" |
   jq -r --arg marker "$marker" 'add | [ .[] | select(.pull_request == null) | select((.body // "") | contains($marker)) ] | if length == 1 then .[0].number else empty end')"
 if [ -z "$issue_number" ]; then
@@ -63,6 +64,21 @@ while IFS=$'\t' read -r projected_ticket state source_version mapped_issue; do
   if [ -z "$mapped_issue" ]; then
     echo "$projected_ticket does not map to exactly one GitHub issue after canonical Git publication." >&2
     exit 1
+  fi
+
+  if [ "$projected_ticket" != "$ticket_id" ]; then
+    projected_marker="<!-- product-factory-ticket-id: $projected_ticket -->"
+    active_prs="$(printf '%s' "$pull_requests" |
+      jq -c --arg marker "$projected_marker" 'add | [ .[] | select((.body // "") | contains($marker)) ]')"
+    active_pr_count="$(jq 'length' <<<"$active_prs")"
+    if [ "$active_pr_count" -gt 1 ]; then
+      echo "$projected_ticket maps to $active_pr_count active pull requests; refusing ambiguous delivery projection." >&2
+      exit 1
+    elif [ "$active_pr_count" -eq 1 ]; then
+      active_pr_number="$(jq -r '.[0].number' <<<"$active_prs")"
+      echo "$projected_ticket has active PR #$active_pr_number; preserving active delivery projection."
+      continue
+    fi
   fi
 
   PROJECT_STATUS="$state" PROJECT_SOURCE_VERSION="$source_version" PROJECT_ITEM_NUMBER="$mapped_issue" \

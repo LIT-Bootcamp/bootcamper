@@ -320,6 +320,26 @@ RSpec.describe ProductFactory::GitHubPlan do
     )
   end
 
+  it "does not downgrade delivery fields while an implementation pull request is active" do
+    fields = {
+      "Idea" => "IDEA-001", "Epic" => "EPIC-001", "Ticket ID" => "TICKET-001", "Priority" => "1",
+      "Status" => "ready-for-human-merge", "Estimate" => "1.5", "Dependencies" => "", "Source Version" => "8",
+      "Factory Run" => "RUN-20260830T120000Z-a1b2c3"
+    }
+    operations = plan(
+      { "TICKET-001" => ticket(github_issue: 42, state: "available", current_version: 3) },
+      remote(
+        issues: [ issue ],
+        project_items: [ { "issue_number" => 42, "fields" => fields } ],
+        pull_requests: [ { "ticket_id" => "TICKET-001", "number" => 77, "state" => "OPEN" } ]
+      )
+    )
+
+    delivery_fields = operations.select { |operation| operation.action == :project_field }
+      .map { |operation| operation.attributes.fetch("field") }
+    expect(delivery_fields).not_to include("Status", "Source Version")
+  end
+
   it "sorts operations stably by Ticket ID and action" do
     local = {
       "TICKET-010" => ticket(id: "TICKET-010", title: "Later"),

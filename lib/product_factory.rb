@@ -286,9 +286,14 @@ module ProductFactory
       end
     end
 
-    def next_ticket
+    def next_ticket(ticket_id: nil)
       tickets = snapshot.values.select { |item| item["kind"] == "ticket" && item["state"] == "available" && item["dependency_safe"] }
-      selected = tickets.min_by { |ticket| [ ticket["priority"].to_f, ticket["id"] ] }
+      selected = if ticket_id
+        tickets.find { |ticket| ticket["id"] == ticket_id } ||
+          raise(ValidationError, "#{ticket_id} is not available and dependency-safe")
+      else
+        tickets.min_by { |ticket| [ ticket["priority"].to_f, ticket["id"] ] }
+      end
       selected && Pathname(selected["manifest_path"])
     end
 
