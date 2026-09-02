@@ -1,13 +1,14 @@
 id: TICKET-011
 kind: ticket
-current_version: 3
-state: in-progress
+current_version: 6
+state: done
 source_versions:
   EPIC-001: 2
-content_sha256: 9659552ed50fc519525f49ba73e5a3429ffe8ec1c833c89a9424b37604ba96e9
-github_issue:
+content_sha256: a109f9077fb8b549f97d2252904faa5b86161bfb85e7d84338f4adc0aa13760a
+github_issue: 158
 dependencies: []
 priority: 2
 estimate_days: 1
 scenarios:
 - SCENARIO-012
+merged_pull_request: 160

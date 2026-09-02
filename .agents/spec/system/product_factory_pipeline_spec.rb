@@ -3,6 +3,7 @@
 require "digest"
 require "fileutils"
 require "json"
+require "open3"
 require "pathname"
 require "tmpdir"
 require "yaml"
@@ -89,6 +90,62 @@ RSpec.describe "Product Factory offline pipeline" do
       changes = ProductFactory::Repository.new(root: product).changes(phase: "backlog-idea").to_h { |change| [ change.id, change.status ] }
 
       expect(changes).to include("TICKET-001" => :changed, "TICKET-002" => :newly_unblocked)
+    end
+  end
+
+  it "publishes merged completion and newly unblocked tickets as immutable versions" do
+    with_fixture do |_root, product|
+      completed = product.join("ideas/IDEA-001-guided-learning/epics/EPIC-001-admissions/tickets/TICKET-001-accept-application")
+      dependent = product.join("ideas/IDEA-001-guided-learning/epics/EPIC-001-admissions/tickets/TICKET-002-show-next-action")
+      FileUtils.rm(completed.join("v007.md"))
+      FileUtils.rm(dependent.join("v003.md"))
+
+      completed_manifest = YAML.safe_load(File.read(completed.join("manifest.yml")), aliases: false)
+      completed_manifest.merge!(
+        "current_version" => 6,
+        "state" => "ready-for-human-merge",
+        "content_sha256" => Digest::SHA256.hexdigest(File.binread(completed.join("v006.md")).gsub("\r\n", "\n"))
+      )
+      File.write(completed.join("manifest.yml"), YAML.dump(completed_manifest))
+
+      dependent_manifest = YAML.safe_load(File.read(dependent.join("manifest.yml")), aliases: false)
+      dependent_manifest.merge!(
+        "current_version" => 2,
+        "state" => "backlog-ready",
+        "content_sha256" => Digest::SHA256.hexdigest(File.binread(dependent.join("v002.md")).gsub("\r\n", "\n"))
+      )
+      File.write(dependent.join("manifest.yml"), YAML.dump(dependent_manifest))
+
+      stdout, stderr, status = Open3.capture3(
+        "bin/product_factory", "complete-ticket", "--root", product.to_s,
+        "--ticket", "TICKET-001", "--run-id", "RUN-20260901T180000Z-a1b2c3",
+        "--pull-request", "77", "--merge-commit", "abc123", "--created-at", "2026-09-01T18:00:00Z"
+      )
+      expect(status).to be_success, stderr
+      result = JSON.parse(stdout).fetch("tickets")
+
+      expect(result.map { |ticket| [ ticket.fetch("id"), ticket.fetch("state") ] }).to contain_exactly(
+        [ "TICKET-001", "done" ], [ "TICKET-002", "available" ]
+      )
+      expect(YAML.safe_load(File.read(completed.join("manifest.yml")), aliases: false)).to include(
+        "current_version" => 7, "state" => "done", "merged_pull_request" => 77
+      )
+      expect(YAML.safe_load(File.read(dependent.join("manifest.yml")), aliases: false)).to include(
+        "current_version" => 3, "state" => "available"
+      )
+      changelog = product.join("ideas/IDEA-001-guided-learning/changelog.md")
+      expect(File.read(changelog)).to include("TICKET-001", "TICKET-002", "RUN-20260901T180000Z-a1b2c3")
+
+      ProductFactory::Repository.new(root: product).complete_ticket!(
+        ticket_id: "TICKET-001",
+        run_id: "RUN-20260901T180000Z-a1b2c3",
+        pull_request: 77,
+        merge_commit: "abc123"
+      )
+      expect(YAML.safe_load(File.read(completed.join("manifest.yml")), aliases: false)).to include(
+        "current_version" => 7, "state" => "done"
+      )
+      expect { ProductFactory::Repository.new(root: product).validate! }.not_to raise_error
     end
   end
 

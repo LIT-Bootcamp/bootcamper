@@ -1,6 +1,6 @@
 ---
 name: merge
-description: Manually authorize and merge one reviewed Product Factory pull request, then reconcile its ticket to done.
+description: Use when a human explicitly requests merging one reviewed Product Factory pull request.
 ---
 
 # Merge Reviewed Ticket
@@ -22,13 +22,15 @@ Only the project-scoped `lead_bootcamper` agent may execute
 `bin/lead_bootcamper merge`. Do not use `gh pr merge` directly and do not merge
 through implementation or reviewer agents.
 
-After a successful merge, invoke the project-scoped `bootcamper_backlogger` in
-a fresh context with the merged PR number, ticket ID, merge commit, and the
-existing factory run/snapshot. The backlogger must idempotently publish the
-next immutable ticket version as `done`, update the GitHub Project Status to
-`Done`, and recalculate dependency-safe tickets. A failed post-merge sync does
-not undo the merge or mark the ticket done; preserve the reconciliation run and
-resume it automatically from its snapshot.
+After a successful merge, the post-merge CI reconciler owns completion. It must
+idempotently publish canonical Git ticket versions (`done` plus newly unblocked
+`available` tickets) before GitHub Project `Status` and `Source Version` are
+updated. The reconciler must fail visibly when validation, commit, push,
+mapping, or Project projection fails; a green no-op with a present ticket
+marker is forbidden. Rerunning the same workflow is the recovery path.
 
-Record the merge and reconciliation evidence in the human-readable factory
-journal. Never close the ticket before the merged commit is confirmed.
+`$merge` reports the post-merge workflow URL and does not duplicate its work
+through a local Backlogger run. Backlog reconciliation may repair later Project
+drift from canonical Git, but it is not the primary merge transition. Record
+the merge and reconciliation evidence in the human-readable factory journal.
+Never close the ticket before the merged commit is confirmed.

@@ -18,3 +18,6 @@
 - 2026-08-31 — `TICKET-001` v006 — `RUN-20260831T165115Z-911e5f` — Refresh the in-review snapshot after remediation round 2.
 - 2026-08-31 — `TICKET-001` v007 — `RUN-20260831T165115Z-911e5f` — Open pull request #156 and hand off for human merge.
 - 2026-09-01 — `TICKET-002` v003–v004 — `RUN-20260831T084434Z-a2b2c2` — Promote the confirmation-proof ticket to the execution-ready contract.
+- 2026-09-01 — `TICKET-011` v001–v002 — `RUN-20260901T065604Z-f4dfd5` — Add and publish the blocked-account eligibility prerequisite.
+- 2026-09-01 — `TICKET-011` v003–v005 — `RUN-20260901T121856Z-526ccf` — Record implementation, independent review, and readiness for human merge in PR #160.
+- 2026-09-01 — `TICKET-011` v006 — `RUN-20260901T121856Z-526ccf` — Reconcile canonical Git with merged PR #160 and GitHub issue #158.

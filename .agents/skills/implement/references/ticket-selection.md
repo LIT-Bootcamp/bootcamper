@@ -29,6 +29,8 @@ Before delivery, re-read the selected manifest in the worktree. If it no longer 
 
 Each lifecycle change creates a new immutable ticket version rather than editing the prior version. Publish `in-progress` before implementation, `in-review` before independent review, and `ready-for-human-merge` only after the pull request exists and all factory delivery gates pass. Each version names its immediate predecessor, run ID, author, source versions, state, and non-empty reason. Validate the proposed version and manifest together in a temporary product-tree copy, then publish both together before changing the changelog.
 
+The final `ready-for-human-merge` version is part of the implementation pull request. Commit and push it to the same branch, then verify the remote pull request head contains the version and manifest before finishing. This guarantees that, after human merge, the canonical base branch can read the exact predecessor required by post-merge completion.
+
 ## Cleanup and recovery
 
 Always attempt to release the transient claim after a claim was acquired:

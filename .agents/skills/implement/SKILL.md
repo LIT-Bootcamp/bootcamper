@@ -39,7 +39,7 @@ dependencies_satisfied: true
 
 The immutable ticket version is the approved scope boundary. Delivery must use the existing `senior_ruby_rails_engineer`, `fresh_eye_rails_reviewer`, and `project_context_rails_reviewer` agents in their required isolated contexts. Preserve both independent reviews, lead-only release commands, and at most three remediation rounds. Escalate rather than expanding scope, waiving consequential ambiguity, or continuing after a third unsuccessful remediation round.
 
-Publish and validate an `in-review` version before independent review begins. After both reviewers approve and the lead creates the pull request, publish and validate the next immutable ticket version at `ready-for-human-merge`. Record the pull request and verification evidence in the factory run. Never merge automatically: Product Factory delivery has a human-only merge gate.
+Publish and validate an `in-review` version before independent review begins. After both reviewers approve and the lead creates the pull request, publish and validate the next immutable ticket version at `ready-for-human-merge`. The lead must commit and push that version and manifest to the same pull request branch before finishing the run; a local-only lifecycle version is an escalated failure. Record the pull request and verification evidence in the factory run. Never merge automatically: Product Factory delivery has a human-only merge gate.
 
 ## Release and Finish
 
