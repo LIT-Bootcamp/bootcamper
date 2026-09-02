@@ -1,0 +1,175 @@
+{
+  "run_id": "RUN-20260901T081248Z-bab280",
+  "repository": "LIT-Bootcamp/bootcamper",
+  "project_number": 1,
+  "operations": [
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-002",
+      "issue_number": 141,
+      "attributes": {
+        "field": "Dependencies",
+        "value": "TICKET-011"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-002",
+      "issue_number": 141,
+      "attributes": {
+        "field": "Factory Run",
+        "value": "RUN-20260901T065604Z-f4dfd5"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-002",
+      "issue_number": 141,
+      "attributes": {
+        "field": "Source Version",
+        "value": "5"
+      }
+    },
+    {
+      "action": "update",
+      "ticket_id": "TICKET-002",
+      "issue_number": 141,
+      "attributes": {
+        "title": "TICKET-002: Enforce confirmation-proof lifecycle",
+        "body": "# TICKET-002: Enforce confirmation-proof lifecycle\n\n## Observable goal\n\nLearners can confirm email ownership only with the current valid proof, while failed proof attempts leave account state private and unchanged. A valid proof confirms a blocked learner without restoring ordinary sign-in eligibility.\n\n## Source IDEA, EPIC, version, and scenario IDs\n\nIDEA-009/v003; EPIC-001/v002; SCENARIO-004, SCENARIO-005, SCENARIO-006, SCENARIO-007, SCENARIO-008, SCENARIO-012.\n\n## Acceptance evidence\n\n`spec/requests/confirmations_spec.rb` proves valid-current confirmation (SCENARIO-004); invalid, expired, used, and superseded proofs leave account state unchanged (SCENARIO-005 through SCENARIO-008); and a blocked learner is confirmed without mutation of the blocked state (SCENARIO-012). TICKET-011 supplies the persisted block state and the request proof that correct blocked credentials cannot start a session.\n\n## Dependencies\n\nTICKET-011\n\n## Difficulty (1-5)\n\n3\n\n## Estimate (ideal days, at most 2)\n\n1.5\n\n## Risks\n\nToken handling can disclose private account state or accept an old, expired, or used proof. Confirmation must not clear or otherwise alter the blocked state supplied by TICKET-011.\n\n## External actions\n\nConfigure the production confirmation URL host and email delivery.\n\n## Allowed scope\n\nDevise Confirmable token lifecycle, confirmation-controller outcome, confirmation result copy, mailer URL configuration, and focused confirmation specs. No blocked-state persistence or authentication-policy implementation, resend form, registration flow, block/unblock administration, recovery proof lifecycle, or production mail-provider setup.\n\n<!-- product-factory-ticket-id: TICKET-002 -->"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-004",
+      "issue_number": 143,
+      "attributes": {
+        "field": "Dependencies",
+        "value": "TICKET-011"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-004",
+      "issue_number": 143,
+      "attributes": {
+        "field": "Factory Run",
+        "value": "RUN-20260901T071732Z-a6c676"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-004",
+      "issue_number": 143,
+      "attributes": {
+        "field": "Source Version",
+        "value": "3"
+      }
+    },
+    {
+      "action": "update",
+      "ticket_id": "TICKET-004",
+      "issue_number": 143,
+      "attributes": {
+        "title": "TICKET-004: Invalidate sessions after account blocking",
+        "body": "# TICKET-004: Invalidate sessions after account blocking\n## Observable goal\nBlocking rejects every existing session; unblocking never resumes them and requires new sign-in.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-002/v002; SCENARIO-020.\n## Acceptance evidence\nRequest specs prove multiple-session denial before and after unblock, including a fresh sign-in requirement after unblocking.\n## Dependencies\nTICKET-011\n## Difficulty (1-5)\n4\n## Estimate (ideal days, at most 2)\n2\n## Risks\nEvery authenticated path must enforce server-checked invalidation; session generation must not be revived by unblock.\n## External actions\nAdministrator-owned system must use the agreed block transition.\n## Allowed scope\nPersisted session generation, authentication hooks, invalidation, and focused specs consuming TICKET-011's blocked-account state; no admin UI or block-state ownership.\n\n<!-- product-factory-ticket-id: TICKET-004 -->"
+      }
+    },
+    {
+      "action": "create",
+      "ticket_id": "TICKET-011",
+      "issue_number": null,
+      "attributes": {
+        "title": "TICKET-011: Establish blocked-account sign-in eligibility",
+        "body": "# TICKET-011: Establish blocked-account sign-in eligibility\n\n## Observable goal\n\nA persisted blocked account can confirm email ownership without becoming eligible for ordinary sign-in; blocked credentials receive the existing generic sign-in rejection and create no session.\n\n## Source IDEA, EPIC, version, and scenario IDs\n\nIDEA-009/v003; EPIC-001/v002; SCENARIO-012.\n\n## Acceptance evidence\n\nFocused model and request specs prove that a blocked, unconfirmed learner can be confirmed without clearing the blocked state, then cannot sign in with correct credentials and receives no authenticated session. The rejected response matches the generic invalid-credentials outcome.\n\n## Dependencies\n\nnone\n\n## Difficulty (1-5)\n\n3\n\n## Estimate (ideal days, at most 2)\n\n1\n\n## Risks\n\nAn authentication override could accidentally bypass Devise Confirmable or expose a blocked state through a distinct failure message. Existing-session invalidation is intentionally outside this ticket and remains TICKET-004's responsibility.\n\n## External actions\n\nThe administrator-owned blocking system must use the agreed persisted block/unblock transition; no administration interface is included here.\n\n## Allowed scope\n\nThe `users` blocked-state migration, `User` block predicate and Devise sign-in eligibility hook, generic failure mapping, and focused model/request specs. No confirmation-proof lifecycle changes, block/unblock UI, existing-session invalidation, or recovery behavior.\n\n<!-- product-factory-ticket-id: TICKET-011 -->"
+      }
+    },
+    {
+      "action": "project_add",
+      "ticket_id": "TICKET-011",
+      "issue_number": null,
+      "attributes": {}
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": null,
+      "attributes": {
+        "field": "Dependencies",
+        "value": ""
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": null,
+      "attributes": {
+        "field": "Epic",
+        "value": "EPIC-001"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": null,
+      "attributes": {
+        "field": "Estimate",
+        "value": "1"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": null,
+      "attributes": {
+        "field": "Factory Run",
+        "value": "RUN-20260901T065604Z-f4dfd5"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": null,
+      "attributes": {
+        "field": "Idea",
+        "value": "IDEA-009"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": null,
+      "attributes": {
+        "field": "Priority",
+        "value": "2"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": null,
+      "attributes": {
+        "field": "Source Version",
+        "value": "1"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": null,
+      "attributes": {
+        "field": "Status",
+        "value": "backlog-ready"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": null,
+      "attributes": {
+        "field": "Ticket ID",
+        "value": "TICKET-011"
+      }
+    }
+  ]
+}

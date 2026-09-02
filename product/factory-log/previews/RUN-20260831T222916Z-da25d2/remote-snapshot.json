@@ -1,0 +1,1655 @@
+{
+  "issues": [
+    {
+      "assignees": [],
+      "body": "# TICKET-010: Revoke all sessions after recovery\n## Observable goal\nSuccessful replacement invalidates every older session on its next authenticated action.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-003/v002; SCENARIO-034.\n## Acceptance evidence\nRequest specs prove multiple old sessions fail and fresh eligible sign-in works.\n## Dependencies\nTICKET-004, TICKET-008\n## Difficulty (1-5)\n3\n## Estimate (ideal days, at most 2)\n1\n## Risks\nRevocation must be atomic only after successful replacement.\n## External actions\nnone\n## Allowed scope\nReuse server-checked invalidation during successful recovery and add focused specs only.\n\nSuperseded duplicate of #153.\n",
+      "number": 155,
+      "state": "CLOSED",
+      "title": "TICKET-010: Revoke all sessions after recovery",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/155"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-010: Revoke all sessions after recovery\n## Observable goal\nSuccessful replacement invalidates every older session on its next authenticated action.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-003/v002; SCENARIO-034.\n## Acceptance evidence\nRequest specs prove multiple old sessions fail and fresh eligible sign-in works.\n## Dependencies\nTICKET-004, TICKET-008\n## Difficulty (1-5)\n3\n## Estimate (ideal days, at most 2)\n1\n## Risks\nRevocation must be atomic only after successful replacement.\n## External actions\nnone\n## Allowed scope\nReuse server-checked invalidation during successful recovery and add focused specs only.\n\nSuperseded duplicate of #153.\n",
+      "number": 154,
+      "state": "CLOSED",
+      "title": "TICKET-010: Revoke all sessions after recovery",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/154"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-010: Revoke all sessions after recovery\n## Observable goal\nSuccessful replacement invalidates every older session on its next authenticated action.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-003/v002; SCENARIO-034.\n## Acceptance evidence\nRequest specs prove multiple old sessions fail and fresh eligible sign-in works.\n## Dependencies\nTICKET-004, TICKET-008\n## Difficulty (1-5)\n3\n## Estimate (ideal days, at most 2)\n1\n## Risks\nRevocation must be atomic only after successful replacement.\n## External actions\nnone\n## Allowed scope\nReuse server-checked invalidation during successful recovery and add focused specs only.\n\n<!-- product-factory-ticket-id: TICKET-010 -->",
+      "number": 153,
+      "state": "OPEN",
+      "title": "TICKET-010: Revoke all sessions after recovery",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/153"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-009: Preserve account state after recovery\n## Observable goal\nNew password supersedes old while recovery neither confirms nor unblocks the account.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-003/v002; SCENARIO-031, SCENARIO-032, SCENARIO-033.\n## Acceptance evidence\nRequest specs prove new success, old rejection, confirmation gate, and preserved generic blocked rejection.\n## Dependencies\nTICKET-004, TICKET-005, TICKET-008\n## Difficulty (1-5)\n2\n## Estimate (ideal days, at most 2)\n1\n## Risks\nRecovery callbacks must not confirm, unblock, or authenticate.\n## External actions\nnone\n## Allowed scope\nPost-recovery authentication/state preservation and focused specs only.\n\nSuperseded duplicate of #151.\n",
+      "number": 152,
+      "state": "CLOSED",
+      "title": "TICKET-009: Preserve account state after recovery",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/152"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-009: Preserve account state after recovery\n## Observable goal\nNew password supersedes old while recovery neither confirms nor unblocks the account.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-003/v002; SCENARIO-031, SCENARIO-032, SCENARIO-033.\n## Acceptance evidence\nRequest specs prove new success, old rejection, confirmation gate, and preserved generic blocked rejection.\n## Dependencies\nTICKET-004, TICKET-005, TICKET-008\n## Difficulty (1-5)\n2\n## Estimate (ideal days, at most 2)\n1\n## Risks\nRecovery callbacks must not confirm, unblock, or authenticate.\n## External actions\nnone\n## Allowed scope\nPost-recovery authentication/state preservation and focused specs only.\n\n<!-- product-factory-ticket-id: TICKET-009 -->",
+      "number": 151,
+      "state": "OPEN",
+      "title": "TICKET-009: Preserve account state after recovery",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/151"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-008: Enforce recovery-proof password replacement\n## Observable goal\nOnly valid current proof plus acceptable password changes credentials; all invalid cases preserve them with feedback.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-003/v002; SCENARIO-025, SCENARIO-026, SCENARIO-027, SCENARIO-028, SCENARIO-029, SCENARIO-030.\n## Acceptance evidence\nRequest specs exercise every proof and policy state, success, preservation after failure, and non-reuse.\n## Dependencies\nTICKET-007\n## Difficulty (1-5)\n3\n## Estimate (ideal days, at most 2)\n1.5\n## Risks\nConcurrent requests and privacy.\n## External actions\nnone\n## Allowed scope\nProof validation, replacement form/controller, feedback, translations, and focused specs only.\n\nSuperseded duplicate of #149.\n",
+      "number": 150,
+      "state": "CLOSED",
+      "title": "TICKET-008: Enforce recovery-proof password replacement",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/150"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-008: Enforce recovery-proof password replacement\n## Observable goal\nOnly valid current proof plus acceptable password changes credentials; all invalid cases preserve them with feedback.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-003/v002; SCENARIO-025, SCENARIO-026, SCENARIO-027, SCENARIO-028, SCENARIO-029, SCENARIO-030.\n## Acceptance evidence\nRequest specs exercise every proof and policy state, success, preservation after failure, and non-reuse.\n## Dependencies\nTICKET-007\n## Difficulty (1-5)\n3\n## Estimate (ideal days, at most 2)\n1.5\n## Risks\nConcurrent requests and privacy.\n## External actions\nnone\n## Allowed scope\nProof validation, replacement form/controller, feedback, translations, and focused specs only.\n\n<!-- product-factory-ticket-id: TICKET-008 -->",
+      "number": 149,
+      "state": "OPEN",
+      "title": "TICKET-008: Enforce recovery-proof password replacement",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/149"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-007: Keep recovery requests private\n## Observable goal\nAll email/account states receive the same acknowledgement while eligible accounts receive proof without confirmation or block changes.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-003/v002; SCENARIO-021, SCENARIO-022, SCENARIO-023, SCENARIO-024.\n## Acceptance evidence\nRequest specs compare responses and verify applicable delivery without state mutation.\n## Dependencies\nTICKET-004\n## Difficulty (1-5)\n2\n## Estimate (ideal days, at most 2)\n1\n## Risks\nResponse or delivery differences disclose state.\n## External actions\nConfigure production reset URL host and email delivery.\n## Allowed scope\nRecovery request route, form, response, mail invocation, translations, and focused specs only.\n\nSuperseded duplicate of #147.\n",
+      "number": 148,
+      "state": "CLOSED",
+      "title": "TICKET-007: Keep recovery requests private",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/148"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-007: Keep recovery requests private\n## Observable goal\nAll email/account states receive the same acknowledgement while eligible accounts receive proof without confirmation or block changes.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-003/v002; SCENARIO-021, SCENARIO-022, SCENARIO-023, SCENARIO-024.\n## Acceptance evidence\nRequest specs compare responses and verify applicable delivery without state mutation.\n## Dependencies\nTICKET-004\n## Difficulty (1-5)\n2\n## Estimate (ideal days, at most 2)\n1\n## Risks\nResponse or delivery differences disclose state.\n## External actions\nConfigure production reset URL host and email delivery.\n## Allowed scope\nRecovery request route, form, response, mail invocation, translations, and focused specs only.\n\n<!-- product-factory-ticket-id: TICKET-007 -->",
+      "number": 147,
+      "state": "OPEN",
+      "title": "TICKET-007: Keep recovery requests private",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/147"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-006: Make sign-out final and idempotent\n## Observable goal\nAuthenticated and anonymous sign-out are safe, and an ended session cannot authorize later actions.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-002/v002; SCENARIO-017, SCENARIO-018, SCENARIO-019.\n## Acceptance evidence\nRequest specs prove both sign-out paths and rejection of a captured ended session.\n## Dependencies\nnone\n## Difficulty (1-5)\n2\n## Estimate (ideal days, at most 2)\n0.5\n## Risks\nRouting and CSRF safety.\n## External actions\nnone\n## Allowed scope\nLogout route/response, session termination, destination, translations, and focused specs only.\n\nSuperseded duplicate of #145.\n",
+      "number": 146,
+      "state": "CLOSED",
+      "title": "TICKET-006: Make sign-out final and idempotent",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/146"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-006: Make sign-out final and idempotent\n## Observable goal\nAuthenticated and anonymous sign-out are safe, and an ended session cannot authorize later actions.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-002/v002; SCENARIO-017, SCENARIO-018, SCENARIO-019.\n## Acceptance evidence\nRequest specs prove both sign-out paths and rejection of a captured ended session.\n## Dependencies\nnone\n## Difficulty (1-5)\n2\n## Estimate (ideal days, at most 2)\n0.5\n## Risks\nRouting and CSRF safety.\n## External actions\nnone\n## Allowed scope\nLogout route/response, session termination, destination, translations, and focused specs only.\n\n<!-- product-factory-ticket-id: TICKET-006 -->",
+      "number": 145,
+      "state": "OPEN",
+      "title": "TICKET-006: Make sign-out final and idempotent",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/145"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-005: Enforce private sign-in outcomes\n## Observable goal\nEligible learners sign in; incorrect and blocked credentials look identical with recovery offered; inactive learners get confirmation guidance and resend.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-002/v002; SCENARIO-013, SCENARIO-014, SCENARIO-015, SCENARIO-016.\n## Acceptance evidence\nRequest specs prove success, indistinguishable rejection, no rejected session, recovery navigation, and both resend entries.\n## Dependencies\nTICKET-003, TICKET-004\n## Difficulty (1-5)\n3\n## Estimate (ideal days, at most 2)\n1.5\n## Risks\nFailure details can disclose accounts.\n## External actions\nnone\n## Allowed scope\nSession eligibility, failure presentation, navigation, resend reuse, translations, and focused specs only.\n\n<!-- product-factory-ticket-id: TICKET-005 -->",
+      "number": 144,
+      "state": "OPEN",
+      "title": "TICKET-005: Enforce private sign-in outcomes",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/144"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-004: Invalidate sessions after account blocking\n## Observable goal\nBlocking rejects every existing session; unblocking never resumes them and requires new sign-in.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-002/v002; SCENARIO-020.\n## Acceptance evidence\nRequest specs prove multiple-session denial before and after unblock.\n## Dependencies\nnone\n## Difficulty (1-5)\n4\n## Estimate (ideal days, at most 2)\n2\n## Risks\nEvery authenticated path must enforce server-checked invalidation.\n## External actions\nAdministrator-owned system must use the agreed block transition.\n## Allowed scope\nPersisted block/session generation, authentication hooks, invalidation, and focused specs; no admin UI.\n\n<!-- product-factory-ticket-id: TICKET-004 -->",
+      "number": 143,
+      "state": "OPEN",
+      "title": "TICKET-004: Invalidate sessions after account blocking",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/143"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-003: Add private confirmation resend\n## Observable goal\nA public form returns one generic acknowledgement and gives an inactive account one newest proof that supersedes all earlier proofs.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-001/v002; SCENARIO-009, SCENARIO-010, SCENARIO-011.\n## Acceptance evidence\nRequest specs compare all account states and prove only the newest proof works.\n## Dependencies\nTICKET-002\n## Difficulty (1-5)\n3\n## Estimate (ideal days, at most 2)\n1.5\n## Risks\nPrivacy differences and concurrent resends.\n## External actions\nConfigure and monitor production email delivery.\n## Allowed scope\nResend route, controller, form, acknowledgement, mail invocation, token supersession, and focused specs only.\n\n<!-- product-factory-ticket-id: TICKET-003 -->",
+      "number": 142,
+      "state": "OPEN",
+      "title": "TICKET-003: Add private confirmation resend",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/142"
+    },
+    {
+      "assignees": [],
+      "body": "# TICKET-002: Enforce confirmation-proof lifecycle\n## Observable goal\nOnly the current valid proof confirms ownership; invalid, expired, used, or superseded proofs fail, and confirmation never removes a block.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-001/v002; SCENARIO-004, SCENARIO-005, SCENARIO-006, SCENARIO-007, SCENARIO-008, SCENARIO-012.\n## Acceptance evidence\nRequest specs prove each proof state, no invalid mutation, and preservation of blocked state.\n## Dependencies\nnone\n## Difficulty (1-5)\n3\n## Estimate (ideal days, at most 2)\n1.5\n## Risks\nToken rotation and account privacy.\n## External actions\nConfigure production confirmation URL host and email delivery.\n## Allowed scope\nConfirmation state, controller, result views, translations, and focused specs only.\n\n<!-- product-factory-ticket-id: TICKET-002 -->",
+      "number": 141,
+      "state": "OPEN",
+      "title": "TICKET-002: Enforce confirmation-proof lifecycle",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/141"
+    },
+    {
+      "assignees": [
+        {
+          "id": "MDQ6VXNlcjM2NDU4MTI3",
+          "login": "dzemlianoi-double",
+          "name": "Denis Zemlyaniy",
+          "databaseId": 36458127
+        }
+      ],
+      "body": "# TICKET-001: Make registration privacy-preserving\n\n## Observable goal\nValid registration creates one inactive learner; invalid fields are actionable; an existing email receives the same visible success acknowledgement without another account.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-001/v002; SCENARIO-001, SCENARIO-002, SCENARIO-003.\n## Acceptance evidence\nRequest specs prove creation, validation, case-insensitive duplicate prevention, and indistinguishable visible success and duplicate responses.\n## Dependencies\nnone\n## Difficulty (1-5)\n2\n## Estimate (ideal days, at most 2)\n1\n## Risks\nResponse differences can disclose account existence.\n## External actions\nConfigure production email delivery.\n## Allowed scope\nRegistration controller, views, translations, and focused specs only.\n\n<!-- product-factory-ticket-id: TICKET-001 -->",
+      "number": 140,
+      "state": "CLOSED",
+      "title": "TICKET-001: Make registration privacy-preserving",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/140"
+    },
+    {
+      "assignees": [],
+      "body": "## Capability\nGuide character and tours\n\n**Track:** Post-MVP\n**Depends on:** MVP production baseline\n**Source:** `docs/post-mvp-roadmap.md`\n\nPromote into SMART tickets only after its release gate and production evidence are satisfied.\n",
+      "number": 135,
+      "state": "CLOSED",
+      "title": "POST-MVP: Guide character and tours",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/135"
+    },
+    {
+      "assignees": [],
+      "body": "## Capability\nSafe view-as-student\n\n**Track:** Post-MVP\n**Depends on:** MVP production baseline\n**Source:** `docs/post-mvp-roadmap.md`\n\nPromote into SMART tickets only after its release gate and production evidence are satisfied.\n",
+      "number": 134,
+      "state": "CLOSED",
+      "title": "POST-MVP: Safe view-as-student",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/134"
+    },
+    {
+      "assignees": [],
+      "body": "## Capability\nAdvanced reporting\n\n**Track:** Post-MVP\n**Depends on:** MVP production baseline\n**Source:** `docs/post-mvp-roadmap.md`\n\nPromote into SMART tickets only after its release gate and production evidence are satisfied.\n",
+      "number": 133,
+      "state": "CLOSED",
+      "title": "POST-MVP: Advanced reporting",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/133"
+    },
+    {
+      "assignees": [],
+      "body": "## Capability\nPublic course archive\n\n**Track:** Post-MVP\n**Depends on:** MVP production baseline\n**Source:** `docs/post-mvp-roadmap.md`\n\nPromote into SMART tickets only after its release gate and production evidence are satisfied.\n",
+      "number": 132,
+      "state": "CLOSED",
+      "title": "POST-MVP: Public course archive",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/132"
+    },
+    {
+      "assignees": [],
+      "body": "## Capability\nTeam project showcases\n\n**Track:** Post-MVP\n**Depends on:** MVP production baseline\n**Source:** `docs/post-mvp-roadmap.md`\n\nPromote into SMART tickets only after its release gate and production evidence are satisfied.\n",
+      "number": 131,
+      "state": "CLOSED",
+      "title": "POST-MVP: Team project showcases",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/131"
+    },
+    {
+      "assignees": [],
+      "body": "## Capability\nAttendance providers\n\n**Track:** Post-MVP\n**Depends on:** MVP production baseline\n**Source:** `docs/post-mvp-roadmap.md`\n\nPromote into SMART tickets only after its release gate and production evidence are satisfied.\n",
+      "number": 130,
+      "state": "CLOSED",
+      "title": "POST-MVP: Attendance providers",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/130"
+    },
+    {
+      "assignees": [],
+      "body": "## Capability\nGitHub synchronization\n\n**Track:** Post-MVP\n**Depends on:** MVP production baseline\n**Source:** `docs/post-mvp-roadmap.md`\n\nPromote into SMART tickets only after its release gate and production evidence are satisfied.\n",
+      "number": 129,
+      "state": "CLOSED",
+      "title": "POST-MVP: GitHub synchronization",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/129"
+    },
+    {
+      "assignees": [],
+      "body": "## Capability\nLinked sign-in identities\n\n**Track:** Post-MVP\n**Depends on:** MVP production baseline\n**Source:** `docs/post-mvp-roadmap.md`\n\nPromote into SMART tickets only after its release gate and production evidence are satisfied.\n",
+      "number": 128,
+      "state": "CLOSED",
+      "title": "POST-MVP: Linked sign-in identities",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/128"
+    },
+    {
+      "assignees": [],
+      "body": "## Capability\nConfigurable admission stages\n\n**Track:** Post-MVP\n**Depends on:** MVP production baseline\n**Source:** `docs/post-mvp-roadmap.md`\n\nPromote into SMART tickets only after its release gate and production evidence are satisfied.\n",
+      "number": 127,
+      "state": "CLOSED",
+      "title": "POST-MVP: Configurable admission stages",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/127"
+    },
+    {
+      "assignees": [],
+      "body": "## Capability\nSecure admin invitations\n\n**Track:** Post-MVP\n**Depends on:** MVP production baseline\n**Source:** `docs/post-mvp-roadmap.md`\n\nPromote into SMART tickets only after its release gate and production evidence are satisfied.\n",
+      "number": 126,
+      "state": "CLOSED",
+      "title": "POST-MVP: Secure admin invitations",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/126"
+    },
+    {
+      "assignees": [],
+      "body": "## Capability\nContextual messaging\n\n**Track:** Post-MVP\n**Depends on:** MVP production baseline\n**Source:** `docs/post-mvp-roadmap.md`\n\nPromote into SMART tickets only after its release gate and production evidence are satisfied.\n",
+      "number": 125,
+      "state": "CLOSED",
+      "title": "POST-MVP: Contextual messaging",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/125"
+    },
+    {
+      "assignees": [],
+      "body": "## Capability\nBadges and recognition\n\n**Track:** Post-MVP\n**Depends on:** MVP production baseline\n**Source:** `docs/post-mvp-roadmap.md`\n\nPromote into SMART tickets only after its release gate and production evidence are satisfied.\n",
+      "number": 124,
+      "state": "CLOSED",
+      "title": "POST-MVP: Badges and recognition",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/124"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nLaunch the MVP. Production smoke tests pass, monitoring and backups are green, the first course is published, and the product owner signs off.\n\n**Epic:** E12\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E12-10, E12-11\n**Estimate:** 0.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 123,
+      "state": "CLOSED",
+      "title": "E12-12: Launch the MVP. Production smoke tests pass, monitoring and backups are green, the first course is published, and the product owner signs off.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/123"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nPublish the operating runbook. Document deploy, rollback, restore, account support, failed jobs, email failure, and incident contacts; another operator follows one scenario successfully.\n\n**Epic:** E12\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E12-07, E12-08\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 122,
+      "state": "CLOSED",
+      "title": "E12-11: Publish the operating runbook. Document deploy, rollback, restore, account support, failed jobs, email failure, and incident contacts; another operator follows one scenario successfully.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/122"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nRun a pilot acceptance test. One admin and two student accounts complete catalog-to-approved-review on staging; all blocking defects are resolved or explicitly waived.\n\n**Epic:** E12\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E12-08, E12-09\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 121,
+      "state": "CLOSED",
+      "title": "E12-10: Run a pilot acceptance test. One admin and two student accounts complete catalog-to-approved-review on staging; all blocking defects are resolved or explicitly waived.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/121"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nRun accessibility and browser QA. Critical flows pass keyboard, screen-reader smoke, contrast, reduced-motion, current Chrome/Safari/Firefox, iOS Safari, and Android Chrome checks.\n\n**Epic:** E12\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E11-07\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 120,
+      "state": "CLOSED",
+      "title": "E12-09: Run accessibility and browser QA. Critical flows pass keyboard, screen-reader smoke, contrast, reduced-motion, current Chrome/Safari/Firefox, iOS Safari, and Android Chrome checks.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/120"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAutomate deployment. A tagged release deploys after CI, runs migrations once, verifies health, and documents rollback to the previous image.\n\n**Epic:** E12\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E12-05, E12-06\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 119,
+      "state": "CLOSED",
+      "title": "E12-08: Automate deployment. A tagged release deploys after CI, runs migrations once, verifies health, and documents rollback to the previous image.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/119"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nConfigure backups. Enable daily database backups and object-storage retention; complete and record one restore into an isolated environment.\n\n**Epic:** E12\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E12-05\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 118,
+      "state": "CLOSED",
+      "title": "E12-07: Configure backups. Enable daily database backups and object-storage retention; complete and record one restore into an isolated environment.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/118"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAdd health and error monitoring. Expose liveness/readiness checks, report uncaught exceptions, and alert when web or worker checks fail.\n\n**Epic:** E12\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E12-05\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 117,
+      "state": "CLOSED",
+      "title": "E12-06: Add health and error monitoring. Expose liveness/readiness checks, report uncaught exceptions, and alert when web or worker checks fail.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/117"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate staging. Deploy web and worker processes with managed PostgreSQL, private object storage, email sandbox, HTTPS, and seed-free configuration.\n\n**Epic:** E12\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E1-08, E10-06\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 116,
+      "state": "CLOSED",
+      "title": "E12-05: Create staging. Deploy web and worker processes with managed PostgreSQL, private object storage, email sandbox, HTTPS, and seed-free configuration.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/116"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nProtect sensitive data. Filter secrets and answers from logs, set secure cookie and HTTPS policies, and document credential rotation.\n\n**Epic:** E12\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E1-08, E5-07\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 115,
+      "state": "CLOSED",
+      "title": "E12-04: Protect sensitive data. Filter secrets and answers from logs, set secure cookie and HTTPS policies, and document credential rotation.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/115"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAdd abuse protection. Rate-limit sign-in, password reset, registration, application submission, and invitation endpoints; tests assert throttled responses.\n\n**Epic:** E12\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E3-05, E5-13\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 114,
+      "state": "CLOSED",
+      "title": "E12-03: Add abuse protection. Rate-limit sign-in, password reset, registration, application submission, and invitation endpoints; tests assert throttled responses.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/114"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nHarden uploads. Enforce allowlisted types/sizes, randomized storage keys, private delivery, and malware-scan hook; rejected files never become downloadable.\n\n**Epic:** E12\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E5-04, E6-04, E9-04\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 113,
+      "state": "CLOSED",
+      "title": "E12-02: Harden uploads. Enforce allowlisted types/sizes, randomized storage keys, private delivery, and malware-scan hook; rejected files never become downloadable.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/113"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nHarden authorization. Add policy coverage for visitor/student/admin and cross-course access; mutation testing checklist finds no unprotected MVP controller action.\n\n**Epic:** E12\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E11-07\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 112,
+      "state": "CLOSED",
+      "title": "E12-01: Harden authorization. Add policy coverage for visitor/student/admin and cross-course access; mutation testing checklist finds no unprotected MVP controller action.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/112"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nTest critical responsive journeys. System specs cover application, lesson completion, submission/review, and dashboard at desktop and 375px mobile widths.\n\n**Epic:** E11\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E11-01, E11-04\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 111,
+      "state": "CLOSED",
+      "title": "E11-07: Test critical responsive journeys. System specs cover application, lesson completion, submission/review, and dashboard at desktop and 375px mobile widths.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/111"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nBuild internal reports. Admins filter course/cohort progress, attendance, applications, and review turnaround on screen; no CSV/PDF export exists.\n\n**Epic:** E11\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E11-04\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 110,
+      "state": "CLOSED",
+      "title": "E11-06: Build internal reports. Admins filter course/cohort progress, attendance, applications, and review turnaround on screen; no CSV/PDF export exists.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/110"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nDefine the at-risk rule. Flag students with an overdue Core requirement, two missed sessions, or no progress for a configurable number of days; admins can filter by reason.\n\n**Epic:** E11\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E8-06, E8-07, E8-09\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 109,
+      "state": "CLOSED",
+      "title": "E11-05: Define the at-risk rule. Flag students with an overdue Core requirement, two missed sessions, or no progress for a configurable number of days; admins can filter by reason.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/109"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nBuild Admin Overview. Show counts and links for pending applications, review queue, at-risk students, upcoming dates, recent activity, and cohort progress.\n\n**Epic:** E11\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E5-08, E8-06, E9-06, E10-02\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 108,
+      "state": "CLOSED",
+      "title": "E11-04: Build Admin Overview. Show counts and links for pending applications, review queue, at-risk students, upcoming dates, recent activity, and cohort progress.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/108"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nBuild the Tasks page. Students filter draft, due, in-review, changes-requested, and approved work across courses.\n\n**Epic:** E11\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E9-12\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 107,
+      "state": "CLOSED",
+      "title": "E11-03: Build the Tasks page. Students filter draft, due, in-review, changes-requested, and approved work across courses.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/107"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nSwitch active courses. A student enrolled in two courses can switch context globally; the choice persists and never exposes another enrollment.\n\n**Epic:** E11\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E4-06, E11-01\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 106,
+      "state": "CLOSED",
+      "title": "E11-02: Switch active courses. A student enrolled in two courses can switch context globally; the choice persists and never exposes another enrollment.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/106"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nBuild Student Home. The default page shows course selector, current lesson, next step, approaching deadlines, recent feedback, team activity summary, and progress dimensions.\n\n**Epic:** E11\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E8-11, E9-12, E10-02\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 105,
+      "state": "CLOSED",
+      "title": "E11-01: Build Student Home. The default page shows course selector, current lesson, next step, approaching deadlines, recent feedback, team activity summary, and progress dimensions.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/105"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nNotify admins. Admins receive configurable alerts for new applications, submissions awaiting review, and students flagged as falling behind.\n\n**Epic:** E10\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E10-03, E5-07, E9-05\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 104,
+      "state": "CLOSED",
+      "title": "E10-09: Notify admins. Admins receive configurable alerts for new applications, submissions awaiting review, and students flagged as falling behind.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/104"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nSend a digest. Students choose daily or weekly summaries; one job groups unread optional events and never duplicates an event in the same digest period.\n\n**Epic:** E10\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E10-07\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 103,
+      "state": "CLOSED",
+      "title": "E10-08: Send a digest. Students choose daily or weekly summaries; one job groups unread optional events and never duplicates an event in the same digest period.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/103"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nManage notification preferences. Students configure channel preferences for optional events; verification, security, application decisions, and deadline notices remain mandatory.\n\n**Epic:** E10\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E10-03\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 102,
+      "state": "CLOSED",
+      "title": "E10-07: Manage notification preferences. Students configure channel preferences for optional events; verification, security, application decisions, and deadline notices remain mandatory.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/102"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nSend deadline reminders. A recurring job sends idempotent reminders three days and one day before each learner’s effective deadline.\n\n**Epic:** E10\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E10-03, E8-10\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 101,
+      "state": "CLOSED",
+      "title": "E10-06: Send deadline reminders. A recurring job sends idempotent reminders three days and one day before each learner’s effective deadline.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/101"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nNotify learning and review events. New lesson availability, submission, changes requested, approval, and calendar changes use tested notification templates.\n\n**Epic:** E10\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E10-03, E6-07, E9-11\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 100,
+      "state": "CLOSED",
+      "title": "E10-05: Notify learning and review events. New lesson availability, submission, changes requested, approval, and calendar changes use tested notification templates.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/100"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nNotify application decisions. Accept/reject actions create in-app and email messages with no private admin notes.\n\n**Epic:** E10\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E10-03, E5-10, E5-11\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 99,
+      "state": "CLOSED",
+      "title": "E10-04: Notify application decisions. Accept/reject actions create in-app and email messages with no private admin notes.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/99"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate in-app notifications. Store typed notifications with target URL, unread/read state, recipient, and event timestamp; the header shows unread count.\n\n**Epic:** E10\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E3-04\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 98,
+      "state": "CLOSED",
+      "title": "E10-03: Create in-app notifications. Store typed notifications with target URL, unread/read state, recipient, and event timestamp; the header shows unread count.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/98"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nShow a unified calendar. Students see authorized events, release dates, and effective deadlines in month/list views; mobile defaults to the list.\n\n**Epic:** E10\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E10-01, E8-09\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 97,
+      "state": "CLOSED",
+      "title": "E10-02: Show a unified calendar. Students see authorized events, release dates, and effective deadlines in month/list views; mobile defaults to the list.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/97"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate calendar events. Admins add lesson, lab, interview, or general events scoped to a course/cohort/team with start/end times and optional links.\n\n**Epic:** E10\n**Track:** Operations\n**Work batch:** Batch C\n**Depends on:** E4-05, E7-01\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 96,
+      "state": "CLOSED",
+      "title": "E10-01: Create calendar events. Admins add lesson, lab, interview, or general events scoped to a course/cohort/team with start/end times and optional links.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/96"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nDuplicate an assignment. Admins copy instructions, components, and criteria into a new draft without submissions or reviews.\n\n**Epic:** E9\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E9-02\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 95,
+      "state": "CLOSED",
+      "title": "E9-13: Duplicate an assignment. Admins copy instructions, components, and criteria into a new draft without submissions or reviews.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/95"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nShow submission history. Students and admins see each revision, state transition, reviewer, decision time, and released feedback in chronological order.\n\n**Epic:** E9\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E9-09, E9-11\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 94,
+      "state": "CLOSED",
+      "title": "E9-12: Show submission history. Students and admins see each revision, state transition, reviewer, decision time, and released feedback in chronological order.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/94"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nApprove work. A reviewer moves the current revision to `approved`; it becomes read-only and updates the practice progress dimension.\n\n**Epic:** E9\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E9-08, E8-06\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 93,
+      "state": "CLOSED",
+      "title": "E9-11: Approve work. A reviewer moves the current revision to `approved`; it becomes read-only and updates the practice progress dimension.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/93"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nResubmit revised work. Owners copy the previous revision into an editable draft, change it, and resubmit before the effective deadline or extension.\n\n**Epic:** E9\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E9-09\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 92,
+      "state": "CLOSED",
+      "title": "E9-10: Resubmit revised work. Owners copy the previous revision into an editable draft, change it, and resubmit before the effective deadline or extension.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/92"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nRequest changes. A reviewer provides required feedback and moves the work to `changes_requested`; owners receive read access to feedback and may create a new revision.\n\n**Epic:** E9\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E9-08\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 91,
+      "state": "CLOSED",
+      "title": "E9-09: Request changes. A reviewer provides required feedback and moves the work to `changes_requested`; owners receive read access to feedback and may create a new revision.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/91"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAdd written feedback. The reviewer adds overall feedback and criterion-specific comments; drafts remain private until the decision is submitted.\n\n**Epic:** E9\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E9-07\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 90,
+      "state": "CLOSED",
+      "title": "E9-08: Add written feedback. The reviewer adds overall feedback and criterion-specific comments; drafts remain private until the decision is submitted.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/90"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nStart a review. The assigned reviewer moves `submitted` to `in_review`; other reviewers receive read-only access until reassigned.\n\n**Epic:** E9\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E9-06\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 89,
+      "state": "CLOSED",
+      "title": "E9-07: Start a review. The assigned reviewer moves `submitted` to `in_review`; other reviewers receive read-only access until reassigned.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/89"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAssign a reviewer. An admin assigns another admin as reviewer for a submitted revision; the assignee sees it in their review queue.\n\n**Epic:** E9\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E9-05, E3-06\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 88,
+      "state": "CLOSED",
+      "title": "E9-06: Assign a reviewer. An admin assigns another admin as reviewer for a submitted revision; the assignee sees it in their review queue.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/88"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nSubmit work on time. Submission validates all required components in one transaction, records a frozen revision, and rejects attempts after the effective deadline.\n\n**Epic:** E9\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E9-04, E8-10\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 87,
+      "state": "CLOSED",
+      "title": "E9-05: Submit work on time. Submission validates all required components in one transaction, records a frozen revision, and rejects attempts after the effective deadline.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/87"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nSave a submission draft. Eligible owners can save and resume answers and uploads before the effective deadline.\n\n**Epic:** E9\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E9-02, E9-03\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 86,
+      "state": "CLOSED",
+      "title": "E9-04: Save a submission draft. Eligible owners can save and resume answers and uploads before the effective deadline.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/86"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAssign task ownership. An assignment targets an individual, configured pair/group, or permanent team; invalid ownership combinations are rejected.\n\n**Epic:** E9\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E9-01, E7-04\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 85,
+      "state": "CLOSED",
+      "title": "E9-03: Assign task ownership. An assignment targets an individual, configured pair/group, or permanent team; invalid ownership combinations are rejected.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/85"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nConfigure submission components. Text, file, checklist, GitHub URL, and external URL components can be combined, ordered, and required independently.\n\n**Epic:** E9\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E9-01\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 84,
+      "state": "CLOSED",
+      "title": "E9-02: Configure submission components. Text, file, checklist, GitHub URL, and external URL components can be combined, ordered, and required independently.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/84"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate an assignment. Admins add instructions, deadline, allowed submission components, ownership mode, and optional review criteria to a lesson.\n\n**Epic:** E9\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E6-02, E8-09\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 83,
+      "state": "CLOSED",
+      "title": "E9-01: Create an assignment. Admins add instructions, deadline, allowed submission components, ownership mode, and optional review criteria to a lesson.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/83"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nConfigure teammate visibility. Admins enable/disable teammate progress per cohort; disabled data is absent from both pages and responses.\n\n**Epic:** E8\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E7-05, E8-06\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 82,
+      "state": "CLOSED",
+      "title": "E8-12: Configure teammate visibility. Admins enable/disable teammate progress per cohort; disabled data is absent from both pages and responses.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/82"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nDerive next steps. The service returns the nearest available incomplete Core lesson, required task, or resubmission, ordered by due date.\n\n**Epic:** E8\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E8-02, E8-05, E8-09\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 81,
+      "state": "CLOSED",
+      "title": "E8-11: Derive next steps. The service returns the nearest available incomplete Core lesson, required task, or resubmission, ordered by due date.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/81"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nGrant a deadline extension. Admins extend a deadline globally or for one student/pair/team with a required reason; unaffected learners retain the original date.\n\n**Epic:** E8\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E8-09, E7-04\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 80,
+      "state": "CLOSED",
+      "title": "E8-10: Grant a deadline extension. Admins extend a deadline globally or for one student/pair/team with a required reason; unaffected learners retain the original date.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/80"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate scoped deadlines. Admins assign a deadline to a course, lesson, or assignment and see it in the enrolled student’s timezone.\n\n**Epic:** E8\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E6-02\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 79,
+      "state": "CLOSED",
+      "title": "E8-09: Create scoped deadlines. Admins assign a deadline to a course, lesson, or assignment and see it in the enrolled student’s timezone.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/79"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nImport an attendance event. Provide an authenticated service endpoint and idempotency key for future meeting integrations; request specs prove duplicate events do not duplicate attendance.\n\n**Epic:** E8\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E8-07\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 78,
+      "state": "CLOSED",
+      "title": "E8-08: Import an attendance event. Provide an authenticated service endpoint and idempotency key for future meeting integrations; request specs prove duplicate events do not duplicate attendance.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/78"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nRecord attendance manually. Admins mark present, absent, late, or excused for a scheduled session and can correct the record.\n\n**Epic:** E8\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E4-06\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 77,
+      "state": "CLOSED",
+      "title": "E8-07: Record attendance manually. Admins mark present, absent, late, or excused for a scheduled session and can correct the record.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/77"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nShow separate progress dimensions. Student progress displays learning, practice, attendance, and team delivery independently, never as one combined score.\n\n**Epic:** E8\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E8-05\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 76,
+      "state": "CLOSED",
+      "title": "E8-06: Show separate progress dimensions. Student progress displays learning, practice, attendance, and team delivery independently, never as one combined score.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/76"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCalculate lesson state. A lesson is not-started, in-progress, or completed from its required materials; optional materials do not block completion.\n\n**Epic:** E8\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E8-04\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 75,
+      "state": "CLOSED",
+      "title": "E8-05: Calculate lesson state. A lesson is not-started, in-progress, or completed from its required materials; optional materials do not block completion.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/75"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nTrack material progress. Completion records are unique per enrollment/material, timestamped, and update when the configured completion action occurs.\n\n**Epic:** E8\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E6-06, E4-06\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 74,
+      "state": "CLOSED",
+      "title": "E8-04: Track material progress. Completion records are unique per enrollment/material, timestamped, and update when the configured completion action occurs.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/74"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nGrant an access override. An admin grants a student access with a required reason; the exception is visible on that student’s admin view.\n\n**Epic:** E8\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E8-02\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 73,
+      "state": "CLOSED",
+      "title": "E8-03: Grant an access override. An admin grants a student access with a required reason; the exception is visible on that student’s admin view.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/73"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nEnforce lesson access. Students cannot open blocked lessons; the UI explains the unmet prerequisite or opening date without exposing content.\n\n**Epic:** E8\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E8-01, E4-06\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 72,
+      "state": "CLOSED",
+      "title": "E8-02: Enforce lesson access. Students cannot open blocked lessons; the UI explains the unmet prerequisite or opening date without exposing content.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/72"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nDefine lesson prerequisites. Admins select prerequisite lessons and release dates; validation prevents cycles and cross-course links.\n\n**Epic:** E8\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E6-02\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 71,
+      "state": "CLOSED",
+      "title": "E8-01: Define lesson prerequisites. Admins select prerequisite lessons and release dates; validation prevents cycles and cross-course links.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/71"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nView the team page. Members and admins see emblem, roster, current pairs/groups, shared milestones, and configured team-visible progress.\n\n**Epic:** E7\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E7-02, E3-09\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 70,
+      "state": "CLOSED",
+      "title": "E7-05: View the team page. Members and admins see emblem, roster, current pairs/groups, shared milestones, and configured team-visible progress.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/70"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAssign rotating pairs. Admins create a two-person group with start/end dates; validation prevents one-person or three-person pairs.\n\n**Epic:** E7\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E7-03\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 69,
+      "state": "CLOSED",
+      "title": "E7-04: Assign rotating pairs. Admins create a two-person group with start/end dates; validation prevents one-person or three-person pairs.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/69"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate temporary groups. Admins create dated groups for an activity; membership may overlap permanent teams and other groups.\n\n**Epic:** E7\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E7-02\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 68,
+      "state": "CLOSED",
+      "title": "E7-03: Create temporary groups. Admins create dated groups for an activity; membership may overlap permanent teams and other groups.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/68"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAssign team members. Admins add/remove enrolled students; a student has at most one permanent team per cohort.\n\n**Epic:** E7\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E7-01, E4-06\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 67,
+      "state": "CLOSED",
+      "title": "E7-02: Assign team members. Admins add/remove enrolled students; a student has at most one permanent team per cohort.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/67"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate a permanent team. Admins add a team to a cohort with unique name, emblem, and accessible accent color.\n\n**Epic:** E7\n**Track:** Practice\n**Work batch:** Batch C\n**Depends on:** E4-05\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 66,
+      "state": "CLOSED",
+      "title": "E7-01: Create a permanent team. Admins add a team to a cohort with unique name, emblem, and accessible accent color.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/66"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nRender the workshop map. Enrolled students see one large graphic workshop with ordered module stations and accessible locked/current/completed states.\n\n**Epic:** E6\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E6-01, E2-05\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 65,
+      "state": "CLOSED",
+      "title": "E6-10: Render the workshop map. Enrolled students see one large graphic workshop with ordered module stations and accessible locked/current/completed states.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/65"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nDuplicate learning content. Admins can duplicate modules, lessons, and materials as independent draft records within or between courses.\n\n**Epic:** E6\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E6-04\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 64,
+      "state": "CLOSED",
+      "title": "E6-09: Duplicate learning content. Admins can duplicate modules, lessons, and materials as independent draft records within or between courses.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/64"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nRestore a lesson revision. Each published edit stores author/time and restorable content; restoring creates a new revision rather than deleting history.\n\n**Epic:** E6\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E6-03, E6-07\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 63,
+      "state": "CLOSED",
+      "title": "E6-08: Restore a lesson revision. Each published edit stores author/time and restorable content; restoring creates a new revision rather than deleting history.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/63"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nPublish content immediately. Publishing validates required fields and makes the lesson available according to access rules without a scheduler.\n\n**Epic:** E6\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E6-02\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 62,
+      "state": "CLOSED",
+      "title": "E6-07: Publish content immediately. Publishing validates required fields and makes the lesson available according to access rules without a scheduler.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/62"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nConfigure material completion. Each material uses manual, viewed, or admin-approved completion; tests prove only the configured trigger marks completion.\n\n**Epic:** E6\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E6-04\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 61,
+      "state": "CLOSED",
+      "title": "E6-06: Configure material completion. Each material uses manual, viewed, or admin-approved completion; tests prove only the configured trigger marks completion.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/61"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nRead a lesson responsively. Students get a distraction-light reader with table of contents, previous/next navigation, and usable layouts at 360px and 1280px.\n\n**Epic:** E6\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E6-03, E6-04, E2-03\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 60,
+      "state": "CLOSED",
+      "title": "E6-05: Read a lesson responsively. Students get a distraction-light reader with table of contents, previous/next navigation, and usable layouts at 360px and 1280px.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/60"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAttach learning resources. A lesson accepts ordered PDF, video, YouTube/external link, download, and optional-material entries with labels.\n\n**Epic:** E6\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E6-02\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 59,
+      "state": "CLOSED",
+      "title": "E6-04: Attach learning resources. A lesson accepts ordered PDF, video, YouTube/external link, download, and optional-material entries with labels.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/59"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCompose native lesson content. Admins create rich text with headings, lists, links, images, callouts, and syntax-highlighted code; unsafe HTML is sanitized.\n\n**Epic:** E6\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E6-02\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 58,
+      "state": "CLOSED",
+      "title": "E6-03: Compose native lesson content. Admins create rich text with headings, lists, links, images, callouts, and syntax-highlighted code; unsafe HTML is sanitized.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/58"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate leveled lessons. Admins create Core, Stretch, or Deep Dive lessons with title, summary, estimated time, and draft/published state.\n\n**Epic:** E6\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E6-01\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 57,
+      "state": "CLOSED",
+      "title": "E6-02: Create leveled lessons. Admins create Core, Stretch, or Deep Dive lessons with title, summary, estimated time, and draft/published state.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/57"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate ordered modules. Admins can add, rename, reorder, and draft modules within a course; students see published modules only.\n\n**Epic:** E6\n**Track:** Learning\n**Work batch:** Batch C\n**Depends on:** E4-01\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 56,
+      "state": "CLOSED",
+      "title": "E6-01: Create ordered modules. Admins can add, rename, reorder, and draft modules within a course; students see published modules only.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/56"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nConfigure auto-accept invitations. Admins can explicitly mark an invitation as direct enrollment; consuming it creates one enrollment and clearly warns the admin before sending.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E5-13, E4-06\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 55,
+      "state": "CLOSED",
+      "title": "E5-14: Configure auto-accept invitations. Admins can explicitly mark an invitation as direct enrollment; consuming it creates one enrollment and clearly warns the admin before sending.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/55"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nInvite a student to apply. Admins send an expiring course-specific link; it pre-fills the invited email and still requires verification and application by default.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E5-05, E3-03\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 54,
+      "state": "CLOSED",
+      "title": "E5-13: Invite a student to apply. Admins send an expiring course-specific link; it pre-fills the invited email and still requires verification and application by default.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/54"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nReapply when permitted. An eligible rejected student starts a fresh application linked to the previous attempt; ineligible students see the rejection state only.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E5-11\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 53,
+      "state": "CLOSED",
+      "title": "E5-12: Reapply when permitted. An eligible rejected student starts a fresh application linked to the previous attempt; ineligible students see the rejection state only.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/53"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nReject an applicant. Rejection requires a student-visible reason, emails it, and follows the course’s allow-reapplication setting.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E5-08\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 52,
+      "state": "CLOSED",
+      "title": "E5-11: Reject an applicant. Rejection requires a student-visible reason, emails it, and follows the course’s allow-reapplication setting.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/52"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAccept an applicant. Acceptance records the acting admin/time, creates the enrollment exactly once, and emails the student.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E5-08, E4-06\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 51,
+      "state": "CLOSED",
+      "title": "E5-10: Accept an applicant. Acceptance records the acting admin/time, creates the enrollment exactly once, and emails the student.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/51"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nRecord private admin notes. Admins can add timestamped internal notes; students never receive them in HTML, email, or serialized responses.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E5-08\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 50,
+      "state": "CLOSED",
+      "title": "E5-09: Record private admin notes. Admins can add timestamped internal notes; students never receive them in HTML, email, or serialized responses.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/50"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nReview the application queue. Admins can filter pending/accepted/rejected applications and open answers and attachments without exposing private notes.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E5-07\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 49,
+      "state": "CLOSED",
+      "title": "E5-08: Review the application queue. Admins can filter pending/accepted/rejected applications and open answers and attachments without exposing private notes.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/49"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nSubmit an application. Required answers are validated in one transaction; the submitted version becomes read-only and records the submission time.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E5-06\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 48,
+      "state": "CLOSED",
+      "title": "E5-07: Submit an application. Required answers are validated in one transaction; the submitted version becomes read-only and records the submission time.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/48"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nSave an application draft. A verified student can start, save, resume, and edit one application until submission.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E5-05, E3-03\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 47,
+      "state": "CLOSED",
+      "title": "E5-06: Save an application draft. A verified student can start, save, resume, and edit one application until submission.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/47"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nPublish the application form. An admin previews and publishes a valid form; edits after the first submission create a new immutable form version.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E5-02, E5-03, E5-04\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 46,
+      "state": "CLOSED",
+      "title": "E5-05: Publish the application form. An admin previews and publishes a valid form; edits after the first submission create a new immutable form version.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/46"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nSupport application uploads. File questions enforce configured file types and sizes, scan/validate before download, and are admin-only.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E5-01, E1-03\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 45,
+      "state": "CLOSED",
+      "title": "E5-04: Support application uploads. File questions enforce configured file types and sizes, scan/validate before download, and are admin-only.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/45"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nSupport choice questions. Single- and multiple-choice answers use admin-defined options and reject values that are no longer valid.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E5-01\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 44,
+      "state": "CLOSED",
+      "title": "E5-03: Support choice questions. Single- and multiple-choice answers use admin-defined options and reject values that are no longer valid.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/44"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nSupport text questions. Short text, long text, number, and date answers render and validate their configured constraints.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E5-01\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 43,
+      "state": "CLOSED",
+      "title": "E5-02: Support text questions. Short text, long text, number, and date answers render and validate their configured constraints.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/43"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate an application form. An admin creates one draft form per course/cohort and can add, edit, reorder, require, or remove unanswered questions.\n\n**Epic:** E5\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E4-05\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 42,
+      "state": "CLOSED",
+      "title": "E5-01: Create an application form. An admin creates one draft form per course/cohort and can add, edit, reorder, require, or remove unanswered questions.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/42"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nDuplicate a course shell. An admin can copy course metadata and selected configuration into a new draft without sharing mutable records.\n\n**Epic:** E4\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E4-01\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 41,
+      "state": "CLOSED",
+      "title": "E4-08: Duplicate a course shell. An admin can copy course metadata and selected configuration into a new draft without sharing mutable records.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/41"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nArchive completed access. An ended enrollment moves to read-only archive mode while published materials and prior submissions remain readable.\n\n**Epic:** E4\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E4-06\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 40,
+      "state": "CLOSED",
+      "title": "E4-07: Archive completed access. An ended enrollment moves to read-only archive mode while published materials and prior submissions remain readable.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/40"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate enrollments. Acceptance creates one unique active enrollment for the selected course/cohort; the same student may enroll in another course.\n\n**Epic:** E4\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E4-05\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 39,
+      "state": "CLOSED",
+      "title": "E4-06: Create enrollments. Acceptance creates one unique active enrollment for the selected course/cohort; the same student may enroll in another course.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/39"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate cohorts. Admins can add multiple dated cohorts to a course and close enrollment independently for each cohort.\n\n**Epic:** E4\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E4-01\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 38,
+      "state": "CLOSED",
+      "title": "E4-05: Create cohorts. Admins can add multiple dated cohorts to a course and close enrollment independently for each cohort.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/38"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nView course details. The public page displays description, dates, application state, workload, and sign-in/apply call to action.\n\n**Epic:** E4\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E4-02\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 37,
+      "state": "CLOSED",
+      "title": "E4-04: View course details. The public page displays description, dates, application state, workload, and sign-in/apply call to action.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/37"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nBrowse the catalog. Visitors can view open, upcoming, and archived courses with empty states and pagination on mobile and desktop.\n\n**Epic:** E4\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E4-02, E2-03\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 36,
+      "state": "CLOSED",
+      "title": "E4-03: Browse the catalog. Visitors can view open, upcoming, and archived courses with empty states and pagination on mobile and desktop.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/36"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nPublish a course. Admins can publish/unpublish a valid course; public pages show only published courses and return 404 for drafts.\n\n**Epic:** E4\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E4-01\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 35,
+      "state": "CLOSED",
+      "title": "E4-02: Publish a course. Admins can publish/unpublish a valid course; public pages show only published courses and return 404 for drafts.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/35"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate courses. Admins can draft a course with Ukrainian title, summary, description, application window, and cover graphic; drafts are not public.\n\n**Epic:** E4\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E3-06\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 34,
+      "state": "CLOSED",
+      "title": "E4-01: Create courses. Admins can draft a course with Ukrainian title, summary, description, application window, and cover graphic; drafts are not public.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/34"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAnonymize an account. After a second confirmation, a background job removes profile data and replaces identity fields while preserving required team/submission history.\n\n**Epic:** E3\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E3-11\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 33,
+      "state": "CLOSED",
+      "title": "E3-12: Anonymize an account. After a second confirmation, a background job removes profile data and replaces identity fields while preserving required team/submission history.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/33"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nDeactivate a student account. A student can confirm deactivation; sign-in stops immediately while authored course records remain attributed internally.\n\n**Epic:** E3\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E3-04\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 32,
+      "state": "CLOSED",
+      "title": "E3-11: Deactivate a student account. A student can confirm deactivation; sign-in stops immediately while authored course records remain attributed internally.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/32"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nApprove public profiles. Public display is disabled by default and becomes visible only after student opt-in and admin approval; it uses `Display Name (Full Name)`, and rejected edits return it to pending.\n\n**Epic:** E3\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E3-09, E3-06\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 31,
+      "state": "CLOSED",
+      "title": "E3-10: Approve public profiles. Public display is disabled by default and becomes visible only after student opt-in and admin approval; it uses `Display Name (Full Name)`, and rejected edits return it to pending.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/31"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nControl field visibility. Each profile field supports private, team/cohort, or public visibility; request specs cover every audience.\n\n**Epic:** E3\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E3-08\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 30,
+      "state": "CLOSED",
+      "title": "E3-09: Control field visibility. Each profile field supports private, team/cohort, or public visibility; request specs cover every audience.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/30"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nEdit a student profile. Students can save optional display name, avatar, skills, interests, GitHub URL, and profile URLs with format and upload validation.\n\n**Epic:** E3\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E3-04\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 29,
+      "state": "CLOSED",
+      "title": "E3-08: Edit a student profile. Students can save optional display name, avatar, skills, interests, GitHub URL, and profile URLs with format and upload validation.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/29"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nSeparate the admin workspace. `/admin` rejects students and anonymous users; an admin lands on an empty overview page using the shared design system.\n\n**Epic:** E3\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E3-01, E2-03\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 28,
+      "state": "CLOSED",
+      "title": "E3-06: Separate the admin workspace. `/admin` rejects students and anonymous users; an admin lands on an empty overview page using the shared design system.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/28"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nReset a forgotten password. A user receives an expiring reset link without revealing whether an email exists; using it invalidates existing sessions.\n\n**Epic:** E3\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E3-04\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 27,
+      "state": "CLOSED",
+      "title": "E3-05: Reset a forgotten password. A user receives an expiring reset link without revealing whether an email exists; using it invalidates existing sessions.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/27"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nSign in and sign out. Verified users can create and end sessions; protected pages redirect anonymous visitors to sign-in and return them afterward.\n\n**Epic:** E3\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E3-02\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 26,
+      "state": "CLOSED",
+      "title": "E3-04: Sign in and sign out. Verified users can create and end sessions; protected pages redirect anonymous visitors to sign-in and return them afterward.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/26"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nVerify email ownership. Registration sends an expiring, single-use verification link; unverified users cannot apply to courses.\n\n**Epic:** E3\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E3-02\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 25,
+      "state": "CLOSED",
+      "title": "E3-03: Verify email ownership. Registration sends an expiring, single-use verification link; unverified users cannot apply to courses.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/25"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nRegister a student. A visitor can create a student account using email and password; invalid and duplicate values show localized errors.\n\n**Epic:** E3\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E3-01, E2-04\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 24,
+      "state": "CLOSED",
+      "title": "E3-02: Register a student. A visitor can create a student account using email and password; invalid and duplicate values show localized errors.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/24"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate user roles. Add student/admin users with database-enforced email uniqueness and a role constraint; tests prove roles cannot be combined.\n\n**Epic:** E3\n**Track:** Product\n**Work batch:** Batch C\n**Depends on:** E1-05\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 23,
+      "state": "CLOSED",
+      "title": "E3-01: Create user roles. Add student/admin users with database-enforced email uniqueness and a role constraint; tests prove roles cannot be combined.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/23"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAdd visual regression pages. Create an internal component gallery covering both themes, validation, loading, empty, and error states.\n\n**Epic:** E2\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E2-02, E2-04\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 22,
+      "state": "CLOSED",
+      "title": "E2-07: Add visual regression pages. Create an internal component gallery covering both themes, validation, loading, empty, and error states.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/22"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nRespect accessibility preferences. Disable decorative animation under `prefers-reduced-motion`, provide text equivalents for map state, and verify navigation without a mouse.\n\n**Epic:** E2\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E2-03, E2-05\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 21,
+      "state": "CLOSED",
+      "title": "E2-06: Respect accessibility preferences. Disable decorative animation under `prefers-reduced-motion`, provide text equivalents for map state, and verify navigation without a mouse.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/21"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nDefine the workshop map language. Produce one simple graphic map prototype with module stations, locked/current/completed states, and team accent colors; usability-check it with three users.\n\n**Epic:** E2\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E2-01\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 20,
+      "state": "CLOSED",
+      "title": "E2-05: Define the workshop map language. Produce one simple graphic map prototype with module stations, locked/current/completed states, and team accent colors; usability-check it with three users.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/20"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nBuild shared UI primitives. Add documented button, input, select, checkbox, card, badge, alert, modal, tabs, empty-state, and pagination partials with keyboard-visible focus.\n\n**Epic:** E2\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E2-01\n**Estimate:** 2d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 19,
+      "state": "CLOSED",
+      "title": "E2-04: Build shared UI primitives. Add documented button, input, select, checkbox, card, badge, alert, modal, tabs, empty-state, and pagination partials with keyboard-visible focus.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/19"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nBuild the responsive application shell. Desktop side navigation and mobile bottom navigation expose Home, Workshop, Tasks, Team, Calendar, and Profile at 360px and 1280px widths.\n\n**Epic:** E2\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E2-01\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 18,
+      "state": "CLOSED",
+      "title": "E2-03: Build the responsive application shell. Desktop side navigation and mobile bottom navigation expose Home, Workshop, Tasks, Team, Calendar, and Profile at 360px and 1280px widths.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/18"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nBuild light and dark themes. Both themes pass WCAG AA contrast for normal text, persist the user choice, and default to the operating-system preference.\n\n**Epic:** E2\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E2-01\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 17,
+      "state": "CLOSED",
+      "title": "E2-02: Build light and dark themes. Both themes pass WCAG AA contrast for normal text, persist the user choice, and default to the operating-system preference.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/17"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate visual foundations. Define semantic tokens for warm ivory, ink blue, copper, oxidized teal, spacing, type, radius, shadow, and motion in Figma and CSS.\n\n**Epic:** E2\n**Track:** Foundation\n**Work batch:** Batch B\n**Depends on:** E0-01\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 16,
+      "state": "CLOSED",
+      "title": "E2-01: Create visual foundations. Define semantic tokens for warm ivory, ink blue, copper, oxidized teal, spacing, type, radius, shadow, and motion in Figma and CSS.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/16"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAdd developer commands. Provide `bin/dev`, `bin/test`, and `bin/quality`; README explains each and a new contributor can complete setup without undocumented steps.\n\n**Epic:** E1\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E1-04, E1-06\n**Estimate:** 0.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 15,
+      "state": "CLOSED",
+      "title": "E1-09: Add developer commands. Provide `bin/dev`, `bin/test`, and `bin/quality`; README explains each and a new contributor can complete setup without undocumented steps.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/15"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nBuild the production image. CI builds the Docker image from a clean checkout and performs a boot smoke test with production-like settings.\n\n**Epic:** E1\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E1-03, E1-07\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 14,
+      "state": "CLOSED",
+      "title": "E1-08: Build the production image. CI builds the Docker image from a clean checkout and performs a boot smoke test with production-like settings.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/14"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate pull-request CI. GitHub Actions runs database setup, unit/request specs, system specs, linting, and security scans; a failing check blocks the merge job.\n\n**Epic:** E1\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E1-05, E1-06\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 13,
+      "state": "CLOSED",
+      "title": "E1-07: Create pull-request CI. GitHub Actions runs database setup, unit/request specs, system specs, linting, and security scans; a failing check blocks the merge job.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/13"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAdd quality gates. Configure RuboCop, Brakeman, dependency audit, and ERB linting; one documented command runs all checks with zero warnings.\n\n**Epic:** E1\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E1-01\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 12,
+      "state": "CLOSED",
+      "title": "E1-06: Add quality gates. Configure RuboCop, Brakeman, dependency audit, and ERB linting; one documented command runs all checks with zero warnings.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/12"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nInstall the test stack. Configure RSpec, Factory Bot, request specs, and system specs; one example of each type passes locally.\n\n**Epic:** E1\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E1-01\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 11,
+      "state": "CLOSED",
+      "title": "E1-05: Install the test stack. Configure RSpec, Factory Bot, request specs, and system specs; one example of each type passes locally.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/11"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nMake database setup repeatable. `bin/setup` installs dependencies, prepares the database, and seeds one development admin without duplicating records on a second run.\n\n**Epic:** E1\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E1-02\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 10,
+      "state": "CLOSED",
+      "title": "E1-04: Make database setup repeatable. `bin/setup` installs dependencies, prepares the database, and seeds one development admin without duplicating records on a second run.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/10"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nAdd Docker development services. Add `Dockerfile`, `compose.yml`, app, and PostgreSQL services; a fresh machine reaches the home page using documented commands.\n\n**Epic:** E1\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E1-01\n**Estimate:** 1.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 9,
+      "state": "CLOSED",
+      "title": "E1-03: Add Docker development services. Add `Dockerfile`, `compose.yml`, app, and PostgreSQL services; a fresh machine reaches the home page using documented commands.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/9"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate local configuration. Commit `.env.example` with names only, document setup, and make the app fail clearly when a required variable is missing.\n\n**Epic:** E1\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E1-01\n**Estimate:** 0.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 8,
+      "state": "CLOSED",
+      "title": "E1-02: Create local configuration. Commit `.env.example` with names only, document setup, and make the app fail clearly when a required variable is missing.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/8"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nInitialize Rails. Generate the Rails app with PostgreSQL, Hotwire, and a pinned Ruby version; the home page starts locally and the initial test suite passes.\n\n**Epic:** E1\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E0-02\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 7,
+      "state": "CLOSED",
+      "title": "E1-01: Initialize Rails. Generate the Rails app with PostgreSQL, Hotwire, and a pinned Ruby version; the home page starts locally and the initial test suite passes.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/7"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nDefine release success measures. Record target flows: application, first lesson completion, on-time submission, completed review, and mobile use; define how each is measured without collecting unnecessary personal data.\n\n**Epic:** E0\n**Track:** Foundation\n**Work batch:** Batch B\n**Depends on:** E0-01\n**Estimate:** 0.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 6,
+      "state": "CLOSED",
+      "title": "E0-05: Define release success measures. Record target flows: application, first lesson completion, on-time submission, completed review, and mobile use; define how each is measured without collecting unnecessary personal data.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/6"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nApprove the MVP data map. Draw the entity relationships and validate multi-course enrollment, permanent teams, pair work, and prerequisite overrides with three example scenarios.\n\n**Epic:** E0\n**Track:** Foundation\n**Work batch:** Batch C\n**Depends on:** E0-03\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 5,
+      "state": "CLOSED",
+      "title": "E0-04: Approve the MVP data map. Draw the entity relationships and validate multi-course enrollment, permanent teams, pair work, and prerequisite overrides with three example scenarios.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/5"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nCreate the domain glossary. Define course, cohort, enrollment, team, module, lesson, material, assignment, submission, and review; no term has two meanings.\n\n**Epic:** E0\n**Track:** Foundation\n**Work batch:** Batch B\n**Depends on:** E0-01\n**Estimate:** 0.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 4,
+      "state": "CLOSED",
+      "title": "E0-03: Create the domain glossary. Define course, cohort, enrollment, team, module, lesson, material, assignment, submission, and review; no term has two meanings.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/4"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nRecord architecture decisions. Add ADRs for modular monolith, Hotwire, PostgreSQL, RSpec, file storage, and job processing; each states context, decision, and consequence.\n\n**Epic:** E0\n**Track:** Foundation\n**Work batch:** Batch B\n**Depends on:** E0-01\n**Estimate:** 1d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 3,
+      "state": "CLOSED",
+      "title": "E0-02: Record architecture decisions. Add ADRs for modular monolith, Hotwire, PostgreSQL, RSpec, file storage, and job processing; each states context, decision, and consequence.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/3"
+    },
+    {
+      "assignees": [],
+      "body": "## Acceptance criteria\nFreeze the MVP scope. Add an in-scope/out-of-scope section to the product README; product owner approves it before feature work starts.\n\n**Epic:** E0\n**Track:** Foundation\n**Work batch:** Batch A\n**Depends on:** None\n**Estimate:** 0.5d\n\nSource: `docs/mvp-backlog.md` (repository)\n",
+      "number": 2,
+      "state": "CLOSED",
+      "title": "E0-01: Freeze the MVP scope. Add an in-scope/out-of-scope section to the product README; product owner approves it before feature work starts.",
+      "url": "https://github.com/LIT-Bootcamp/bootcamper/issues/2"
+    }
+  ],
+  "project_items": [
+    {
+      "issue_number": 140,
+      "fields": {
+        "Idea": "IDEA-009",
+        "Epic": "EPIC-001",
+        "Ticket ID": "TICKET-001",
+        "Priority": 1,
+        "Status": "done",
+        "Estimate": 1,
+        "Source Version": 2,
+        "Factory Run": "RUN-20260831T164714Z-5bc985"
+      }
+    },
+    {
+      "issue_number": 141,
+      "fields": {
+        "Idea": "IDEA-009",
+        "Epic": "EPIC-001",
+        "Ticket ID": "TICKET-002",
+        "Priority": 2,
+        "Status": "available",
+        "Estimate": 1.5,
+        "Source Version": 2,
+        "Factory Run": "RUN-20260831T164714Z-5bc985"
+      }
+    },
+    {
+      "issue_number": 142,
+      "fields": {
+        "Idea": "IDEA-009",
+        "Epic": "EPIC-001",
+        "Ticket ID": "TICKET-003",
+        "Priority": 3,
+        "Status": "backlog-ready",
+        "Estimate": 1.5,
+        "Dependencies": "TICKET-002",
+        "Source Version": 1,
+        "Factory Run": "RUN-20260830T203654Z-69a65e"
+      }
+    },
+    {
+      "issue_number": 143,
+      "fields": {
+        "Idea": "IDEA-009",
+        "Epic": "EPIC-002",
+        "Ticket ID": "TICKET-004",
+        "Priority": 4,
+        "Status": "available",
+        "Estimate": 2,
+        "Source Version": 2,
+        "Factory Run": "RUN-20260831T164714Z-5bc985"
+      }
+    },
+    {
+      "issue_number": 144,
+      "fields": {
+        "Idea": "IDEA-009",
+        "Epic": "EPIC-002",
+        "Ticket ID": "TICKET-005",
+        "Priority": 5,
+        "Status": "backlog-ready",
+        "Estimate": 1.5,
+        "Dependencies": "TICKET-003, TICKET-004",
+        "Source Version": 1,
+        "Factory Run": "RUN-20260830T203654Z-69a65e"
+      }
+    },
+    {
+      "issue_number": 145,
+      "fields": {
+        "Idea": "IDEA-009",
+        "Epic": "EPIC-002",
+        "Ticket ID": "TICKET-006",
+        "Priority": 6,
+        "Status": "available",
+        "Estimate": 0.5,
+        "Source Version": 2,
+        "Factory Run": "RUN-20260831T164714Z-5bc985"
+      }
+    },
+    {
+      "issue_number": 147,
+      "fields": {
+        "Idea": "IDEA-009",
+        "Epic": "EPIC-003",
+        "Ticket ID": "TICKET-007",
+        "Priority": 7,
+        "Status": "backlog-ready",
+        "Estimate": 1,
+        "Dependencies": "TICKET-004",
+        "Source Version": 1,
+        "Factory Run": "RUN-20260830T203654Z-69a65e"
+      }
+    },
+    {
+      "issue_number": 149,
+      "fields": {
+        "Idea": "IDEA-009",
+        "Epic": "EPIC-003",
+        "Ticket ID": "TICKET-008",
+        "Priority": 8,
+        "Status": "backlog-ready",
+        "Estimate": 1.5,
+        "Dependencies": "TICKET-007",
+        "Source Version": 1,
+        "Factory Run": "RUN-20260830T203654Z-69a65e"
+      }
+    },
+    {
+      "issue_number": 151,
+      "fields": {
+        "Idea": "IDEA-009",
+        "Epic": "EPIC-003",
+        "Ticket ID": "TICKET-009",
+        "Priority": 9,
+        "Status": "backlog-ready",
+        "Estimate": 1,
+        "Dependencies": "TICKET-004, TICKET-005, TICKET-008",
+        "Source Version": 1,
+        "Factory Run": "RUN-20260830T203654Z-69a65e"
+      }
+    },
+    {
+      "issue_number": 153,
+      "fields": {
+        "Idea": "IDEA-009",
+        "Epic": "EPIC-003",
+        "Ticket ID": "TICKET-010",
+        "Priority": 10,
+        "Status": "backlog-ready",
+        "Estimate": 1,
+        "Dependencies": "TICKET-004, TICKET-008",
+        "Source Version": 1,
+        "Factory Run": "RUN-20260830T203654Z-69a65e"
+      }
+    }
+  ],
+  "pull_requests": [
+    {
+      "body": "## Summary\n- make duplicate-only registrations reuse the generic success acknowledgement without creating a second account\n- defer confirmation delivery into `RegistrationConfirmationJob` and enqueue only after commit visibility\n- add focused request/job coverage plus Product Factory ticket/task artifacts for TICKET-001\n\n## Verification\n- `RAILS_ENV=test RAILS_MASTER_KEY=\"$(cat /Users/Denys_Zemlianoi/projects/bootcamper/config/credentials/test.key)\" mise exec ruby@4.0.6 -- bin/rails db:prepare`\n- `RAILS_ENV=test RAILS_MASTER_KEY=\"$(cat /Users/Denys_Zemlianoi/projects/bootcamper/config/credentials/test.key)\" mise exec ruby@4.0.6 -- bin/quality`\n- `RAILS_ENV=test RAILS_MASTER_KEY=\"$(cat /Users/Denys_Zemlianoi/projects/bootcamper/config/credentials/test.key)\" mise exec ruby@4.0.6 -- bundle exec rspec`\n\n## Notes\n- Browser verification remains pending because this runtime exposes no browser-control tool.\n- Product Factory state is review-ready for human merge only; no merge was performed by the agent.\n",
+      "headRefName": "implement/TICKET-001-RUN-20260831T165115Z-911e5f",
+      "mergedAt": "2026-08-31T21:04:35Z",
+      "number": 156,
+      "state": "MERGED"
+    },
+    {
+      "body": "## Motivation\nTurn the approved account access and recovery scenarios into a traceable, dependency-safe delivery backlog.\n\n## Summary\n- resolve one TL-to-BA clarification round across three EPICs\n- advance EPIC-001 through EPIC-003 to TL-approved\n- add technical risk, external-action, coverage, dependency, and delivery-wave analysis\n- publish TICKET-001 through TICKET-010 as backlog-ready artifacts\n- map all 34 Gherkin scenarios to tickets\n\n## Verification\n- bin/product_factory validate --root product\n- env -u CI bin/product_factory test (81 examples, 0 failures)\n- full pre-push quality gate (70 Rails examples, 0 failures; 0 security warnings)\n\n## External actions\nProduction email host, sender, and delivery configuration are required. Administrative block/unblock operations belong to the separate user-administration scope.",
+      "headRefName": "product/idea-009-technical-analysis",
+      "mergedAt": "2026-08-30T21:17:58Z",
+      "number": 139,
+      "state": "MERGED"
+    },
+    {
+      "body": "## Motivation\n\nStart the Product Factory with an evidence-backed, human-reviewed portfolio for Bootcamper’s foundational learning and mentoring experience.\n\n## Portfolio\n\n1. Interactive lesson authoring and delivery\n2. Learning programs and assignments\n3. Assessment and mentor feedback\n4. Learning progress and evidence\n5. Mentor-guided learning journey\n6. Trusted mentor participation and fit\n7. Live shared lectures (post-MVP)\n8. Collaborative and advanced lesson authoring (post-MVP)\n\nAll IDEA artifacts remain `proposed`. This PR does not approve BA analysis, create backlog tickets, select frontend libraries, or mutate GitHub Projects.\n\n## Verification\n\n- Product artifacts valid\n- Rails specs: 70 examples, 0 failures\n- Rails coverage: 99.08% line, 84.61% branch\n- Product Factory specs: 81 examples, 0 failures\n- Complete quality/security gate passed\n- `git diff --check` passed",
+      "headRefName": "product/initial-ideation",
+      "mergedAt": "2026-08-30T20:36:01Z",
+      "number": 138,
+      "state": "MERGED"
+    },
+    {
+      "body": "## Motivation\n\nCreate a cumulative, human-gated product factory that turns researched ideas into versioned epics, dependency-safe tickets, GitHub backlog previews, and reviewed implementation PRs. This cumulative branch also includes the prerequisite delivery controls, CI/test hardening, and current profile work that preceded the factory.\n\n## Implementation\n\n- Add Ideator, BA, TL, Backlogger, delivery-controller, engineer, and reviewer contracts.\n- Add incremental ideation, idea analysis, documentation analysis, backlog reconciliation, and implementation skills.\n- Add immutable artifact validation, run journals, ticket claims, GitHub reconciliation planning, and offline end-to-end fixtures.\n- Protect first GitHub Project bootstrap by updating its built-in Status field and escalating duplicate managed fields.\n- Preserve human approval for IDEA selection, GitHub mutations, and final PR merges.\n\n## Verification\n\n- `RAILS_ENV=test bin/rails db:prepare`\n- `RAILS_ENV=test bin/quality`\n- `RAILS_ENV=test bundle exec rspec` — 61 examples, 0 failures\n- `bin/product_factory test` — 81 examples, 0 failures\n- `bin/product_factory validate --root product`\n- all five factory skill validators\n- `git diff --check`\n\nGitHub is configured to delete merged head branches automatically.",
+      "headRefName": "feat/product-factory",
+      "mergedAt": "2026-08-30T17:54:20Z",
+      "number": 137,
+      "state": "MERGED"
+    },
+    {
+      "body": "",
+      "headRefName": "ci/optimized-pipeline",
+      "mergedAt": "2026-08-30T15:05:42Z",
+      "number": 136,
+      "state": "MERGED"
+    },
+    {
+      "body": "Adds lead-only release wrapper and pre-push protection.",
+      "headRefName": "ops/OPS-001-lead-release-workflow",
+      "mergedAt": null,
+      "number": 1,
+      "state": "CLOSED"
+    }
+  ],
+  "branches": [
+    {
+      "name": "main",
+      "commit": {
+        "sha": "2c05e1cc27fab0482ebf1b3f86a7c93259bd69e4",
+        "url": "https://api.github.com/repos/LIT-Bootcamp/bootcamper/commits/2c05e1cc27fab0482ebf1b3f86a7c93259bd69e4"
+      },
+      "protected": true,
+      "protection": {
+        "enabled": true,
+        "required_status_checks": {
+          "enforcement_level": "off",
+          "contexts": [],
+          "checks": []
+        }
+      },
+      "protection_url": "https://api.github.com/repos/LIT-Bootcamp/bootcamper/branches/main/protection"
+    },
+    {
+      "name": "ops/OPS-001-lead-release-workflow",
+      "commit": {
+        "sha": "e43e56b6ed3a34030f95eb3dc5d2f554f89ba13d",
+        "url": "https://api.github.com/repos/LIT-Bootcamp/bootcamper/commits/e43e56b6ed3a34030f95eb3dc5d2f554f89ba13d"
+      },
+      "protected": false,
+      "protection": {
+        "enabled": false,
+        "required_status_checks": {
+          "enforcement_level": "off",
+          "contexts": [],
+          "checks": []
+        }
+      },
+      "protection_url": "https://api.github.com/repos/LIT-Bootcamp/bootcamper/branches/ops/OPS-001-lead-release-workflow/protection"
+    }
+  ],
+  "project_fields": {
+    "totalCount": 23,
+    "nodes": [
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhgkCak",
+        "name": "Title",
+        "dataType": "TITLE"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhgkCao",
+        "name": "Assignees",
+        "dataType": "ASSIGNEES"
+      },
+      {
+        "__typename": "ProjectV2SingleSelectField",
+        "id": "PVTSSF_lADOEyhuUM4BhpCpzhgkCas",
+        "name": "Status",
+        "options": [
+          {
+            "id": "91918b4f",
+            "name": "draft"
+          },
+          {
+            "id": "bebd1d79",
+            "name": "backlog-ready"
+          },
+          {
+            "id": "c93558fd",
+            "name": "available"
+          },
+          {
+            "id": "f9fb969b",
+            "name": "in-progress"
+          },
+          {
+            "id": "ee1144c3",
+            "name": "in-review"
+          },
+          {
+            "id": "543fe4cc",
+            "name": "ready-for-human-merge"
+          },
+          {
+            "id": "cde4c61f",
+            "name": "done"
+          },
+          {
+            "id": "409ccd04",
+            "name": "blocked"
+          },
+          {
+            "id": "e8e9aede",
+            "name": "superseded"
+          },
+          {
+            "id": "7cb1d983",
+            "name": "escalated"
+          }
+        ]
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhgkCaw",
+        "name": "Labels",
+        "dataType": "LABELS"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhgkCa0",
+        "name": "Linked pull requests",
+        "dataType": "LINKED_PULL_REQUESTS"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhgkCa4",
+        "name": "Milestone",
+        "dataType": "MILESTONE"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhgkCa8",
+        "name": "Repository",
+        "dataType": "REPOSITORY"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhgkCbE",
+        "name": "Reviewers",
+        "dataType": "REVIEWERS"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhgkCbI",
+        "name": "Parent issue",
+        "dataType": "PARENT_ISSUE"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhgkCbM",
+        "name": "Sub-issues progress",
+        "dataType": "SUB_ISSUES_PROGRESS"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhgkCbQ",
+        "name": "Created",
+        "dataType": "CREATED"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhgkCbU",
+        "name": "Updated",
+        "dataType": "UPDATED"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhgkCbY",
+        "name": "Closed",
+        "dataType": "CLOSED"
+      },
+      {
+        "__typename": "ProjectV2SingleSelectField",
+        "id": "PVTSSF_lADOEyhuUM4BhpCpzhgkCic",
+        "name": "Track",
+        "options": [
+          {
+            "id": "4f0162c6",
+            "name": "Foundation"
+          },
+          {
+            "id": "16713f44",
+            "name": "Product"
+          },
+          {
+            "id": "68920fb8",
+            "name": "Learning"
+          },
+          {
+            "id": "827fc10f",
+            "name": "Practice"
+          },
+          {
+            "id": "aa419669",
+            "name": "Operations"
+          },
+          {
+            "id": "e35be56d",
+            "name": "Post-MVP"
+          }
+        ]
+      },
+      {
+        "__typename": "ProjectV2SingleSelectField",
+        "id": "PVTSSF_lADOEyhuUM4BhpCpzhgkCig",
+        "name": "Work batch",
+        "options": [
+          {
+            "id": "cd2def37",
+            "name": "Batch A"
+          },
+          {
+            "id": "88b725b2",
+            "name": "Batch B"
+          },
+          {
+            "id": "27276178",
+            "name": "Batch C"
+          },
+          {
+            "id": "9b5e0fec",
+            "name": "Blocked"
+          }
+        ]
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhg2JCw",
+        "name": "Dependencies",
+        "dataType": "TEXT"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhg2JC0",
+        "name": "Epic",
+        "dataType": "TEXT"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhg2JC4",
+        "name": "Estimate",
+        "dataType": "NUMBER"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhg2JD0",
+        "name": "Factory Run",
+        "dataType": "TEXT"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhg2JD4",
+        "name": "Idea",
+        "dataType": "TEXT"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhg2JD8",
+        "name": "Priority",
+        "dataType": "NUMBER"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhg2JEA",
+        "name": "Source Version",
+        "dataType": "NUMBER"
+      },
+      {
+        "__typename": "ProjectV2Field",
+        "id": "PVTF_lADOEyhuUM4BhpCpzhg2JEE",
+        "name": "Ticket ID",
+        "dataType": "TEXT"
+      }
+    ]
+  }
+}

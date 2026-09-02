@@ -1,0 +1,737 @@
+---
+run_id: RUN-20260831T221206Z-09b9b0
+phase: backlog-idea
+skill: backlog-idea
+started_at: '2026-08-31T22:12:06Z'
+finished_at:
+source_ids: []
+source_snapshot:
+  IDEA-001:
+    id: IDEA-001
+    kind: idea
+    current_version: 2
+    state: proposed
+    source_versions:
+      IDEA-001: 1
+    content_sha256: 99ad4119d2c8de7f6635102b05e3d3426672300ece10b048787162bd9557db99
+    github_issue:
+    dependencies: []
+    priority: 6
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-001-interactive-lessons/idea/manifest.yml
+    dependency_safe: false
+  IDEA-002:
+    id: IDEA-002
+    kind: idea
+    current_version: 2
+    state: proposed
+    source_versions:
+      IDEA-002: 1
+    content_sha256: ba0e11b907f23e94352f17ef6671b864e0b565cdb8299ad88403880b22239ab7
+    github_issue:
+    dependencies: []
+    priority: 7
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-002-learning-programs/idea/manifest.yml
+    dependency_safe: false
+  IDEA-003:
+    id: IDEA-003
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: ff148dcec504be429cd1c6d74a1f458fcbf1062355a55c3ff2a6dc45809b19f2
+    github_issue:
+    dependencies: []
+    priority: 13
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-003-assessment-feedback/idea/manifest.yml
+    dependency_safe: false
+  IDEA-004:
+    id: IDEA-004
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: 621d8d07442f20ec67bb11d30b97d61de2e1266fce631a0e3df2f17f5c5d6a4d
+    github_issue:
+    dependencies: []
+    priority: 14
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-004-progress-evidence/idea/manifest.yml
+    dependency_safe: false
+  IDEA-005:
+    id: IDEA-005
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: 3ca41510cf25b64197ec878920a82e546cea70673e860871747fb5ed8775268d
+    github_issue:
+    dependencies: []
+    priority: 15
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-005-mentor-guided-journey/idea/manifest.yml
+    dependency_safe: false
+  IDEA-006:
+    id: IDEA-006
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: 7cdfa9376374f942b1a2935be93b437076e93411bbcc2d6c148041d58a163dfa
+    github_issue:
+    dependencies: []
+    priority: 16
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-006-trusted-mentoring/idea/manifest.yml
+    dependency_safe: false
+  IDEA-007:
+    id: IDEA-007
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: f8361ccb46e156e499e3d5c4b32deedd3946d9ec53b8a40df6151c8e00a97746
+    github_issue:
+    dependencies: []
+    priority: 17
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-007-live-lectures/idea/manifest.yml
+    dependency_safe: false
+  IDEA-008:
+    id: IDEA-008
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: eb79279a0d574930e8064b6463af6c38ce086951f22e1e2d99824ec821617d68
+    github_issue:
+    dependencies: []
+    priority: 18
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-008-advanced-authoring/idea/manifest.yml
+    dependency_safe: false
+  EPIC-001:
+    id: EPIC-001
+    kind: epic
+    current_version: 4
+    state: TL-approved
+    source_versions:
+      IDEA-009: 3
+      EPIC-001: 1
+    content_sha256: 3052f07bb6e7a7c4abb42de97cafe6ba66216ff8f6fee3f0ea5065a99fd67d24
+    github_issue:
+    dependencies: []
+    priority: 1
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/epics/EPIC-001-register-and-verify-account/manifest.yml
+    dependency_safe: false
+  TICKET-001:
+    id: TICKET-001
+    kind: ticket
+    current_version: 6
+    state: done
+    source_versions:
+      EPIC-001: 2
+    content_sha256: 2c59d714ea92ca847fda23a4f4fbe990eb5cb4004f9451660bc3820489ce7d15
+    github_issue: 140
+    merged_pull_request: 156
+    dependencies: []
+    priority: 1
+    estimate_days: 1
+    scenarios:
+    - SCENARIO-001
+    - SCENARIO-002
+    - SCENARIO-003
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/epics/EPIC-001-register-and-verify-account/tickets/TICKET-001-private-registration/manifest.yml
+    title: 'TICKET-001: Make registration privacy-preserving'
+    body: |-
+      # TICKET-001: Make registration privacy-preserving
+
+      Acceptance evidence: PR #156 merged into `main`; GitHub issue #140 closed.
+    idea_id: IDEA-009
+    epic_id: EPIC-001
+    factory_run: RUN-20260831T220156Z-bcaba2
+    dependency_safe: true
+  TICKET-002:
+    id: TICKET-002
+    kind: ticket
+    current_version: 4
+    state: available
+    source_versions:
+      EPIC-001: 2
+    content_sha256: d36d8454bbe68c4945cfb70016c6b5dd092e0ddbe867adb3390fc7e41c97e53a
+    github_issue: 141
+    dependencies: []
+    priority: 2
+    estimate_days: 1.5
+    scenarios:
+    - SCENARIO-004
+    - SCENARIO-005
+    - SCENARIO-006
+    - SCENARIO-007
+    - SCENARIO-008
+    - SCENARIO-012
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/epics/EPIC-001-register-and-verify-account/tickets/TICKET-002-confirmation-proof/manifest.yml
+    title: 'TICKET-002: Enforce confirmation-proof lifecycle'
+    body: |-
+      # TICKET-002: Enforce confirmation-proof lifecycle
+
+      ## Business outcome
+      Learners can confirm email ownership only with the current valid proof, while failed proof attempts leave account state private and unchanged.
+
+      ## Scenario traceability
+      IDEA-009/v003; EPIC-001/v002; SCENARIO-004, SCENARIO-005, SCENARIO-006, SCENARIO-007, SCENARIO-008, SCENARIO-012.
+
+      ## User/system flow
+      1. SCENARIO-004 normal path: an inactive learner follows valid current confirmation proof; the system marks email ownership confirmed and tells the learner ordinary sign-in is available.
+      2. SCENARIO-005 invalid proof: a learner presents malformed or unknown proof; the system changes no account state and tells the learner to request another confirmation.
+      3. SCENARIO-006 expired proof: a learner presents expired proof; the system changes no account state and tells the learner to request another confirmation.
+      4. SCENARIO-007 used proof: a learner presents already-used proof; the system changes no account state and tells the learner the proof cannot be used.
+      5. SCENARIO-008 superseded proof: a learner presents proof issued before the newest proof; the system changes no account state and tells the learner to use the newest confirmation or request another.
+      6. SCENARIO-012 blocked account path: a blocked learner confirms with valid current proof; the system records email ownership but keeps the account blocked and ordinary sign-in unavailable.
+
+      ## Technical implementation
+      Use Devise Confirmable at the confirmation controller boundary. Validate token authenticity, freshness, used state, and newest-proof status before applying the confirmed transition; on blocked accounts, persist confirmation without changing the external blocked state or session eligibility.
+
+      ## Change surface
+      Likely paths: `app/models/user.rb`, Devise confirmation controller/customization, confirmation result views, confirmation mailer URL configuration, locale copy, `spec/models/user_spec.rb`, and `spec/requests/confirmations_spec.rb`.
+
+      ## Data and security notes
+      Store confirmation proof so old and used tokens cannot confirm the account. Failed confirmation attempts must not reveal whether an email exists, whether an account is blocked, or which private account state caused the failure.
+
+      ## Acceptance evidence
+      `spec/requests/confirmations_spec.rb` covers SCENARIO-004 valid current proof confirming ownership. The same request spec covers SCENARIO-005 invalid proof, SCENARIO-006 expired proof, SCENARIO-007 used proof, and SCENARIO-008 superseded proof with no account mutation. `spec/requests/confirmations_spec.rb` covers SCENARIO-012 confirming ownership while preserving blocked state and denied ordinary sign-in.
+
+      ## Out of scope
+      No confirmation resend form, registration form changes, sign-in flow changes, block/unblock administration, recovery proof lifecycle, or production mail-provider setup.
+
+      ## Dependencies and external actions
+      Dependencies: none. External actions: configure production confirmation URL host and email delivery.
+
+      ## Estimate
+      6-8 hours.
+
+      ## Definition of Done
+      Each mapped proof state has request coverage, invalid proof attempts preserve account state, valid confirmation uses only the current proof, blocked accounts remain blocked, and focused specs pass.
+    idea_id: IDEA-009
+    epic_id: EPIC-001
+    factory_run: RUN-20260831T084434Z-a2b2c2
+    dependency_safe: true
+  TICKET-003:
+    id: TICKET-003
+    kind: ticket
+    current_version: 1
+    state: backlog-ready
+    source_versions:
+      EPIC-001: 2
+    content_sha256: bef62fcc1c101a10f54cf4b31c60dc89fe86f53433c017e8b288ec207f39b2df
+    github_issue: 142
+    dependencies:
+    - TICKET-002
+    priority: 3
+    estimate_days: 1.5
+    scenarios:
+    - SCENARIO-009
+    - SCENARIO-010
+    - SCENARIO-011
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/epics/EPIC-001-register-and-verify-account/tickets/TICKET-003-confirmation-resend/manifest.yml
+    title: 'TICKET-003: Add private confirmation resend'
+    body: |-
+      # TICKET-003: Add private confirmation resend
+      ## Observable goal
+      A public form returns one generic acknowledgement and gives an inactive account one newest proof that supersedes all earlier proofs.
+      ## Source IDEA, EPIC, version, and scenario IDs
+      IDEA-009/v003; EPIC-001/v002; SCENARIO-009, SCENARIO-010, SCENARIO-011.
+      ## Acceptance evidence
+      Request specs compare all account states and prove only the newest proof works.
+      ## Dependencies
+      TICKET-002
+      ## Difficulty (1-5)
+      3
+      ## Estimate (ideal days, at most 2)
+      1.5
+      ## Risks
+      Privacy differences and concurrent resends.
+      ## External actions
+      Configure and monitor production email delivery.
+      ## Allowed scope
+      Resend route, controller, form, acknowledgement, mail invocation, token supersession, and focused specs only.
+    idea_id: IDEA-009
+    epic_id: EPIC-001
+    factory_run: RUN-20260830T203654Z-69a65e
+    dependency_safe: false
+  EPIC-002:
+    id: EPIC-002
+    kind: epic
+    current_version: 4
+    state: TL-approved
+    source_versions:
+      IDEA-009: 3
+      EPIC-002: 1
+    content_sha256: 4dea7a4188946a12d87cb99538a6f02721a31b749567f92a7000f666655bb55f
+    github_issue:
+    dependencies: []
+    priority: 2
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/epics/EPIC-002-authenticated-session/manifest.yml
+    dependency_safe: false
+  TICKET-004:
+    id: TICKET-004
+    kind: ticket
+    current_version: 2
+    state: available
+    source_versions:
+      EPIC-002: 2
+    content_sha256: 7f98bb24b1489eb10bf2f1a5e235122482e2fcde82b6a49d5ab23282186377c6
+    github_issue: 143
+    dependencies: []
+    priority: 4
+    estimate_days: 2
+    scenarios:
+    - SCENARIO-020
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/epics/EPIC-002-authenticated-session/tickets/TICKET-004-session-invalidation/manifest.yml
+    title: 'TICKET-004: Invalidate sessions after account blocking'
+    body: |-
+      # TICKET-004: Invalidate sessions after account blocking
+      ## Observable goal
+      Blocking rejects every existing session; unblocking never resumes them and requires new sign-in.
+      ## Source IDEA, EPIC, version, and scenario IDs
+      IDEA-009/v003; EPIC-002/v002; SCENARIO-020.
+      ## Acceptance evidence
+      Request specs prove multiple-session denial before and after unblock.
+      ## Dependencies
+      none
+      ## Difficulty (1-5)
+      4
+      ## Estimate (ideal days, at most 2)
+      2
+      ## Risks
+      Every authenticated path must enforce server-checked invalidation.
+      ## External actions
+      Administrator-owned system must use the agreed block transition.
+      ## Allowed scope
+      Persisted block/session generation, authentication hooks, invalidation, and focused specs; no admin UI.
+    idea_id: IDEA-009
+    epic_id: EPIC-002
+    factory_run: RUN-20260831T164714Z-5bc985
+    dependency_safe: true
+  TICKET-005:
+    id: TICKET-005
+    kind: ticket
+    current_version: 1
+    state: backlog-ready
+    source_versions:
+      EPIC-002: 2
+    content_sha256: 75479be6e784fb9764b05ec698b56db7eaff6117f8240e76e2f82f7828a5ac98
+    github_issue: 144
+    dependencies:
+    - TICKET-003
+    - TICKET-004
+    priority: 5
+    estimate_days: 1.5
+    scenarios:
+    - SCENARIO-013
+    - SCENARIO-014
+    - SCENARIO-015
+    - SCENARIO-016
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/epics/EPIC-002-authenticated-session/tickets/TICKET-005-private-sign-in/manifest.yml
+    title: 'TICKET-005: Enforce private sign-in outcomes'
+    body: |-
+      # TICKET-005: Enforce private sign-in outcomes
+      ## Observable goal
+      Eligible learners sign in; incorrect and blocked credentials look identical with recovery offered; inactive learners get confirmation guidance and resend.
+      ## Source IDEA, EPIC, version, and scenario IDs
+      IDEA-009/v003; EPIC-002/v002; SCENARIO-013, SCENARIO-014, SCENARIO-015, SCENARIO-016.
+      ## Acceptance evidence
+      Request specs prove success, indistinguishable rejection, no rejected session, recovery navigation, and both resend entries.
+      ## Dependencies
+      TICKET-003, TICKET-004
+      ## Difficulty (1-5)
+      3
+      ## Estimate (ideal days, at most 2)
+      1.5
+      ## Risks
+      Failure details can disclose accounts.
+      ## External actions
+      none
+      ## Allowed scope
+      Session eligibility, failure presentation, navigation, resend reuse, translations, and focused specs only.
+    idea_id: IDEA-009
+    epic_id: EPIC-002
+    factory_run: RUN-20260830T203654Z-69a65e
+    dependency_safe: false
+  TICKET-006:
+    id: TICKET-006
+    kind: ticket
+    current_version: 2
+    state: available
+    source_versions:
+      EPIC-002: 2
+    content_sha256: c4ec4ad6e8fa0a2f534444ffca9c6d426522eb43948a744f4fbfbf8793670028
+    github_issue: 145
+    dependencies: []
+    priority: 6
+    estimate_days: 0.5
+    scenarios:
+    - SCENARIO-017
+    - SCENARIO-018
+    - SCENARIO-019
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/epics/EPIC-002-authenticated-session/tickets/TICKET-006-sign-out/manifest.yml
+    title: 'TICKET-006: Make sign-out final and idempotent'
+    body: |-
+      # TICKET-006: Make sign-out final and idempotent
+      ## Observable goal
+      Authenticated and anonymous sign-out are safe, and an ended session cannot authorize later actions.
+      ## Source IDEA, EPIC, version, and scenario IDs
+      IDEA-009/v003; EPIC-002/v002; SCENARIO-017, SCENARIO-018, SCENARIO-019.
+      ## Acceptance evidence
+      Request specs prove both sign-out paths and rejection of a captured ended session.
+      ## Dependencies
+      none
+      ## Difficulty (1-5)
+      2
+      ## Estimate (ideal days, at most 2)
+      0.5
+      ## Risks
+      Routing and CSRF safety.
+      ## External actions
+      none
+      ## Allowed scope
+      Logout route/response, session termination, destination, translations, and focused specs only.
+    idea_id: IDEA-009
+    epic_id: EPIC-002
+    factory_run: RUN-20260831T164714Z-5bc985
+    dependency_safe: true
+  EPIC-003:
+    id: EPIC-003
+    kind: epic
+    current_version: 4
+    state: TL-approved
+    source_versions:
+      IDEA-009: 3
+      EPIC-003: 1
+    content_sha256: 310e7e9a75607b8e62fc2d89a64a3c9754e8ddc9368488fd643c1c8d80e11817
+    github_issue:
+    dependencies: []
+    priority: 3
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/epics/EPIC-003-recover-account-access/manifest.yml
+    dependency_safe: false
+  TICKET-007:
+    id: TICKET-007
+    kind: ticket
+    current_version: 1
+    state: backlog-ready
+    source_versions:
+      EPIC-003: 2
+    content_sha256: bbac6457b320530941ac5e7da4c96100069a7730f9e2847fdb47d147fcfa7916
+    github_issue: 147
+    dependencies:
+    - TICKET-004
+    priority: 7
+    estimate_days: 1
+    scenarios:
+    - SCENARIO-021
+    - SCENARIO-022
+    - SCENARIO-023
+    - SCENARIO-024
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/epics/EPIC-003-recover-account-access/tickets/TICKET-007-private-recovery-request/manifest.yml
+    title: 'TICKET-007: Keep recovery requests private'
+    body: |-
+      # TICKET-007: Keep recovery requests private
+      ## Observable goal
+      All email/account states receive the same acknowledgement while eligible accounts receive proof without confirmation or block changes.
+      ## Source IDEA, EPIC, version, and scenario IDs
+      IDEA-009/v003; EPIC-003/v002; SCENARIO-021, SCENARIO-022, SCENARIO-023, SCENARIO-024.
+      ## Acceptance evidence
+      Request specs compare responses and verify applicable delivery without state mutation.
+      ## Dependencies
+      TICKET-004
+      ## Difficulty (1-5)
+      2
+      ## Estimate (ideal days, at most 2)
+      1
+      ## Risks
+      Response or delivery differences disclose state.
+      ## External actions
+      Configure production reset URL host and email delivery.
+      ## Allowed scope
+      Recovery request route, form, response, mail invocation, translations, and focused specs only.
+    idea_id: IDEA-009
+    epic_id: EPIC-003
+    factory_run: RUN-20260830T203654Z-69a65e
+    dependency_safe: false
+  TICKET-008:
+    id: TICKET-008
+    kind: ticket
+    current_version: 1
+    state: backlog-ready
+    source_versions:
+      EPIC-003: 2
+    content_sha256: 2e74021a1ba831d4a2c72047a3cf04d01b32e2d2d71139296049323a93a5e298
+    github_issue: 149
+    dependencies:
+    - TICKET-007
+    priority: 8
+    estimate_days: 1.5
+    scenarios:
+    - SCENARIO-025
+    - SCENARIO-026
+    - SCENARIO-027
+    - SCENARIO-028
+    - SCENARIO-029
+    - SCENARIO-030
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/epics/EPIC-003-recover-account-access/tickets/TICKET-008-password-replacement/manifest.yml
+    title: 'TICKET-008: Enforce recovery-proof password replacement'
+    body: |-
+      # TICKET-008: Enforce recovery-proof password replacement
+      ## Observable goal
+      Only valid current proof plus acceptable password changes credentials; all invalid cases preserve them with feedback.
+      ## Source IDEA, EPIC, version, and scenario IDs
+      IDEA-009/v003; EPIC-003/v002; SCENARIO-025, SCENARIO-026, SCENARIO-027, SCENARIO-028, SCENARIO-029, SCENARIO-030.
+      ## Acceptance evidence
+      Request specs exercise every proof and policy state, success, preservation after failure, and non-reuse.
+      ## Dependencies
+      TICKET-007
+      ## Difficulty (1-5)
+      3
+      ## Estimate (ideal days, at most 2)
+      1.5
+      ## Risks
+      Concurrent requests and privacy.
+      ## External actions
+      none
+      ## Allowed scope
+      Proof validation, replacement form/controller, feedback, translations, and focused specs only.
+    idea_id: IDEA-009
+    epic_id: EPIC-003
+    factory_run: RUN-20260830T203654Z-69a65e
+    dependency_safe: false
+  TICKET-009:
+    id: TICKET-009
+    kind: ticket
+    current_version: 1
+    state: backlog-ready
+    source_versions:
+      EPIC-003: 2
+    content_sha256: 9192e8b2fdbf37eb4d9f7698a340d6e00cfdb4e195c577a9c313ae8c7f669e71
+    github_issue: 151
+    dependencies:
+    - TICKET-004
+    - TICKET-005
+    - TICKET-008
+    priority: 9
+    estimate_days: 1
+    scenarios:
+    - SCENARIO-031
+    - SCENARIO-032
+    - SCENARIO-033
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/epics/EPIC-003-recover-account-access/tickets/TICKET-009-recovered-account-state/manifest.yml
+    title: 'TICKET-009: Preserve account state after recovery'
+    body: |-
+      # TICKET-009: Preserve account state after recovery
+      ## Observable goal
+      New password supersedes old while recovery neither confirms nor unblocks the account.
+      ## Source IDEA, EPIC, version, and scenario IDs
+      IDEA-009/v003; EPIC-003/v002; SCENARIO-031, SCENARIO-032, SCENARIO-033.
+      ## Acceptance evidence
+      Request specs prove new success, old rejection, confirmation gate, and preserved generic blocked rejection.
+      ## Dependencies
+      TICKET-004, TICKET-005, TICKET-008
+      ## Difficulty (1-5)
+      2
+      ## Estimate (ideal days, at most 2)
+      1
+      ## Risks
+      Recovery callbacks must not confirm, unblock, or authenticate.
+      ## External actions
+      none
+      ## Allowed scope
+      Post-recovery authentication/state preservation and focused specs only.
+    idea_id: IDEA-009
+    epic_id: EPIC-003
+    factory_run: RUN-20260830T203654Z-69a65e
+    dependency_safe: false
+  TICKET-010:
+    id: TICKET-010
+    kind: ticket
+    current_version: 1
+    state: backlog-ready
+    source_versions:
+      EPIC-003: 2
+    content_sha256: 6d03915ca6dd4cdeaa5138b873e5ebae81ca8c563ac7f79954b9481589e41e1e
+    github_issue: 153
+    dependencies:
+    - TICKET-004
+    - TICKET-008
+    priority: 10
+    estimate_days: 1
+    scenarios:
+    - SCENARIO-034
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/epics/EPIC-003-recover-account-access/tickets/TICKET-010-recovery-session-revocation/manifest.yml
+    title: 'TICKET-010: Revoke all sessions after recovery'
+    body: |-
+      # TICKET-010: Revoke all sessions after recovery
+      ## Observable goal
+      Successful replacement invalidates every older session on its next authenticated action.
+      ## Source IDEA, EPIC, version, and scenario IDs
+      IDEA-009/v003; EPIC-003/v002; SCENARIO-034.
+      ## Acceptance evidence
+      Request specs prove multiple old sessions fail and fresh eligible sign-in works.
+      ## Dependencies
+      TICKET-004, TICKET-008
+      ## Difficulty (1-5)
+      3
+      ## Estimate (ideal days, at most 2)
+      1
+      ## Risks
+      Revocation must be atomic only after successful replacement.
+      ## External actions
+      none
+      ## Allowed scope
+      Reuse server-checked invalidation during successful recovery and add focused specs only.
+    idea_id: IDEA-009
+    epic_id: EPIC-003
+    factory_run: RUN-20260830T203654Z-69a65e
+    dependency_safe: false
+  IDEA-009:
+    id: IDEA-009
+    kind: idea
+    current_version: 3
+    state: analyzed
+    source_versions:
+      IDEA-009: 2
+      EPIC-001: 1
+      EPIC-002: 1
+      EPIC-003: 1
+    content_sha256: 6a38c5d99acc8e2f76189f8e072175f8d1ebd0c2189aa79a717f9afde526d050
+    github_issue:
+    dependencies: []
+    priority: 1
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-009-account-access-recovery/idea/manifest.yml
+    dependency_safe: false
+  IDEA-010:
+    id: IDEA-010
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: '051180caef2b5d07085bc4e10dcb1bff215f84650ecfb45dcbac8c82d5f80e81'
+    github_issue:
+    dependencies: []
+    priority: 2
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-010-roles-authorization/idea/manifest.yml
+    dependency_safe: false
+  IDEA-011:
+    id: IDEA-011
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: 1016767e0190ebfc7c70f1ef978339f157419721f9e264afbd3bf1db32cf3243
+    github_issue:
+    dependencies: []
+    priority: 5
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-011-learner-onboarding-profile-settings/idea/manifest.yml
+    dependency_safe: false
+  IDEA-012:
+    id: IDEA-012
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: 41ca2894a20d2c249cc6e431917ba11edc0773d5c02bcba7af61bc256277e85e
+    github_issue:
+    dependencies: []
+    priority: 4
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-012-admin-workspace/idea/manifest.yml
+    dependency_safe: false
+  IDEA-013:
+    id: IDEA-013
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: be0f6c9d827c558db6e37602b3d2430041f74d1722921ecda2b017aed8f592b7
+    github_issue:
+    dependencies: []
+    priority: 3
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-013-user-administration/idea/manifest.yml
+    dependency_safe: false
+  IDEA-014:
+    id: IDEA-014
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: 6da8fc6ed7cc7712523ea453d9b3c80f3bf88a16ab8db744506877538f018370
+    github_issue:
+    dependencies: []
+    priority: 8
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-014-public-course-catalog/idea/manifest.yml
+    dependency_safe: false
+  IDEA-015:
+    id: IDEA-015
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: 9b1b23b93fe3f1ba6ecb0563ad96ac692c0f34b100aef6ceecdd7e999b46e9da
+    github_issue:
+    dependencies: []
+    priority: 9
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-015-course-detail/idea/manifest.yml
+    dependency_safe: false
+  IDEA-016:
+    id: IDEA-016
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: 001114c8082645c926a51a90c3975319a3384f2450d33b831b96ac992c95ed76
+    github_issue:
+    dependencies: []
+    priority: 10
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-016-learner-course-application/idea/manifest.yml
+    dependency_safe: false
+  IDEA-017:
+    id: IDEA-017
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: 39be4b85bc75db0b7d1e06fc5652467a4310a1f82d7b47fd90ea54fd3eec0caa
+    github_issue:
+    dependencies: []
+    priority: 12
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-017-learner-course-learning-page/idea/manifest.yml
+    dependency_safe: false
+  IDEA-018:
+    id: IDEA-018
+    kind: idea
+    current_version: 1
+    state: proposed
+    source_versions: {}
+    content_sha256: d364ac84d8cc591567a221a6909b824d577ee863a5a277c99477c07e080096a9
+    github_issue:
+    dependencies: []
+    priority: 11
+    estimate_days: 0
+    manifest_path: product/ideas/IDEA-018-course-admissions/idea/manifest.yml
+    dependency_safe: false
+output_ids: []
+status: started
+external_changes: []
+error:
+next_action:

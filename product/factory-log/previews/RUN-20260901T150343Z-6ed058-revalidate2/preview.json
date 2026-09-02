@@ -1,0 +1,43 @@
+{
+  "run_id": "RUN-20260901T150343Z-6ed058-revalidate2",
+  "repository": "LIT-Bootcamp/bootcamper",
+  "project_number": 1,
+  "operations": [
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": 158,
+      "attributes": {
+        "field": "Factory Run",
+        "value": "RUN-20260901T121856Z-526ccf"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": 158,
+      "attributes": {
+        "field": "Source Version",
+        "value": "5"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": 158,
+      "attributes": {
+        "field": "Status",
+        "value": "ready-for-human-merge"
+      }
+    },
+    {
+      "action": "update",
+      "ticket_id": "TICKET-011",
+      "issue_number": 158,
+      "attributes": {
+        "title": "TICKET-011: Establish blocked-account sign-in eligibility",
+        "body": "# TICKET-011: Establish blocked-account sign-in eligibility\n\n## Observable goal\n\nA persisted blocked account can confirm email ownership without becoming eligible for ordinary sign-in; blocked credentials receive the existing generic sign-in rejection and create no session.\n\n## Source IDEA, EPIC, version, and scenario IDs\n\nIDEA-009/v003; EPIC-001/v002; SCENARIO-012.\n\n## Acceptance evidence\n\nFocused model and request specs prove that a blocked, unconfirmed learner can be confirmed without clearing the blocked state, then cannot sign in with correct credentials and receives the generic invalid-credentials outcome.\n\n## Dependencies\n\nnone\n\n## Difficulty (1-5)\n\n3\n\n## Estimate (ideal days, at most 2)\n\n1\n\n## Risks\n\nAn authentication override could accidentally bypass Devise Confirmable or expose a blocked state through a distinct failure message. Existing-session invalidation is intentionally outside this ticket and remains TICKET-004's responsibility.\n\n## External actions\n\nThe administrator-owned blocking system must use the agreed persisted block/unblock transition; no administration interface is included here.\n\n## Allowed scope\n\nThe `users` blocked-state migration, `User` block predicate and Devise sign-in eligibility hook, generic failure mapping, and focused model/request specs. No confirmation-proof lifecycle changes, block/unblock UI, existing-session invalidation, or recovery behavior.\n\n<!-- product-factory-ticket-id: TICKET-011 -->"
+      }
+    }
+  ]
+}

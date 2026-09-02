@@ -1,13 +1,14 @@
 ---
 id: TICKET-002
 kind: ticket
-current_version: 4
+current_version: 5
 state: available
 source_versions:
   EPIC-001: 2
-content_sha256: d36d8454bbe68c4945cfb70016c6b5dd092e0ddbe867adb3390fc7e41c97e53a
+content_sha256: 80c6fb4f9dcf24d8577b613e82f7cf7cd7e8e80366e98b9650b1bdd561bcbd2d
 github_issue: 141
-dependencies: []
+dependencies:
+- TICKET-011
 priority: 2
 estimate_days: 1.5
 scenarios:

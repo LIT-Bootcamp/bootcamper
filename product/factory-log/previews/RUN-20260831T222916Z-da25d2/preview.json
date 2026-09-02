@@ -1,0 +1,61 @@
+{
+  "run_id": "RUN-20260831T222916Z-da25d2",
+  "repository": "LIT-Bootcamp/bootcamper",
+  "project_number": 1,
+  "operations": [
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-001",
+      "issue_number": 140,
+      "attributes": {
+        "field": "Factory Run",
+        "value": "RUN-20260831T220156Z-bcaba2"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-001",
+      "issue_number": 140,
+      "attributes": {
+        "field": "Source Version",
+        "value": "6"
+      }
+    },
+    {
+      "action": "update",
+      "ticket_id": "TICKET-001",
+      "issue_number": 140,
+      "attributes": {
+        "title": "TICKET-001: Make registration privacy-preserving",
+        "body": "# TICKET-001: Make registration privacy-preserving\n\nAcceptance evidence: PR #156 merged into `main`; GitHub issue #140 closed.\n\n<!-- product-factory-ticket-id: TICKET-001 -->"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-002",
+      "issue_number": 141,
+      "attributes": {
+        "field": "Factory Run",
+        "value": "RUN-20260831T084434Z-a2b2c2"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-002",
+      "issue_number": 141,
+      "attributes": {
+        "field": "Source Version",
+        "value": "4"
+      }
+    },
+    {
+      "action": "update",
+      "ticket_id": "TICKET-002",
+      "issue_number": 141,
+      "attributes": {
+        "title": "TICKET-002: Enforce confirmation-proof lifecycle",
+        "body": "# TICKET-002: Enforce confirmation-proof lifecycle\n\n## Business outcome\nLearners can confirm email ownership only with the current valid proof, while failed proof attempts leave account state private and unchanged.\n\n## Scenario traceability\nIDEA-009/v003; EPIC-001/v002; SCENARIO-004, SCENARIO-005, SCENARIO-006, SCENARIO-007, SCENARIO-008, SCENARIO-012.\n\n## User/system flow\n1. SCENARIO-004 normal path: an inactive learner follows valid current confirmation proof; the system marks email ownership confirmed and tells the learner ordinary sign-in is available.\n2. SCENARIO-005 invalid proof: a learner presents malformed or unknown proof; the system changes no account state and tells the learner to request another confirmation.\n3. SCENARIO-006 expired proof: a learner presents expired proof; the system changes no account state and tells the learner to request another confirmation.\n4. SCENARIO-007 used proof: a learner presents already-used proof; the system changes no account state and tells the learner the proof cannot be used.\n5. SCENARIO-008 superseded proof: a learner presents proof issued before the newest proof; the system changes no account state and tells the learner to use the newest confirmation or request another.\n6. SCENARIO-012 blocked account path: a blocked learner confirms with valid current proof; the system records email ownership but keeps the account blocked and ordinary sign-in unavailable.\n\n## Technical implementation\nUse Devise Confirmable at the confirmation controller boundary. Validate token authenticity, freshness, used state, and newest-proof status before applying the confirmed transition; on blocked accounts, persist confirmation without changing the external blocked state or session eligibility.\n\n## Change surface\nLikely paths: `app/models/user.rb`, Devise confirmation controller/customization, confirmation result views, confirmation mailer URL configuration, locale copy, `spec/models/user_spec.rb`, and `spec/requests/confirmations_spec.rb`.\n\n## Data and security notes\nStore confirmation proof so old and used tokens cannot confirm the account. Failed confirmation attempts must not reveal whether an email exists, whether an account is blocked, or which private account state caused the failure.\n\n## Acceptance evidence\n`spec/requests/confirmations_spec.rb` covers SCENARIO-004 valid current proof confirming ownership. The same request spec covers SCENARIO-005 invalid proof, SCENARIO-006 expired proof, SCENARIO-007 used proof, and SCENARIO-008 superseded proof with no account mutation. `spec/requests/confirmations_spec.rb` covers SCENARIO-012 confirming ownership while preserving blocked state and denied ordinary sign-in.\n\n## Out of scope\nNo confirmation resend form, registration form changes, sign-in flow changes, block/unblock administration, recovery proof lifecycle, or production mail-provider setup.\n\n## Dependencies and external actions\nDependencies: none. External actions: configure production confirmation URL host and email delivery.\n\n## Estimate\n6-8 hours.\n\n## Definition of Done\nEach mapped proof state has request coverage, invalid proof attempts preserve account state, valid confirmation uses only the current proof, blocked accounts remain blocked, and focused specs pass.\n\n<!-- product-factory-ticket-id: TICKET-002 -->"
+      }
+    }
+  ]
+}
