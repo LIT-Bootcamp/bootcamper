@@ -34,4 +34,12 @@ RSpec.describe "Local quality gate" do # rubocop:disable RSpec/DescribeClass
     expect(spec_helper).to include('skip "/lib/product_factory"')
     expect(workflow).to include("bundle exec rspec && env -u CI bin/product_factory test")
   end
+
+  it "mounts every factory contract input read-only", :aggregate_failures do
+    workflow = File.read(File.expand_path("../../.github/workflows/ci.yml", __dir__))
+
+    expect(workflow).to include("-v $GITHUB_WORKSPACE/.agents:/app/.agents:ro")
+    expect(workflow).to include("-v $GITHUB_WORKSPACE/.codex:/app/.codex:ro")
+    expect(workflow).to include("-v $GITHUB_WORKSPACE/docs:/app/docs:ro")
+  end
 end
