@@ -1,0 +1,18 @@
+---
+run_id: RUN-20260901T150343Z-6ed058-retry
+phase: backlog-idea-apply
+repository: LIT-Bootcamp/bootcamper
+project_number: 1
+ticket_id: TICKET-011
+issue_number: 158
+source_version: 5
+factory_run: RUN-20260901T121856Z-526ccf
+authorized_preview: product/factory-log/previews/RUN-20260901T150343Z-6ed058-retry/preview.json
+revalidated_preview: product/factory-log/previews/RUN-20260901T150343Z-6ed058-revalidate2/preview.json
+authorized_remote_snapshot_sha256: 9d6da3960461934639fdbf957fc26d1ff8cc7f87d03d6d6232774d321d61f8be
+revalidated_remote_snapshot_sha256: 9d6da3960461934639fdbf957fc26d1ff8cc7f87d03d6d6232774d321d61f8be
+local_projection_sha256: 613d58e3d1cf582d4e5ae7217c27edabc369dc81cd6166bd12163f26553730cd
+base_commit: 030cc9eb15477dda992e44aeeef2c2dd9ee05445
+auth_scopes: [gist, project, read:org, repo, workflow]
+status: applying
+completed_operations: []

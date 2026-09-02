@@ -1,0 +1,34 @@
+{
+  "run_id": "RUN-20260901T121436Z-e1fad9",
+  "repository": "LIT-Bootcamp/bootcamper",
+  "project_number": 1,
+  "operations": [
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": 158,
+      "attributes": {
+        "field": "Factory Run",
+        "value": "RUN-20260901T121500Z-4b7c2e"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": 158,
+      "attributes": {
+        "field": "Source Version",
+        "value": "2"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": 158,
+      "attributes": {
+        "field": "Status",
+        "value": "available"
+      }
+    }
+  ]
+}

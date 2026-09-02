@@ -1,0 +1,25 @@
+{
+  "run_id": "RUN-20260901T171431Z-f7361e",
+  "repository": "LIT-Bootcamp/bootcamper",
+  "project_number": 1,
+  "operations": [
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": 158,
+      "attributes": {
+        "field": "Source Version",
+        "value": "6"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-011",
+      "issue_number": 158,
+      "attributes": {
+        "field": "Status",
+        "value": "done"
+      }
+    }
+  ]
+}

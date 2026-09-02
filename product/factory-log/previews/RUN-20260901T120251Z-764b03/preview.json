@@ -1,0 +1,43 @@
+{
+  "run_id": "RUN-20260901T120251Z-764b03",
+  "repository": "LIT-Bootcamp/bootcamper",
+  "project_number": 1,
+  "operations": [
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-006",
+      "issue_number": 145,
+      "attributes": {
+        "field": "Dependencies",
+        "value": "TICKET-004"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-006",
+      "issue_number": 145,
+      "attributes": {
+        "field": "Factory Run",
+        "value": "RUN-20260901T120133Z-841fe4"
+      }
+    },
+    {
+      "action": "project_field",
+      "ticket_id": "TICKET-006",
+      "issue_number": 145,
+      "attributes": {
+        "field": "Source Version",
+        "value": "3"
+      }
+    },
+    {
+      "action": "update",
+      "ticket_id": "TICKET-006",
+      "issue_number": 145,
+      "attributes": {
+        "title": "TICKET-006: Make sign-out final and idempotent",
+        "body": "# TICKET-006: Make sign-out final and idempotent\n## Observable goal\nAuthenticated and anonymous sign-out are safe, and an ended session cannot authorize later actions.\n## Source IDEA, EPIC, version, and scenario IDs\nIDEA-009/v003; EPIC-002/v002; SCENARIO-017, SCENARIO-018, SCENARIO-019.\n## Acceptance evidence\nRequest specs prove authenticated and anonymous sign-out plus rejection of a captured session after sign-out.\n## Dependencies\nTICKET-004\n## Difficulty (1-5)\n2\n## Estimate (ideal days, at most 2)\n0.5\n## Risks\nRouting and CSRF safety; replayed cookies must fail after session termination.\n## External actions\nnone\n## Allowed scope\nLogout route/response, session termination, destination, translations, and focused specs consuming TICKET-004's invalidation mechanism.\n\n<!-- product-factory-ticket-id: TICKET-006 -->"
+      }
+    }
+  ]
+}

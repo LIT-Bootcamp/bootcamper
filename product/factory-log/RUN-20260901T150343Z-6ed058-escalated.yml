@@ -1,0 +1,36 @@
+---
+run_id: RUN-20260901T150343Z-6ed058-retry
+phase: backlog-idea-apply
+repository: LIT-Bootcamp/bootcamper
+project_number: 1
+ticket_id: TICKET-011
+issue_number: 158
+status: escalated
+reason: GitHub API connection failure on first mutation; stopped without retry.
+failed_command: >-
+  bin/gh_safe project item-edit --id PVTI_lADOEyhuUM4BhpCpzg43zBU
+  --project-id PVT_kwDOEyhuUM4BhpCp --field-id
+  PVTF_lADOEyhuUM4BhpCpzhg2JD0 --text RUN-20260901T121856Z-526ccf
+error: error connecting to api.github.com
+authorized_preview: product/factory-log/previews/RUN-20260901T150343Z-6ed058-retry/preview.json
+revalidated_snapshot: product/factory-log/previews/RUN-20260901T150343Z-6ed058-revalidate2/remote-snapshot.json
+revalidated_preview: product/factory-log/previews/RUN-20260901T150343Z-6ed058-revalidate2/preview.json
+authorized_remote_snapshot_sha256: 9d6da3960461934639fdbf957fc26d1ff8cc7f87d03d6d6232774d321d61f8be
+revalidated_remote_snapshot_sha256: 9d6da3960461934639fdbf957fc26d1ff8cc7f87d03d6d6232774d321d61f8be
+completed_operations: []
+unapplied_operations:
+  - action: project_field
+    field: Factory Run
+    value: RUN-20260901T121856Z-526ccf
+  - action: project_field
+    field: Source Version
+    value: '5'
+  - action: project_field
+    field: Status
+    value: ready-for-human-merge
+  - action: update
+    title: 'TICKET-011: Establish blocked-account sign-in eligibility'
+recovery:
+  - Revalidate auth and all remote inputs against the preserved snapshot before retrying.
+  - Re-run the exact four operations from the authorized preview only after GitHub API connectivity is restored.
+  - Do not merge PR #160.
