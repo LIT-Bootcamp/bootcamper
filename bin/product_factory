@@ -33,6 +33,9 @@ parser = OptionParser.new do |opts|
   opts.on("--output-id ID") { |value| options[:output_ids] << value }
   opts.on("--external-change CHANGE") { |value| options[:external_changes] << value }
   opts.on("--error MESSAGE") { |value| options[:error] = value }
+  opts.on("--pull-request NUMBER", Integer) { |value| options[:pull_request] = value }
+  opts.on("--merge-commit SHA") { |value| options[:merge_commit] = value }
+  opts.on("--created-at TIME") { |value| options[:created_at] = value }
 end
 
 command = ARGV.shift
@@ -81,7 +84,7 @@ begin
     puts JSON.generate(run_id: options[:run_id], root: options[:destination_root])
   when "next-ticket"
     required!(options, :root, :run_id)
-    ticket = ProductFactory::Repository.new(root: options[:root]).next_ticket
+    ticket = ProductFactory::Repository.new(root: options[:root]).next_ticket(ticket_id: options[:ticket])
     exit 3 unless ticket
     ticket_id = YAML.safe_load(File.read(ticket), aliases: false).fetch("id")
     claim_registry(options[:root]).claim!(ticket_id: ticket_id, run_id: options[:run_id])
@@ -90,6 +93,13 @@ begin
     required!(options, :root, :run_id, :ticket)
     claim_registry(options[:root]).release!(ticket_id: options[:ticket], run_id: options[:run_id])
     puts JSON.generate(ticket: options[:ticket], released: true)
+  when "complete-ticket"
+    required!(options, :root, :ticket, :run_id, :pull_request, :merge_commit, :created_at)
+    tickets = ProductFactory::Repository.new(root: options[:root]).complete_ticket!(
+      ticket_id: options[:ticket], run_id: options[:run_id], pull_request: options[:pull_request],
+      merge_commit: options[:merge_commit], created_at: options[:created_at]
+    )
+    puts JSON.generate(tickets: tickets)
   else
     raise OptionParser::InvalidOption, command || "command"
   end

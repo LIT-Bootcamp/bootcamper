@@ -25,11 +25,62 @@ fi
 
 ticket_id="$(printf '%s\n' "$markers" | sed -nE 's/^<!-- product-factory-ticket-id: (TICKET-[0-9]{3}) -->$/\1/p')"
 marker="<!-- product-factory-ticket-id: $ticket_id -->"
-issue_number="$(gh api --paginate --slurp "repos/$REPOSITORY/issues?state=all&per_page=100" |
+issues="$(gh api --paginate --slurp "repos/$REPOSITORY/issues?state=all&per_page=100")"
+pull_requests="$(gh api --paginate --slurp "repos/$REPOSITORY/pulls?state=open&base=main&per_page=100")"
+issue_number="$(printf '%s' "$issues" |
   jq -r --arg marker "$marker" 'add | [ .[] | select(.pull_request == null) | select((.body // "") | contains($marker)) ] | if length == 1 then .[0].number else empty end')"
 if [ -z "$issue_number" ]; then
   echo "Factory marker $ticket_id does not map to exactly one GitHub issue; leaving Project unchanged." >&2
   exit 1
 fi
 
-PROJECT_STATUS=done PROJECT_ITEM_NUMBER="$issue_number" GH_TOKEN="$GH_TOKEN" bin/project_status_update
+merge_commit="$(jq -r '.merge_commit_sha // empty' <<<"$pr")"
+merged_at="$(jq -r '.merged_at // empty' <<<"$pr")"
+if ! [[ "$merge_commit" =~ ^[0-9a-f]{6,40}$ ]] || ! [[ "$merged_at" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$ ]]; then
+  echo "PR #$PR_NUMBER has invalid merge evidence; refusing reconciliation." >&2
+  exit 1
+fi
+
+run_id="RUN-${merged_at//[-:]/}-${merge_commit:0:6}"
+completion="$(bin/product_factory complete-ticket --root product --ticket "$ticket_id" --run-id "$run_id" \
+  --pull-request "$PR_NUMBER" --merge-commit "$merge_commit" --created-at "$merged_at")"
+
+git config user.name "bootcamper-product-factory[bot]"
+git config user.email "bootcamper-product-factory[bot]@users.noreply.github.com"
+git add product
+if ! git diff --cached --quiet -- product; then
+  git commit -m "product: complete $ticket_id after PR #$PR_NUMBER"
+  git push origin HEAD:main
+fi
+
+while IFS=$'\t' read -r projected_ticket state source_version mapped_issue; do
+  if [ "$projected_ticket" = "$ticket_id" ]; then
+    mapped_issue="$issue_number"
+  elif [ -z "$mapped_issue" ] || [ "$mapped_issue" = "null" ]; then
+    projected_marker="<!-- product-factory-ticket-id: $projected_ticket -->"
+    mapped_issue="$(printf '%s' "$issues" |
+      jq -r --arg marker "$projected_marker" 'add | [ .[] | select(.pull_request == null) | select((.body // "") | contains($marker)) ] | if length == 1 then .[0].number else empty end')"
+  fi
+  if [ -z "$mapped_issue" ]; then
+    echo "$projected_ticket does not map to exactly one GitHub issue after canonical Git publication." >&2
+    exit 1
+  fi
+
+  if [ "$projected_ticket" != "$ticket_id" ]; then
+    projected_marker="<!-- product-factory-ticket-id: $projected_ticket -->"
+    active_prs="$(printf '%s' "$pull_requests" |
+      jq -c --arg marker "$projected_marker" 'add | [ .[] | select((.body // "") | contains($marker)) ]')"
+    active_pr_count="$(jq 'length' <<<"$active_prs")"
+    if [ "$active_pr_count" -gt 1 ]; then
+      echo "$projected_ticket maps to $active_pr_count active pull requests; refusing ambiguous delivery projection." >&2
+      exit 1
+    elif [ "$active_pr_count" -eq 1 ]; then
+      active_pr_number="$(jq -r '.[0].number' <<<"$active_prs")"
+      echo "$projected_ticket has active PR #$active_pr_number; preserving active delivery projection."
+      continue
+    fi
+  fi
+
+  PROJECT_STATUS="$state" PROJECT_SOURCE_VERSION="$source_version" PROJECT_ITEM_NUMBER="$mapped_issue" \
+    GH_TOKEN="$GH_TOKEN" bin/project_status_update
+done < <(jq -r '.tickets[] | [.id, .state, .current_version, (.github_issue // "")] | @tsv' <<<"$completion")

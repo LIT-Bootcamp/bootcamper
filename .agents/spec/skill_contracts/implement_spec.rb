@@ -24,6 +24,19 @@ RSpec.describe "Product factory implementation skill contract" do
     expect(selection).to include("separate ticket branch and worktree")
   end
 
+  it "recovers an active factory pull request before claiming new work" do
+    content = File.read(skill_root.join("SKILL.md"))
+    selection = File.read(skill_root.join("references/ticket-selection.md"))
+
+    expect(content).to include("active Product Factory pull request")
+    expect(content).to include("before selecting new work")
+    expect(content).to include("--ticket TICKET-ID")
+    expect(content).to include("same pull request branch")
+    expect(content).to include("duplicate active pull requests")
+    expect(selection).to include("active pull request has priority")
+    expect(selection).to include("Do not create a second branch or pull request")
+  end
+
   it "publishes lifecycle versions and delegates factory delivery to named isolated agents" do
     content = File.read(skill_root.join("SKILL.md"))
 
@@ -61,6 +74,17 @@ RSpec.describe "Product factory implementation skill contract" do
     expect(content).to include("human-only merge")
     expect(content).to include("Never merge automatically")
     expect(content).to include("success", "no-op", "escalated")
+  end
+
+  it "publishes the final pre-merge lifecycle state on the pull request branch" do
+    content = File.read(skill_root.join("SKILL.md"))
+    selection = File.read(skill_root.join("references/ticket-selection.md"))
+
+    expect(content).to include("commit and push")
+    expect(content).to include("ready-for-human-merge")
+    expect(content).to include("same pull request branch")
+    expect(content).to include("before finishing the run")
+    expect(selection).to include("canonical base branch can read")
   end
 
   it "declares the requested interface" do

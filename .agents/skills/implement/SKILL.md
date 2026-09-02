@@ -7,20 +7,23 @@ description: Claim and deliver the next dependency-safe Product Factory ticket t
 
 Deliver exactly one ticket per invocation. Git artifacts remain canonical, the shared claim prevents concurrent delivery of the same ticket, and every terminal outcome is recorded as `success`, `no-op`, or `escalated`. Read [ticket-selection.md](references/ticket-selection.md) before selecting, isolating, or cleaning up work.
 
-## Validate and Claim
+## Recover Active Delivery, Then Claim
 
 From the factory repository root:
 
 1. Run `bin/product_factory validate --root product`. Stop without artifact mutation if validation fails.
-2. Allocate the run ID with `bin/product_factory start-run --root product --phase implement`.
-3. Run `bin/product_factory next-ticket --root product --run-id RUN-ID` once. This chooses the highest-priority available ticket whose dependencies are satisfied and acquires its claim lock in the shared Git common directory.
-4. The workflow must claim before creating a branch or worktree. Do not process a second ticket in the same run.
+2. Inspect every open pull request targeting `main` before selecting new work and parse exact `<!-- product-factory-ticket-id: TICKET-NNN -->` markers. An active Product Factory pull request has priority over new work. Escalate duplicate active pull requests for one ticket.
+3. Allocate the run ID with `bin/product_factory start-run --root product --phase implement`.
+4. If an eligible active ticket exists, claim it with `bin/product_factory next-ticket --root product --run-id RUN-ID --ticket TICKET-ID`; otherwise run `bin/product_factory next-ticket --root product --run-id RUN-ID` once. Both forms require an `available`, dependency-safe canonical ticket and acquire its claim lock in the shared Git common directory.
+5. The workflow must claim before creating a branch or worktree; recovery must also claim before resuming one. Do not process a second ticket in the same run.
 
 If `next-ticket` returns exit status 3, finish the run as `no-op` and report that no ticket is available. Treat an ambiguous result, claim conflict, invalid lineage, or other selection failure as `escalated`; do not silently choose another ticket.
 
 ## Publish the Delivery State
 
-After the claim succeeds, create a separate ticket branch and worktree as described in the reference. In that worktree, read the selected manifest and immutable ticket body, its source EPIC and IDEA versions, dependencies, and acceptance evidence. Verify that the IDEA is `analyzed`, the EPIC is `TL-approved`, the ticket is `available`, and all dependencies remain satisfied.
+After the claim succeeds, create a separate ticket branch and worktree as described in the reference unless an active PR was selected. For recovery, fetch and resume the same pull request branch in an isolated worktree; do not create a second branch or pull request. Rebase or merge the current `main` safely, preserve the newest valid immutable lifecycle artifact from the PR head, rerun required verification and both reviews, and push fixes to the same pull request branch. If it is already clean, reviewed, and green, report it ready for the human-only merge gate without reimplementing it.
+
+In that worktree, read the selected manifest and immutable ticket body, its source EPIC and IDEA versions, dependencies, and acceptance evidence. Verify that the IDEA is `analyzed`, the EPIC is `TL-approved`, the canonical base ticket is `available`, and all dependencies remain satisfied.
 
 Move the started run record into the ticket worktree with `bin/product_factory move-run --root COORDINATOR_PRODUCT_ROOT --destination-root TICKET_WORKTREE/product --run-id RUN-ID`, verify that it no longer exists in the coordinator tree, and run every later factory command from the ticket worktree.
 
@@ -39,7 +42,7 @@ dependencies_satisfied: true
 
 The immutable ticket version is the approved scope boundary. Delivery must use the existing `senior_ruby_rails_engineer`, `fresh_eye_rails_reviewer`, and `project_context_rails_reviewer` agents in their required isolated contexts. Preserve both independent reviews, lead-only release commands, and at most three remediation rounds. Escalate rather than expanding scope, waiving consequential ambiguity, or continuing after a third unsuccessful remediation round.
 
-Publish and validate an `in-review` version before independent review begins. After both reviewers approve and the lead creates the pull request, publish and validate the next immutable ticket version at `ready-for-human-merge`. Record the pull request and verification evidence in the factory run. Never merge automatically: Product Factory delivery has a human-only merge gate.
+Publish and validate an `in-review` version before independent review begins. After both reviewers approve and the lead creates the pull request, publish and validate the next immutable ticket version at `ready-for-human-merge`. The lead must commit and push that version and manifest to the same pull request branch before finishing the run; a local-only lifecycle version is an escalated failure. Record the pull request and verification evidence in the factory run. Never merge automatically: Product Factory delivery has a human-only merge gate.
 
 ## Release and Finish
 

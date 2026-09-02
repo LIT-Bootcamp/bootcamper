@@ -4,6 +4,8 @@
 
 Run validation and allocate the implementation run before selection. `bin/product_factory next-ticket` is the only selector: it returns the highest-priority `available` ticket whose dependencies are satisfied, then acquires a per-ticket claim lock under the shared Git common directory. The lock is shared by every worktree for the repository.
 
+Before new selection, inspect open pull requests targeting `main` for exact Product Factory ticket markers. An eligible active pull request has priority; claim that stable ID with `next-ticket --ticket TICKET-ID`. If multiple eligible active tickets exist, use the same priority-then-ID order. Duplicate active pull requests for one ticket are ambiguous and must escalate. Do not create a second branch or pull request; resume the existing PR branch and recovery evidence.
+
 Use the returned ticket ID and manifest path exactly. One invocation may claim and deliver only that ticket. Do not substitute a nearby ticket when selection is empty, ambiguous, or loses a claim race.
 
 The command outcomes are:
@@ -28,6 +30,8 @@ Before delivery, re-read the selected manifest in the worktree. If it no longer 
 ## Lifecycle publication
 
 Each lifecycle change creates a new immutable ticket version rather than editing the prior version. Publish `in-progress` before implementation, `in-review` before independent review, and `ready-for-human-merge` only after the pull request exists and all factory delivery gates pass. Each version names its immediate predecessor, run ID, author, source versions, state, and non-empty reason. Validate the proposed version and manifest together in a temporary product-tree copy, then publish both together before changing the changelog.
+
+The final `ready-for-human-merge` version is part of the implementation pull request. Commit and push it to the same branch, then verify the remote pull request head contains the version and manifest before finishing. This guarantees that, after human merge, the canonical base branch can read the exact predecessor required by post-merge completion.
 
 ## Cleanup and recovery
 

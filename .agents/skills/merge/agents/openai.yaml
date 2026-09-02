@@ -1,0 +1,6 @@
+interface:
+  display_name: "Merge reviewed PR"
+  short_description: "Merge one reviewed Product Factory PR"
+  default_prompt: "$merge <PR-number>"
+policy:
+  allow_implicit_invocation: false
