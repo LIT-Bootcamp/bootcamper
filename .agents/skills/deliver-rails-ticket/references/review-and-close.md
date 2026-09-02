@@ -25,4 +25,4 @@ After two final `APPROVE` verdicts, append reviews, responses, lessons, outcome,
 
 Factory Mode uses the same remediation, snapshot invalidation, two isolated reviews, final `APPROVE` requirements, and task-record finalization described above. It must not convert a finding into permission to expand the immutable ticket version; consequential remediation outside that boundary requires a newly approved version.
 
-After finalization, hand the evidence to `lead_bootcamper` for the lead-only release commands. The lead may commit, push, and open the pull request, then update the ticket state to `ready-for-human-merge`. The lead and all other agents must not merge, even after a generic review skip; a human must merge the pull request.
+After finalization, hand the evidence to `lead_bootcamper` for the lead-only release commands. The lead may commit, push, and open the pull request, then update the ticket state to `ready-for-human-merge` and commit and push that immutable version to the same branch. The lead and all other agents must not merge, even after a generic review skip; a human must merge the pull request.

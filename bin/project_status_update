@@ -12,12 +12,19 @@ PROJECT_ITEM_NUMBER="${PROJECT_ITEM_NUMBER:-$PR_NUMBER}"
 owner="${REPOSITORY%%/*}"
 project="$(gh project view "$PROJECT_NUMBER" --owner "$owner" --format json)"
 project_id="$(jq -r '.id' <<<"$project")"
-fields="$(gh api graphql -f query='query($id:ID!) { node(id:$id) { ... on ProjectV2 { fields(first:100) { nodes { ... on ProjectV2SingleSelectField { id name options { id name } } } } } } }' -F id="$project_id")"
+fields="$(gh api graphql -f query='query($id:ID!) { node(id:$id) { ... on ProjectV2 { fields(first:100) { nodes { ... on ProjectV2Field { id name dataType } ... on ProjectV2SingleSelectField { id name options { id name } } } } } } }' -F id="$project_id")"
 field_id="$(jq -r '.data.node.fields.nodes[] | select(.name == "Status") | .id' <<<"$fields")"
 option_id="$(jq -r --arg name "$PROJECT_STATUS" '.data.node.fields.nodes[] | select(.name == "Status") | .options[] | select(.name == $name) | .id' <<<"$fields")"
 if [ -z "$field_id" ] || [ -z "$option_id" ]; then
   echo "Project $PROJECT_NUMBER has no Status/$PROJECT_STATUS option; refusing update." >&2
   exit 1
+fi
+if [ -n "${PROJECT_SOURCE_VERSION:-}" ]; then
+  source_version_field_id="$(jq -r '.data.node.fields.nodes[] | select(.name == "Source Version") | .id' <<<"$fields")"
+  if [ -z "$source_version_field_id" ]; then
+    echo "Project $PROJECT_NUMBER has no Source Version field; refusing update." >&2
+    exit 1
+  fi
 fi
 
 item_id="$(gh project item-list "$PROJECT_NUMBER" --owner "$owner" --limit 1000 --format json | \
@@ -29,4 +36,8 @@ fi
 
 gh project item-edit --id "$item_id" --project-id "$project_id" \
   --field-id "$field_id" --single-select-option-id "$option_id"
-echo "Project item #$PROJECT_ITEM_NUMBER marked $PROJECT_STATUS in Project $PROJECT_NUMBER."
+if [ -n "${PROJECT_SOURCE_VERSION:-}" ]; then
+  gh project item-edit --id "$item_id" --project-id "$project_id" \
+    --field-id "$source_version_field_id" --number "$PROJECT_SOURCE_VERSION"
+fi
+echo "Project item #$PROJECT_ITEM_NUMBER marked $PROJECT_STATUS at source version ${PROJECT_SOURCE_VERSION:-unchanged} in Project $PROJECT_NUMBER."

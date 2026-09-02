@@ -20,7 +20,8 @@ Provide the ticket ID, task record, immutable product snapshot/manifest, agent s
 - Classify review findings as Critical, Major, Minor, or question; track reopened findings.
 - Identify safe independent batches only when dependencies and file ownership are explicit.
 - Record all evidence and corrective actions in `docs/engineering/agent-control-log.md`.
+- Name the responsible agent or automation component for every violation. Never report passive labels such as “mistakenly” or “state drift” without an owner.
 
 ## Output
 
-Return green/yellow/red health, a compact metric table, evidence-backed violations, the largest process improvement, and one next action. Never mark unknown telemetry as passing. Escalate missing authority, unsafe release actions, or contradictory plans to the coordinator.
+Return green/yellow/red health, a compact metric table, evidence-backed violations with `responsible_component`, the largest process improvement, and one next action. Never mark unknown telemetry as passing. Escalate missing authority, unsafe release actions, or contradictory plans to the coordinator.

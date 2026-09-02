@@ -63,6 +63,17 @@ RSpec.describe "Product factory implementation skill contract" do
     expect(content).to include("success", "no-op", "escalated")
   end
 
+  it "publishes the final pre-merge lifecycle state on the pull request branch" do
+    content = File.read(skill_root.join("SKILL.md"))
+    selection = File.read(skill_root.join("references/ticket-selection.md"))
+
+    expect(content).to include("commit and push")
+    expect(content).to include("ready-for-human-merge")
+    expect(content).to include("same pull request branch")
+    expect(content).to include("before finishing the run")
+    expect(selection).to include("canonical base branch can read")
+  end
+
   it "declares the requested interface" do
     metadata = File.read(skill_root.join("agents/openai.yaml"))
 

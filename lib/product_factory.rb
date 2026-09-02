@@ -5,6 +5,7 @@ require "open3"
 require "pathname"
 require "securerandom"
 require "time"
+require "tmpdir"
 require "yaml"
 require_relative "product_factory/github_plan"
 
@@ -291,6 +292,60 @@ module ProductFactory
       selected && Pathname(selected["manifest_path"])
     end
 
+    def complete_ticket!(ticket_id:, run_id:, pull_request:, merge_commit:, created_at: Time.now.utc.iso8601)
+      validate!
+      current = snapshot.fetch(ticket_id) { raise ValidationError, "unknown ticket #{ticket_id}" }
+      raise ValidationError, "#{ticket_id} is not a ticket" unless current["kind"] == "ticket"
+      unless %w[ready-for-human-merge done].include?(current["state"])
+        raise ValidationError, "#{ticket_id} must be ready-for-human-merge before completion"
+      end
+      if current["state"] == "done" && current["merged_pull_request"] && current["merged_pull_request"] != pull_request
+        raise ValidationError, "#{ticket_id} was completed by PR ##{current["merged_pull_request"]}"
+      end
+
+      changed_ids = []
+      Dir.mktmpdir("product-factory-completion") do |directory|
+        staged_root = Pathname(directory).join("product")
+        FileUtils.mkdir_p(staged_root)
+        FileUtils.cp_r(@root.children, staged_root)
+        staged = self.class.new(root: staged_root)
+
+        if current["state"] != "done"
+          staged.send(:advance_ticket!, ticket_id, state: "done", run_id: run_id, created_at: created_at,
+            reason: "PR ##{pull_request} merged as #{merge_commit}.", merged_pull_request: pull_request)
+          changed_ids << ticket_id
+        end
+
+        staged.snapshot.values.select do |ticket|
+          ticket["kind"] == "ticket" && ticket["state"] == "backlog-ready" && ticket["dependency_safe"]
+        end.sort_by { |ticket| ticket["id"] }.each do |ticket|
+          staged.send(:advance_ticket!, ticket["id"], state: "available", run_id: run_id, created_at: created_at,
+            reason: "Dependencies completed after PR ##{pull_request}; ticket is now dependency-safe.")
+          changed_ids << ticket["id"]
+        end
+
+        staged.validate!
+        changed_ids.each do |id|
+          source = staged.send(:ticket_directory, id)
+          destination = ticket_directory(id)
+          version = YAML.safe_load(File.read(source.join("manifest.yml")), aliases: false).fetch("current_version")
+          FileUtils.cp(source.join(format("v%03d.md", version)), destination)
+          FileUtils.cp(source.join("manifest.yml"), destination)
+        end
+        changed_ids.map { |id| staged.send(:idea_changelog, staged.send(:ticket_directory, id)) }.uniq.each do |source|
+          destination = @root.join(source.relative_path_from(staged_root))
+          FileUtils.mkdir_p(destination.dirname)
+          FileUtils.cp(source, destination)
+        end
+      end
+      validate!
+
+      current_snapshot = snapshot
+      ([ ticket_id ] + changed_ids).uniq.map do |id|
+        current_snapshot.fetch(id).slice("id", "state", "current_version", "github_issue")
+      end
+    end
+
     def snapshot
       records = @root.glob("ideas/**/manifest.yml").sort.filter_map do |path|
         manifest = YAML.safe_load(File.read(path), aliases: false)
@@ -309,6 +364,69 @@ module ProductFactory
     end
 
     private
+
+    def advance_ticket!(ticket_id, state:, run_id:, created_at:, reason:, merged_pull_request: nil)
+      directory = ticket_directory(ticket_id)
+      manifest_path = directory.join("manifest.yml")
+      manifest = YAML.safe_load(File.read(manifest_path), aliases: false)
+      previous_version = manifest.fetch("current_version")
+      previous_path = directory.join(format("v%03d.md", previous_version))
+      content = File.binread(previous_path).gsub("\r\n", "\n")
+      match = content.match(/\A---\n(.*?)\n---\n/m)
+      raise ValidationError, "#{ticket_id} current version has invalid front matter" unless match
+
+      metadata = YAML.safe_load(match[1], aliases: false)
+      version = previous_version + 1
+      metadata.merge!(
+        "version" => version,
+        "author" => "product_factory_ci",
+        "run_id" => run_id,
+        "created_at" => created_at,
+        "previous_version" => previous_version,
+        "reason" => reason,
+        "state" => state
+      )
+      next_path = directory.join(format("v%03d.md", version))
+      body = content[match.end(0)..]
+      File.write(next_path, "---\n#{YAML.dump(metadata).sub(/\A---\n/, "")}---\n#{body}")
+
+      manifest.merge!(
+        "current_version" => version,
+        "state" => state,
+        "content_sha256" => Digest::SHA256.hexdigest(File.binread(next_path).gsub("\r\n", "\n"))
+      )
+      manifest["merged_pull_request"] = merged_pull_request if merged_pull_request
+      File.write(manifest_path, YAML.dump(manifest))
+      append_changelog!(directory, ticket_id: ticket_id, version: version, run_id: run_id,
+        created_at: created_at, reason: reason)
+    end
+
+    def append_changelog!(directory, ticket_id:, version:, run_id:, created_at:, reason:)
+      path = idea_changelog(directory)
+      FileUtils.mkdir_p(path.dirname)
+      existing = path.file? ? File.read(path) : "# #{path.dirname.basename} changelog\n"
+      existing = "#{existing.rstrip}\n" unless existing.empty?
+      date = Time.iso8601(created_at).utc.strftime("%Y-%m-%d")
+      File.write(path, "#{existing}- #{date} — `#{ticket_id}` v#{format("%03d", version)} — `#{run_id}` — #{reason}\n")
+    end
+
+    def idea_changelog(directory)
+      parts = directory.relative_path_from(@root).each_filename.to_a
+      raise ValidationError, "ticket artifact is outside an IDEA" unless parts[0] == "ideas" && parts[1]
+
+      @root.join("ideas", parts[1], "changelog.md")
+    end
+
+    def ticket_directory(ticket_id)
+      matches = @root.glob("ideas/**/tickets/**/manifest.yml").select do |path|
+        YAML.safe_load(File.read(path), aliases: false)["id"] == ticket_id
+      rescue Psych::Exception
+        false
+      end
+      raise ValidationError, "#{ticket_id} does not map to exactly one ticket artifact" unless matches.one?
+
+      matches.first.dirname
+    end
 
     def enrich_ticket_projection!(item, manifest_path)
       current = manifest_path.dirname.join(format("v%03d.md", item["current_version"]))
