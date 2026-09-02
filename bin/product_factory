@@ -84,7 +84,7 @@ begin
     puts JSON.generate(run_id: options[:run_id], root: options[:destination_root])
   when "next-ticket"
     required!(options, :root, :run_id)
-    ticket = ProductFactory::Repository.new(root: options[:root]).next_ticket
+    ticket = ProductFactory::Repository.new(root: options[:root]).next_ticket(ticket_id: options[:ticket])
     exit 3 unless ticket
     ticket_id = YAML.safe_load(File.read(ticket), aliases: false).fetch("id")
     claim_registry(options[:root]).claim!(ticket_id: ticket_id, run_id: options[:run_id])

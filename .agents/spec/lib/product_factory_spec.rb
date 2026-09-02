@@ -287,6 +287,18 @@ RSpec.describe ProductFactory::Repository do
     end
   end
 
+  it "selects an explicitly requested available dependency-safe ticket" do
+    with_product do |root|
+      write_manifest(root, id: "TICKET-001", kind: "ticket", priority: 1)
+      requested = write_manifest(root, id: "TICKET-002", kind: "ticket", priority: 2)
+      repository = described_class.new(root: root)
+
+      expect(repository.next_ticket(ticket_id: "TICKET-002")).to eq(requested.join("manifest.yml"))
+      expect { repository.next_ticket(ticket_id: "TICKET-999") }
+        .to raise_error(ProductFactory::ValidationError, /not available and dependency-safe/)
+    end
+  end
+
   it "derives GitHub projection data from the immutable ticket and lineage path" do
     with_product do |root|
       directory = write_manifest(root, id: "TICKET-001", kind: "ticket")

@@ -4,6 +4,8 @@
 
 Run validation and allocate the implementation run before selection. `bin/product_factory next-ticket` is the only selector: it returns the highest-priority `available` ticket whose dependencies are satisfied, then acquires a per-ticket claim lock under the shared Git common directory. The lock is shared by every worktree for the repository.
 
+Before new selection, inspect open pull requests targeting `main` for exact Product Factory ticket markers. An eligible active pull request has priority; claim that stable ID with `next-ticket --ticket TICKET-ID`. If multiple eligible active tickets exist, use the same priority-then-ID order. Duplicate active pull requests for one ticket are ambiguous and must escalate. Do not create a second branch or pull request; resume the existing PR branch and recovery evidence.
+
 Use the returned ticket ID and manifest path exactly. One invocation may claim and deliver only that ticket. Do not substitute a nearby ticket when selection is empty, ambiguous, or loses a claim race.
 
 The command outcomes are:
