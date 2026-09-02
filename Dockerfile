@@ -12,7 +12,7 @@ FROM base AS development
 ENV RAILS_ENV=docker \
     BUNDLE_WITHOUT=""
 
-RUN apt-get update -qq && apt-get install -y --no-install-recommends build-essential libpq-dev && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -qq && apt-get install -y --no-install-recommends build-essential jq libpq-dev && rm -rf /var/lib/apt/lists/*
 
 COPY --from=droast /usr/local/bin/droast /usr/local/bin/droast
 

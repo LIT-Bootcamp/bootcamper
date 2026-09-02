@@ -139,6 +139,8 @@ jobs:
           docker run --rm --network host
           -v $GITHUB_WORKSPACE/coverage:/app/coverage
           -v $GITHUB_WORKSPACE/.agents:/app/.agents:ro
+          -v $GITHUB_WORKSPACE/.codex:/app/.codex:ro
+          -v $GITHUB_WORKSPACE/docs:/app/docs:ro
           -e CI=true
           -e RAILS_ENV=test
           -e RAILS_MASTER_KEY
