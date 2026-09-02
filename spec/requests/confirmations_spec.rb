@@ -42,6 +42,24 @@ RSpec.describe "Email confirmation" do
     expect_invalid_confirmation_attempt("not-a-real-token", user)
   end
 
+  it "rejects a confirmation request without a token without changing account state", :aggregate_failures do
+    user = create_unconfirmed_user
+
+    expect_invalid_confirmation_attempt(:missing, user)
+  end
+
+  it "rejects a blank confirmation token without changing account state", :aggregate_failures do
+    user = create_unconfirmed_user
+
+    expect_invalid_confirmation_attempt("", user)
+  end
+
+  it "rejects an array confirmation token without changing account state", :aggregate_failures do
+    user = create_unconfirmed_user
+
+    expect_invalid_confirmation_attempt([ "not-a-real-token" ], user)
+  end
+
   it "rejects a confirmation link after it is used without changing account state", :aggregate_failures do
     create_unconfirmed_user
     token = current_confirmation_token
@@ -166,7 +184,8 @@ RSpec.describe "Email confirmation" do
   end
 
   def confirm_with(token)
-    get confirmation_path, params: { confirmation_token: token }
+    request_params = token == :missing ? {} : { confirmation_token: token }
+    get confirmation_path, params: request_params
     follow_redirect! if response.redirect?
   end
 
