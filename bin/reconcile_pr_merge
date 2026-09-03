@@ -5,14 +5,83 @@ set -euo pipefail
 : "${GH_TOKEN:?GH_TOKEN is required}"
 : "${REPOSITORY:?REPOSITORY is required}"
 : "${PR_NUMBER:?PR_NUMBER is required}"
+
+pr_json_value() {
+  local expression="$1"
+  ruby -rjson -e '
+    pr = JSON.parse(STDIN.read)
+    value = eval(ARGV.fetch(0))
+    case value
+    when true then print "true"
+    when false then print "false"
+    when nil then print ""
+    else print value
+    end
+  ' "$expression"
+}
+
+extract_ticket_markers() {
+  ruby -e '
+    body = STDIN.read
+    body.scan(/<!-- product-factory-ticket-id: (TICKET-[0-9]{3}) -->/).each do |match|
+      puts match.first
+    end
+  '
+}
+
+matching_issue_number() {
+  local marker="$1"
+  ruby -rjson -e '
+    marker = ARGV.fetch(0)
+    pages = JSON.parse(STDIN.read)
+    issues = Array(pages).flatten.select do |issue|
+      issue.is_a?(Hash) &&
+        !issue.key?("pull_request") &&
+        issue.fetch("body", "").include?(marker)
+    end
+    print(issues.length == 1 ? issues.first["number"] : "")
+  ' "$marker"
+}
+
+active_pull_request_projection() {
+  local marker="$1"
+  ruby -rjson -e '
+    marker = ARGV.fetch(0)
+    pages = JSON.parse(STDIN.read)
+    pull_requests = Array(pages).flatten.select do |pull_request|
+      pull_request.is_a?(Hash) && pull_request.fetch("body", "").include?(marker)
+    end
+    if pull_requests.length == 1
+      print "1\t#{pull_requests.first["number"]}"
+    else
+      print "#{pull_requests.length}\t"
+    end
+  ' "$marker"
+}
+
+completion_rows() {
+  ruby -rjson -e '
+    completion = JSON.parse(STDIN.read)
+    Array(completion.fetch("tickets")).each do |ticket|
+      puts [
+        ticket.fetch("id"),
+        ticket.fetch("state"),
+        ticket.fetch("current_version"),
+        ticket["github_issue"].to_s
+      ].join("\t")
+    end
+  '
+}
+
 pr="$(gh api "repos/$REPOSITORY/pulls/$PR_NUMBER")"
-if [ "$(jq -r '.base.ref' <<<"$pr")" != main ] || [ "$(jq -r '.merged' <<<"$pr")" != true ]; then
+base_ref="$(pr_json_value 'pr.dig("base", "ref").to_s' <<<"$pr")"
+merged="$(pr_json_value 'pr["merged"] == true' <<<"$pr")"
+if [ "$base_ref" != main ] || [ "$merged" != true ]; then
   echo "PR #$PR_NUMBER is not merged into main; leaving Project unchanged."
   exit 0
 fi
 
-marker_pattern='<!-- product-factory-ticket-id: TICKET-[0-9]{3} -->'
-markers="$(jq -r '.body // ""' <<<"$pr" | grep -oE "$marker_pattern" || true)"
+markers="$(pr_json_value 'pr["body"].to_s' <<<"$pr" | extract_ticket_markers || true)"
 marker_count="$(printf '%s\n' "$markers" | sed '/^$/d' | wc -l | tr -d ' ')"
 if [ "$marker_count" -eq 0 ]; then
   echo "PR #$PR_NUMBER has no Product Factory ticket marker; nothing to reconcile."
@@ -23,19 +92,18 @@ if [ "$marker_count" -ne 1 ]; then
   exit 1
 fi
 
-ticket_id="$(printf '%s\n' "$markers" | sed -nE 's/^<!-- product-factory-ticket-id: (TICKET-[0-9]{3}) -->$/\1/p')"
+ticket_id="$(printf '%s\n' "$markers" | sed -n '1p')"
 marker="<!-- product-factory-ticket-id: $ticket_id -->"
 issues="$(gh api --paginate --slurp "repos/$REPOSITORY/issues?state=all&per_page=100")"
 pull_requests="$(gh api --paginate --slurp "repos/$REPOSITORY/pulls?state=open&base=main&per_page=100")"
-issue_number="$(printf '%s' "$issues" |
-  jq -r --arg marker "$marker" 'add | [ .[] | select(.pull_request == null) | select((.body // "") | contains($marker)) ] | if length == 1 then .[0].number else empty end')"
+issue_number="$(matching_issue_number "$marker" <<<"$issues")"
 if [ -z "$issue_number" ]; then
   echo "Factory marker $ticket_id does not map to exactly one GitHub issue; leaving Project unchanged." >&2
   exit 1
 fi
 
-merge_commit="$(jq -r '.merge_commit_sha // empty' <<<"$pr")"
-merged_at="$(jq -r '.merged_at // empty' <<<"$pr")"
+merge_commit="$(pr_json_value 'pr["merge_commit_sha"].to_s' <<<"$pr")"
+merged_at="$(pr_json_value 'pr["merged_at"].to_s' <<<"$pr")"
 if ! [[ "$merge_commit" =~ ^[0-9a-f]{6,40}$ ]] || ! [[ "$merged_at" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$ ]]; then
   echo "PR #$PR_NUMBER has invalid merge evidence; refusing reconciliation." >&2
   exit 1
@@ -58,8 +126,7 @@ while IFS=$'\t' read -r projected_ticket state source_version mapped_issue; do
     mapped_issue="$issue_number"
   elif [ -z "$mapped_issue" ] || [ "$mapped_issue" = "null" ]; then
     projected_marker="<!-- product-factory-ticket-id: $projected_ticket -->"
-    mapped_issue="$(printf '%s' "$issues" |
-      jq -r --arg marker "$projected_marker" 'add | [ .[] | select(.pull_request == null) | select((.body // "") | contains($marker)) ] | if length == 1 then .[0].number else empty end')"
+    mapped_issue="$(matching_issue_number "$projected_marker" <<<"$issues")"
   fi
   if [ -z "$mapped_issue" ]; then
     echo "$projected_ticket does not map to exactly one GitHub issue after canonical Git publication." >&2
@@ -68,14 +135,13 @@ while IFS=$'\t' read -r projected_ticket state source_version mapped_issue; do
 
   if [ "$projected_ticket" != "$ticket_id" ]; then
     projected_marker="<!-- product-factory-ticket-id: $projected_ticket -->"
-    active_prs="$(printf '%s' "$pull_requests" |
-      jq -c --arg marker "$projected_marker" 'add | [ .[] | select((.body // "") | contains($marker)) ]')"
-    active_pr_count="$(jq 'length' <<<"$active_prs")"
+    projection="$(active_pull_request_projection "$projected_marker" <<<"$pull_requests")"
+    active_pr_count="${projection%%$'\t'*}"
+    active_pr_number="${projection#*$'\t'}"
     if [ "$active_pr_count" -gt 1 ]; then
       echo "$projected_ticket maps to $active_pr_count active pull requests; refusing ambiguous delivery projection." >&2
       exit 1
     elif [ "$active_pr_count" -eq 1 ]; then
-      active_pr_number="$(jq -r '.[0].number' <<<"$active_prs")"
       echo "$projected_ticket has active PR #$active_pr_number; preserving active delivery projection."
       continue
     fi
@@ -83,4 +149,4 @@ while IFS=$'\t' read -r projected_ticket state source_version mapped_issue; do
 
   PROJECT_STATUS="$state" PROJECT_SOURCE_VERSION="$source_version" PROJECT_ITEM_NUMBER="$mapped_issue" \
     GH_TOKEN="$GH_TOKEN" bin/project_status_update
-done < <(jq -r '.tickets[] | [.id, .state, .current_version, (.github_issue // "")] | @tsv' <<<"$completion")
+done < <(completion_rows <<<"$completion")
